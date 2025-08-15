@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EuroTAP - Terminal de Pagamento Quantum-Safe</title>
     <style>
+        /* ===== NAV BRAND TEXT GRADIENTE ===== */
+        .nav-brand-text {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #0066ff, #ff6600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.3s ease;
+        }
+
+        .nav-brand:hover .nav-brand-text {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.5));
+        }
         * {
             margin: 0;
             padding: 0;
@@ -410,7 +425,32 @@
                display: none;
            }
        }
-   </style>
+           /* ===== NAVEGAÇÃO GRADIENTE FORÇADO ===== */
+        .nav-brand-text {
+            font-size: 1.8rem !important;
+            font-weight: 900 !important;
+            background: linear-gradient(135deg, #0066ff, #ff6600) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .nav-brand:hover .nav-brand-text {
+            transform: scale(1.05) !important;
+            filter: drop-shadow(0 0 10px rgba(0, 102, 255, 0.5)) !important;
+        }
+            /* ===== FOOTER GRADIENTE ===== */
+        .footer-brand-title {
+            font-size: 2rem !important;
+            font-weight: 900 !important;
+            margin-bottom: 1rem !important;
+            background: linear-gradient(135deg, #0066ff, #ff6600) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            background-clip: text !important;
+        }
+    </style>
 </head>
 <body>
    <!-- Navigation -->
@@ -774,6 +814,9 @@
    </script>
 </body>
 </html>
+
+
+
 
 
 
