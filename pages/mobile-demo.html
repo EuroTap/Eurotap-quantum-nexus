@@ -1,70 +1,65 @@
 ﻿<!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuroTAP Mobile Demo - Terminal de Pagamento</title>
+    <title>EuroTAP Mobile - Demo Funcional</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-            background: linear-gradient(135deg, #000011 0%, #001122 100%);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000033, #000066);
             color: white;
             min-height: 100vh;
-            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
         
         .header {
             text-align: center;
-            padding: 2rem 0;
+            margin-bottom: 30px;
         }
         
         .header h1 {
-            font-size: 2.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #0066ff, #ff6600);
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #0066ff, #ff6600);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
         }
         
-        .demo-container {
-            max-width: 400px;
-            margin: 0 auto;
+        .demo-phone {
+            width: 320px;
+            height: 600px;
             background: #1a1a1a;
-            border-radius: 30px;
-            padding: 1rem;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-radius: 25px;
+            padding: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
         
-        .phone-screen {
-            background: linear-gradient(135deg, #0066ff 0%, #003d99 100%);
-            border-radius: 25px;
-            padding: 2rem 1.5rem;
-            min-height: 600px;
+        .screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0066ff, #004499);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
         
         .app-header {
             text-align: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .app-logo {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
         }
         
         .app-title {
             font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         
         .app-subtitle {
@@ -72,343 +67,257 @@
             opacity: 0.8;
         }
         
-        .status-bar {
-            background: rgba(0, 255, 136, 0.2);
+        .status {
+            background: rgba(0,255,136,0.2);
             border: 1px solid #00ff88;
-            padding: 0.75rem;
-            border-radius: 15px;
+            padding: 10px;
+            border-radius: 10px;
             text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .status-text {
-            font-size: 0.9rem;
-            font-weight: 700;
+            margin-bottom: 20px;
+            font-weight: bold;
             color: #00ff88;
         }
         
-        .transaction-section {
-            background: rgba(255, 255, 255, 0.1);
+        .transaction {
+            background: rgba(255,255,255,0.1);
             border-radius: 15px;
-            padding: 2rem;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 2rem;
-            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
         }
         
-        .amount-display {
-            font-size: 3rem;
-            font-weight: 900;
+        .amount {
+            font-size: 2.5rem;
+            font-weight: bold;
             color: #00ff88;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            margin-bottom: 5px;
         }
         
-        .transaction-info {
-            font-size: 0.9rem;
-            opacity: 0.8;
-        }
-        
-        .stats-grid {
+        .stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 1.5rem 1rem;
+        .stat {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
             text-align: center;
-            backdrop-filter: blur(10px);
         }
         
         .stat-value {
-            font-size: 1.8rem;
-            font-weight: 800;
+            font-size: 1.5rem;
+            font-weight: bold;
             color: #ffaa00;
-            margin-bottom: 0.5rem;
         }
         
         .stat-label {
             font-size: 0.8rem;
-            opacity: 0.7;
+            opacity: 0.8;
         }
         
-        .action-buttons {
-            display: grid;
-            gap: 1rem;
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
         
         .btn {
-            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            background: #00ff88;
             border: none;
-            padding: 1rem;
-            border-radius: 12px;
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
+            padding: 15px;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            transition: all 0.3s;
         }
         
         .btn:hover {
+            background: #00cc6a;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
         }
         
         .btn.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255,255,255,0.2);
+            color: white;
         }
         
         .btn.secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.3);
         }
         
         .back-link {
             position: fixed;
-            top: 1rem;
-            left: 1rem;
-            background: rgba(0, 102, 255, 0.2);
-            border: 1px solid #0066ff;
-            color: #0066ff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        
-        .back-link:hover {
+            top: 20px;
+            left: 20px;
             background: #0066ff;
             color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
         }
         
-        .features-section {
-            margin-top: 2rem;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-        }
-        
-        .features-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
+        .info-section {
+            max-width: 600px;
             text-align: center;
+            margin-top: 30px;
         }
         
-        .features-list {
+        .features {
             display: grid;
-            gap: 0.75rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
         }
         
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            font-size: 0.9rem;
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
         }
         
-        .feature-icon {
-            font-size: 1.2rem;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-        
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @media (max-width: 480px) {
-            .demo-container {
-                margin: 0;
-                border-radius: 0;
-                min-height: 100vh;
-            }
-            
-            .phone-screen {
-                border-radius: 0;
-                min-height: calc(100vh - 2rem);
+        @media (max-width: 768px) {
+            .demo-phone {
+                width: 90%;
+                max-width: 350px;
             }
         }
     </style>
 </head>
 <body>
-    <a href="../index.html" class="back-link">← Voltar</a>
+    <a href="../index.html" class="back-link">← Voltar ao Site</a>
     
     <div class="header">
         <h1>📱 EuroTAP Mobile Demo</h1>
+        <p>Terminal de Pagamento Quantum-Safe Funcionando</p>
     </div>
     
-    <div class="demo-container">
-        <div class="phone-screen">
+    <div class="demo-phone">
+        <div class="screen">
             <div class="app-header">
-                <div class="app-logo">🔮</div>
+                <div style="font-size: 2rem;">🔮</div>
                 <div class="app-title">EuroTAP Terminal</div>
                 <div class="app-subtitle">Quantum-Safe Payment System</div>
             </div>
             
-            <div class="status-bar">
-                <div class="status-text pulse">🔮 QUANTUM-SAFE ATIVO</div>
+            <div class="status">
+                🔮 QUANTUM-SAFE ATIVO
             </div>
             
-            <div class="transaction-section">
-                <div class="amount-display" id="amount">€127,50</div>
-                <div class="transaction-info">Última Transação • Segura ✓</div>
+            <div class="transaction">
+                <div class="amount" id="amount">€127,50</div>
+                <div>Última Transação Segura ✓</div>
             </div>
             
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="transactions">47</div>
-                    <div class="stat-label">Transações Hoje</div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="count">47</div>
+                    <div class="stat-label">Transações</div>
                 </div>
-                <div class="stat-card">
+                <div class="stat">
                     <div class="stat-value" id="revenue">€2.1k</div>
-                    <div class="stat-label">Receita Diária</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">EU Compliant</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value pulse">⚡</div>
-                    <div class="stat-label">Quantum-Safe</div>
+                    <div class="stat-label">Receita</div>
                 </div>
             </div>
             
-            <div class="action-buttons">
-                <button class="btn" onclick="processPayment()">
-                    💳 Processar Pagamento
+            <div class="buttons">
+                <button class="btn" onclick="newPayment()">
+                    💳 Novo Pagamento
                 </button>
-                <button class="btn secondary" onclick="showReceipts()">
-                    🧾 Recibos Digitais
+                <button class="btn secondary" onclick="showReceipt()">
+                    🧾 Ver Recibo
                 </button>
-                <button class="btn secondary" onclick="showAnalytics()">
-                    📊 Ver Analytics
-                </button>
-                <button class="btn secondary" onclick="showCompliance()">
-                    🛡️ Status Compliance
+                <button class="btn secondary" onclick="showStats()">
+                    📊 Estatísticas
                 </button>
             </div>
-            
-            <div class="features-section">
-                <div class="features-title">🔮 Recursos Quantum-Safe</div>
-                <div class="features-list">
-                    <div class="feature-item">
-                        <span class="feature-icon">🔐</span>
-                        <span>Criptografia ML-DSA-65 NIST</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">🇪🇺</span>
-                        <span>Compliance automático UE</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">📱</span>
-                        <span>Processamento NFC integrado</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">🌍</span>
-                        <span>Multi-idioma (PT/EN/FR/DE)</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">⚡</span>
-                        <span>Tempo real analytics</span>
-                    </div>
-                </div>
+        </div>
+    </div>
+    
+    <div class="info-section">
+        <h2>🔮 Recursos Quantum-Safe</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>🔐 Criptografia ML-DSA-65</h3>
+                <p>Padrão NIST aprovado contra ataques quânticos</p>
+            </div>
+            <div class="feature">
+                <h3>🇪🇺 Compliance UE</h3>
+                <p>GDPR, PCI-DSS, PSD2 e MiCA automático</p>
+            </div>
+            <div class="feature">
+                <h3>📱 Mobile-First</h3>
+                <p>Transforma smartphone em terminal POS</p>
+            </div>
+            <div class="feature">
+                <h3>⚡ Tempo Real</h3>
+                <p>Analytics e métricas instantâneas</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Simulação de funcionalidades
         let transactionCount = 47;
-        let dailyRevenue = 2100;
+        let totalRevenue = 2100;
         
-        function processPayment() {
-            // Simular processamento
-            const amount = document.getElementById('amount');
-            const transactions = document.getElementById('transactions');
-            const revenue = document.getElementById('revenue');
-            
-            // Gerar valor aleatório
-            const newAmount = Math.random() * 500 + 10;
+        function newPayment() {
+            // Simular novo pagamento
+            const newAmount = Math.random() * 300 + 50;
             const formattedAmount = '€' + newAmount.toFixed(2).replace('.', ',');
             
-            // Animação do valor
-            amount.style.transform = 'scale(1.2)';
-            amount.style.color = '#ffaa00';
+            // Atualizar display
+            document.getElementById('amount').textContent = formattedAmount;
             
-            setTimeout(() => {
-                amount.textContent = formattedAmount;
-                amount.style.transform = 'scale(1)';
-                amount.style.color = '#00ff88';
-                
-                // Atualizar estatísticas
-                transactionCount++;
-                dailyRevenue += newAmount;
-                
-                transactions.textContent = transactionCount;
-                revenue.textContent = '€' + (dailyRevenue / 1000).toFixed(1) + 'k';
-                
-                // Feedback visual
-                showNotification('✅ Pagamento processado com criptografia quantum-safe!');
-            }, 800);
+            // Atualizar contadores
+            transactionCount++;
+            totalRevenue += newAmount;
             
-            // Feedback imediato
-            showNotification('🔮 Processando com ML-DSA-65...');
+            document.getElementById('count').textContent = transactionCount;
+            document.getElementById('revenue').textContent = '€' + (totalRevenue/1000).toFixed(1) + 'k';
+            
+            // Feedback
+            alert('✅ Pagamento processado!\n\n' + 
+                  '💰 Valor: ' + formattedAmount + '\n' +
+                  '🔮 Criptografia: ML-DSA-65\n' +
+                  '🛡️ Status: Quantum-Safe\n' +
+                  '📧 Recibo enviado automaticamente');
         }
         
-        function showReceipts() {
-            showNotification('📧 Recibo digital enviado!\n\n✅ GDPR Compliant\n✅ Assinatura digital\n✅ Criptografia quantum-safe\n✅ Entrega automática');
+        function showReceipt() {
+            alert('📧 Recibo Digital Enviado!\n\n' +
+                  '✅ GDPR Compliant\n' +
+                  '✅ Assinatura Digital\n' +
+                  '✅ Criptografia Quantum-Safe\n' +
+                  '✅ Armazenamento Seguro\n\n' +
+                  'O recibo foi enviado para o email do cliente com todas as certificações de segurança.');
         }
         
-        function showAnalytics() {
-            showNotification('📊 Analytics Quantum-Safe:\n\n• Uptime: 99.99%\n• Segurança: ML-DSA-65 ativa\n• Compliance: 100% UE\n• Performance: Otimizada\n• Ameaças bloqueadas: 0 (quantum-safe)');
+        function showStats() {
+            alert('📊 Estatísticas do Terminal:\n\n' +
+                  '🔮 Quantum-Safe: 100% Ativo\n' +
+                  '🛡️ Segurança: ML-DSA-65 NIST\n' +
+                  '🇪🇺 Compliance: Todos os regulamentos\n' +
+                  '⚡ Uptime: 99.99%\n' +
+                  '💳 Transações: ' + transactionCount + ' processadas\n' +
+                  '💰 Receita: €' + (totalRevenue/1000).toFixed(1) + 'k gerados');
         }
         
-        function showCompliance() {
-            showNotification('🛡️ Status Compliance UE:\n\n✅ GDPR - Ativo\n✅ PCI-DSS - Certificado\n✅ PSD2 - Implementado\n✅ MiCA - Preparado\n✅ Quantum-Safe - ML-DSA-65');
-        }
-        
-        function showNotification(message) {
-            alert(message);
-        }
-        
-        // Efeitos visuais automáticos
+        // Simulação automática
         setInterval(() => {
-            const pulseElements = document.querySelectorAll('.pulse');
-            pulseElements.forEach(el => {
-                el.style.textShadow = '0 0 20px currentColor';
-                setTimeout(() => el.style.textShadow = '', 1000);
-            });
+            if (Math.random() > 0.8) {
+                const elements = document.querySelectorAll('.amount, .stat-value');
+                elements.forEach(el => {
+                    el.style.textShadow = '0 0 10px currentColor';
+                    setTimeout(() => el.style.textShadow = '', 1000);
+                });
+            }
         }, 3000);
         
-        // Simular atividade automática
-        setInterval(() => {
-            if (Math.random() > 0.7) {
-                const amount = document.getElementById('amount');
-                const newAmount = Math.random() * 200 + 50;
-                amount.textContent = '€' + newAmount.toFixed(2).replace('.', ',');
-                
-                transactionCount++;
-                document.getElementById('transactions').textContent = transactionCount;
-            }
-        }, 8000);
-        
         console.log('🔮 EuroTAP Mobile Demo carregado com sucesso!');
-        console.log('📱 Todas as funcionalidades ativas');
-        console.log('⚡ Quantum-safe systems online');
     </script>
 </body>
 </html>
