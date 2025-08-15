@@ -1,103 +1,104 @@
 ﻿{
-  "name": "EuroTAP - Europe's First Quantum-Safe Payment Terminal",
-  "short_name": "EuroTAP Quantum",
-  "description": "Revolutionary quantum-safe payment terminal securing Europe's €2 trillion payment infrastructure. €15M investment opportunity with 15-25x ROI potential.",
-  "version": "1.0.0",
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#000011",
-  "theme_color": "#0066ff",
-  "scope": "/",
-  "lang": "en",
-  "dir": "ltr",
-  "categories": ["finance", "business", "productivity", "technology"],
-  "screenshots": [
-    {
-      "src": "assets/screenshot-desktop-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "EuroTAP Quantum Terminal Desktop View"
-    },
-    {
-      "src": "assets/screenshot-mobile-narrow.png",
-      "sizes": "375x812",
-      "type": "image/png", 
-      "form_factor": "narrow",
-      "label": "EuroTAP Mobile Application"
-    }
-  ],
-  "icons": [
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%230066ff'/><stop offset='50%' stop-color='%236600ff'/><stop offset='100%' stop-color='%23ff6600'/></linearGradient></defs><rect width='512' height='512' rx='115' fill='url(%23g)'/><circle cx='256' cy='200' r='80' fill='white' opacity='0.9'/><rect x='176' y='300' width='160' height='120' rx='20' fill='white' opacity='0.9'/><rect x='196' y='320' width='120' height='20' rx='10' fill='%230066ff'/><rect x='196' y='350' width='80' height='15' rx='7' fill='%236600ff'/><rect x='196' y='375' width='100' height='15' rx='7' fill='%23ff6600'/></svg>",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%230066ff'/><stop offset='100%' stop-color='%23ff6600'/></linearGradient></defs><rect width='192' height='192' rx='43' fill='url(%23g)'/><circle cx='96' cy='75' r='30' fill='white'/><rect x='66' y='110' width='60' height='45' rx='8' fill='white'/><rect x='72' y='118' width='48' height='8' rx='4' fill='%230066ff'/><rect x='72' y='132' width='30' height='6' rx='3' fill='%236600ff'/><rect x='72' y='143' width='36' height='6' rx='3' fill='%23ff6600'/></svg>",
-      "sizes": "192x192", 
-      "type": "image/svg+xml",
-      "purpose": "any"
-    },
-    {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%230066ff'/><circle cx='256' cy='200' r='80' fill='white'/><rect x='176' y='300' width='160' height='120' rx='20' fill='white'/><text x='256' y='480' text-anchor='middle' font-size='32' fill='white' font-family='Arial'>QUANTUM</text></svg>",
-      "sizes": "512x512",
-      "type": "image/svg+xml", 
-      "purpose": "maskable"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Investment Opportunity",
-      "short_name": "Invest",
-      "description": "€15M investment opportunity details",
-      "url": "/#quantum-investment",
-      "icons": [
-        {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='20' fill='%23ffd700'/><text x='48' y='65' text-anchor='middle' font-size='48' fill='%23000'>💎</text></svg>",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Live Demos",
-      "short_name": "Demos",
-      "description": "Experience quantum-safe payment processing",
-      "url": "/#quantum-demos", 
-      "icons": [
-        {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='20' fill='%230066ff'/><text x='48' y='65' text-anchor='middle' font-size='48' fill='white'>🚀</text></svg>",
-          "sizes": "96x96"
-        }
-      ]
-    },
-    {
-      "name": "Contact Investment",
-      "short_name": "Contact",
-      "description": "Direct contact for investment inquiries",
-      "url": "mailto:tapeuro78@gmail.com?subject=EuroTAP Investment",
-      "icons": [
-        {
-          "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='20' fill='%23ff6600'/><text x='48' y='65' text-anchor='middle' font-size='48' fill='white'>📧</text></svg>",
-          "sizes": "96x96"
-        }
-      ]
-    }
-  ],
-  "related_applications": [],
-  "prefer_related_applications": false,
-  "protocol_handlers": [
-    {
-      "protocol": "mailto",
-      "url": "/?email=%s"
-    }
-  ],
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "launch_handler": {
-    "client_mode": "navigate-existing"
-  }
+    "name":  "EuroTAP - Europe\u0027s First Quantum-Safe Payment Terminal",
+    "short_name":  "EuroTAP Quantum",
+    "description":  "Revolutionary quantum-safe payment terminal securing Europe\u0027s €2 trillion payment infrastructure. €15M investment opportunity with 15-25x ROI potential.",
+    "version":  "1.0.0",
+    "start_url":  "/",
+    "display":  "standalone",
+    "orientation":  "portrait-primary",
+    "background_color":  "#000011",
+    "theme_color":  "#0066ff",
+    "scope":  "/",
+    "lang":  "en",
+    "dir":  "ltr",
+    "categories":  [
+                       "finance",
+                       "business",
+                       "productivity",
+                       "technology"
+                   ],
+    "screenshots":  [
+                        {
+                            "src":  "assets/screenshot-desktop-wide.png",
+                            "sizes":  "1280x720",
+                            "type":  "image/png",
+                            "form_factor":  "wide",
+                            "label":  "EuroTAP Quantum Terminal Desktop View"
+                        },
+                        {
+                            "src":  "assets/screenshot-mobile-narrow.png",
+                            "sizes":  "375x812",
+                            "type":  "image/png",
+                            "form_factor":  "narrow",
+                            "label":  "EuroTAP Mobile Application"
+                        }
+                    ],
+    "icons":  [
+                  {
+                      "purpose":  "any",
+                      "type":  "image/svg+xml",
+                      "sizes":  "any",
+                      "src":  "assets/eurotap-logo.svg"
+                  },
+                  {
+                      "purpose":  "maskable",
+                      "type":  "image/svg+xml",
+                      "sizes":  "any",
+                      "src":  "assets/eurotap-logo-dark.svg"
+                  }
+              ],
+    "shortcuts":  [
+                      {
+                          "name":  "Investment Opportunity",
+                          "short_name":  "Invest",
+                          "description":  "€15M investment opportunity details",
+                          "url":  "/#quantum-investment",
+                          "icons":  [
+                                        {
+                                            "src":  "data:image/svg+xml,\u003csvg xmlns=\u0027http://www.w3.org/2000/svg\u0027 viewBox=\u00270 0 96 96\u0027\u003e\u003crect width=\u002796\u0027 height=\u002796\u0027 rx=\u002720\u0027 fill=\u0027%23ffd700\u0027/\u003e\u003ctext x=\u002748\u0027 y=\u002765\u0027 text-anchor=\u0027middle\u0027 font-size=\u002748\u0027 fill=\u0027%23000\u0027\u003e💎\u003c/text\u003e\u003c/svg\u003e",
+                                            "sizes":  "96x96"
+                                        }
+                                    ]
+                      },
+                      {
+                          "name":  "Live Demos",
+                          "short_name":  "Demos",
+                          "description":  "Experience quantum-safe payment processing",
+                          "url":  "/#quantum-demos",
+                          "icons":  [
+                                        {
+                                            "src":  "data:image/svg+xml,\u003csvg xmlns=\u0027http://www.w3.org/2000/svg\u0027 viewBox=\u00270 0 96 96\u0027\u003e\u003crect width=\u002796\u0027 height=\u002796\u0027 rx=\u002720\u0027 fill=\u0027%230066ff\u0027/\u003e\u003ctext x=\u002748\u0027 y=\u002765\u0027 text-anchor=\u0027middle\u0027 font-size=\u002748\u0027 fill=\u0027white\u0027\u003e🚀\u003c/text\u003e\u003c/svg\u003e",
+                                            "sizes":  "96x96"
+                                        }
+                                    ]
+                      },
+                      {
+                          "name":  "Contact Investment",
+                          "short_name":  "Contact",
+                          "description":  "Direct contact for investment inquiries",
+                          "url":  "mailto:tapeuro78@gmail.com?subject=EuroTAP Investment",
+                          "icons":  [
+                                        {
+                                            "src":  "data:image/svg+xml,\u003csvg xmlns=\u0027http://www.w3.org/2000/svg\u0027 viewBox=\u00270 0 96 96\u0027\u003e\u003crect width=\u002796\u0027 height=\u002796\u0027 rx=\u002720\u0027 fill=\u0027%23ff6600\u0027/\u003e\u003ctext x=\u002748\u0027 y=\u002765\u0027 text-anchor=\u0027middle\u0027 font-size=\u002748\u0027 fill=\u0027white\u0027\u003e📧\u003c/text\u003e\u003c/svg\u003e",
+                                            "sizes":  "96x96"
+                                        }
+                                    ]
+                      }
+                  ],
+    "related_applications":  [
+
+                             ],
+    "prefer_related_applications":  false,
+    "protocol_handlers":  [
+                              {
+                                  "protocol":  "mailto",
+                                  "url":  "/?email=%s"
+                              }
+                          ],
+    "edge_side_panel":  {
+                            "preferred_width":  400
+                        },
+    "launch_handler":  {
+                           "client_mode":  "navigate-existing"
+                       }
 }
