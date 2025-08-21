@@ -1,0 +1,11 @@
+﻿TRIGGER DEPLOY - 2025-08-21_12-31-11
+============================
+OBJETIVO: Forçar GitHub Pages funcionar SEM alterar site
+PROBLEMA: Submodule frontend/eurotap-frontend causa erro GitHub Actions
+SOLUÇÃO: Remover APENAS submodule, manter site intacto
+
+ Site mantido exatamente igual
+ Submodule removido
+ GitHub Actions deve passar agora
+ Demos preservados
+ Função openDemo() preservada
