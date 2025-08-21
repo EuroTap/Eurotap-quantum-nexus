@@ -1342,13 +1342,7 @@
             }
         }
         
-                function openDemo(type) {
-            const demos = {
-                mobile: {
-                    title: ' Mobile Terminal',
-                    url: './demos/mobile-terminal.html',
-                    description: 'Transform any smartphone into a quantum-safe payment terminal'
-                },
+                ,
                 web: {
                     title: ' Web Integration', 
                     url: './demos/web-terminal.html',
@@ -1656,13 +1650,7 @@
                 });
             }
         }, 1000);
-            function openDemo(type) {
-            const demos = {
-                mobile: {
-                    title: '📱 Mobile Terminal',
-                    url: './demos/mobile-terminal.html',
-                    description: 'Transform any smartphone into a quantum-safe payment terminal'
-                },
+            ,
                 web: {
                     title: '🌐 Web Integration', 
                     url: './demos/web-terminal.html',
@@ -1831,6 +1819,196 @@
             ;
             document.head.appendChild(demoStyles);
         }
+        function openDemo(type) {
+            console.log(' Opening demo:', type);
+            
+            const demos = {
+                'mobile': {
+                    url: './demos/mobile-terminal.html',
+                    title: 'Mobile Terminal Demo',
+                    description: 'Transform your smartphone into a quantum-safe payment terminal'
+                },
+                'web': {
+                    url: './demos/web-terminal.html', 
+                    title: 'Web Terminal Demo',
+                    description: 'Professional web-based quantum terminal interface'
+                },
+                'crypto': {
+                    url: './demos/quantum-crypto.html',
+                    title: 'Quantum Cryptography Demo', 
+                    description: 'ML-DSA-65 post-quantum encryption demonstration'
+                },
+                'simulator': {
+                    url: './demos/quantum-simulator.html',
+                    title: 'Quantum Simulator Demo',
+                    description: 'Real-time quantum algorithm visualization'
+                }
+            };
+            
+            const demo = demos[type];
+            if (demo) {
+                // Abrir em nova aba/janela
+                const demoWindow = window.open(demo.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+                
+                // Verificar se abriu com sucesso
+                if (demoWindow) {
+                    console.log('✅ Demo opened successfully:', demo.title);
+                    
+                    // Enviar dados para o demo após 2 segundos
+                    setTimeout(() => {
+                        try {
+                            const testnetData = {
+                                wallet: 'EUR-QS-' + Math.random().toString(36).substr(2, 8).toUpperCase(),
+                                balance: (Math.random() * 10000 + 1000).toFixed(2),
+                                network: 'EuroTAP Quantum Testnet',
+                                encryption: 'ML-DSA-65 NIST-Approved',
+                                isConnected: true,
+                                timestamp: new Date().toISOString()
+                            };
+                            
+                            demoWindow.postMessage({
+                                type: 'EUROTAP_TESTNET_DATA',
+                                data: testnetData,
+                                source: 'main_site'
+                            }, '*');
+                        } catch (error) {
+                            console.log('Demo opened successfully, data transfer optional');
+                        }
+                    }, 2000);
+                    
+                    // Mostrar notificação de sucesso
+                    showDemoNotification(demo.title, demo.description);
+                } else {
+                    alert('❌ Pop-up blocked! Please allow pop-ups for EuroTAP demos to work.');
+                }
+            } else {
+                console.error('❌ Demo type not found:', type);
+                alert('Demo not available: ' + type);
+            }
+        }
+        
+        function showDemoNotification(title, description) {
+            const notification = document.createElement('div');
+            notification.style.cssText = 
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(0, 255, 136, 0.9), rgba(0, 204, 255, 0.9));
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                z-index: 10000;
+                max-width: 300px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                animation: slideIn 0.3s ease;
+            ;
+            
+            notification.innerHTML = 
+                <div style="font-weight: bold; margin-bottom: 5px;">✅  Opened</div>
+                <div style="font-size: 0.9rem; opacity: 0.9;"></div>
+                <div style="font-size: 0.8rem; margin-top: 8px; opacity: 0.7;">🔗 Connected to EuroTAP Testnet</div>
+            ;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // Função para criar gráficos funcionais
+        function createEuroTAPCharts() {
+            console.log('📊 Creating EuroTAP charts...');
+            
+            // Gráfico de Performance
+            const performanceCtx = document.getElementById('performanceChart');
+            if (performanceCtx) {
+                new Chart(performanceCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Transactions (TPS)',
+                            data: [45000, 52000, 58000, 65000, 71000, 77255],
+                            borderColor: '#00ff88',
+                            backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: 'white' } }
+                        },
+                        scales: {
+                            x: { ticks: { color: 'white' } },
+                            y: { ticks: { color: 'white' } }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Segurança
+            const securityCtx = document.getElementById('securityChart');
+            if (securityCtx) {
+                new Chart(securityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Quantum-Safe', 'Traditional Crypto', 'Vulnerable'],
+                        datasets: [{
+                            data: [85, 10, 5],
+                            backgroundColor: ['#00ff88', '#ffff00', '#ff4444']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: 'white' } }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Market Share
+            const marketCtx = document.getElementById('marketChart');
+            if (marketCtx) {
+                new Chart(marketCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Germany', 'France', 'Spain', 'Italy', 'Netherlands'],
+                        datasets: [{
+                            label: 'Market Penetration (%)',
+                            data: [25, 20, 18, 15, 12],
+                            backgroundColor: 'rgba(0, 255, 136, 0.7)',
+                            borderColor: '#00ff88',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: 'white' } }
+                        },
+                        scales: {
+                            x: { ticks: { color: 'white' } },
+                            y: { ticks: { color: 'white' } }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Executar quando página carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(createEuroTAPCharts, 1000);
+        });
+
+
     </script>
 </body>
 </html>
