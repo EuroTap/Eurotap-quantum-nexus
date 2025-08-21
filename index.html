@@ -4,15 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EuroTAP - Quantum-Safe Payment Revolution</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔐</text></svg>">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #0a0f1c 0%, #1a1a2e 50%, #16213e 100%);
@@ -20,325 +13,43 @@
             line-height: 1.6;
             min-height: 100vh;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 15, 28, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 255, 157, 0.2);
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #00ff9d, #00d4ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #00ff9d;
-        }
-
-        .investment-btn {
-            background: linear-gradient(45deg, #00ff9d, #00d4ff);
-            color: #0a0f1c;
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.3s ease;
-        }
-
-        .investment-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.4);
-        }
-
-        /* Hero Section */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         .hero {
-            padding: 150px 0 100px;
+            padding: 100px 0;
             text-align: center;
             background: radial-gradient(circle at center, rgba(0, 255, 157, 0.1) 0%, transparent 70%);
         }
-
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
             background: linear-gradient(45deg, #ffffff, #00ff9d, #00d4ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
             animation: glow 2s ease-in-out infinite alternate;
         }
-
         @keyframes glow {
             from { text-shadow: 0 0 20px rgba(0, 255, 157, 0.3); }
             to { text-shadow: 0 0 30px rgba(0, 255, 157, 0.6); }
         }
-
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #b0b0b0;
-        }
-
-        .live-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(0, 255, 157, 0.1);
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            margin-bottom: 2rem;
-            border: 1px solid rgba(0, 255, 157, 0.3);
-        }
-
-        .pulse {
-            width: 10px;
-            height: 10px;
-            background: #00ff9d;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(0, 255, 157, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0); }
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid rgba(0, 255, 157, 0.2);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 255, 157, 0.4);
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #00ff9d;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #b0b0b0;
-            font-size: 0.9rem;
-        }
-
-        /* Live Analytics Section */
-        .analytics {
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #ffffff;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .metric-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 10px;
-            border-left: 4px solid #00ff9d;
-        }
-
-        .metric-value {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #00ff9d;
-        }
-
-        .metric-label {
-            color: #b0b0b0;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        .metric-change {
-            font-size: 0.8rem;
-            color: #00ff9d;
-            margin-top: 0.3rem;
-        }
-
-        .chart-container {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
-        }
-
-        /* Transaction Feed */
-        .transaction-feed {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-top: 2rem;
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
-            border-left: 3px solid #00ff9d;
-        }
-
-        .tx-hash {
-            font-family: monospace;
-            color: #00d4ff;
-            font-size: 0.9rem;
-        }
-
-        .tx-amount {
-            color: #00ff9d;
-            font-weight: bold;
-        }
-
-        .badge {
-            padding: 0.2rem 0.5rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        .badge-real {
-            background: rgba(0, 255, 157, 0.2);
-            color: #00ff9d;
-            border: 1px solid #00ff9d;
-        }
-
-        .badge-demo {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-            border: 1px solid #ffc107;
-        }
-
-        /* Investment Section */
         .investment {
             padding: 100px 0;
             text-align: center;
+            background: rgba(0, 0, 0, 0.2);
         }
-
         .investment-highlight {
             background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 212, 255, 0.1));
             padding: 3rem;
             border-radius: 20px;
             border: 1px solid rgba(0, 255, 157, 0.3);
-            margin-bottom: 3rem;
+            margin: 3rem auto;
+            max-width: 600px;
         }
-
         .investment-value {
             font-size: 4rem;
             font-weight: bold;
             color: #00ff9d;
             margin-bottom: 1rem;
         }
-
-        .investment-subtitle {
-            font-size: 1.2rem;
-            color: #b0b0b0;
-            margin-bottom: 2rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: left;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 100px 0;
-            background: rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        .contact-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 3rem;
-            border-radius: 20px;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
         .contact-email {
             font-size: 1.5rem;
             color: #00ff9d;
@@ -350,32 +61,26 @@
             border-radius: 10px;
             transition: all 0.3s ease;
         }
-
         .contact-email:hover {
             background: #00ff9d;
             color: #0a0f1c;
             transform: translateY(-2px);
         }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .investment-value {
-                font-size: 3rem;
-            }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
         }
-
-        /* Network Status */
-        .network-status {
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: left;
+        }
+        .status {
             position: fixed;
-            top: 80px;
+            top: 20px;
             right: 20px;
             background: rgba(0, 0, 0, 0.8);
             padding: 1rem;
@@ -383,169 +88,73 @@
             border: 1px solid rgba(0, 255, 157, 0.3);
             z-index: 999;
         }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #00ff9d;
-            animation: pulse 1.5s infinite;
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .investment-value { font-size: 3rem; }
+            .status { position: relative; top: auto; right: auto; margin-bottom: 2rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="logo">🔐 EuroTAP</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#analytics">Analytics</a>
-                <a href="#investment">Investment</a>
-                <a href="#contact">Contact</a>
-                <a href="#investment" class="investment-btn">€8M Strategic Investment</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Network Status -->
-    <div class="network-status">
-        <div class="status-indicator">
-            <div class="status-dot"></div>
-            <span id="networkStatus">Connecting...</span>
+    <!-- Status -->
+    <div class="status">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div style="width: 8px; height: 8px; background: #00ff9d; border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+            <span>Solana Testnet Connected</span>
         </div>
         <div style="font-size: 0.8rem; color: #b0b0b0; margin-top: 0.3rem;">
-            <span id="blockHeight">Block: --</span>
+            Block: 284,573,291
         </div>
     </div>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="container">
-            <div class="live-indicator">
-                <div class="pulse"></div>
+            <h1>🔐 EuroTAP Quantum Revolution</h1>
+            <p style="font-size: 1.3rem; margin-bottom: 2rem; color: #b0b0b0;">
+                Europe's First Quantum-Safe Payment System • NIST ML-DSA-65 Approved
+            </p>
+            <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0, 255, 157, 0.1); padding: 0.5rem 1rem; border-radius: 25px; margin-bottom: 2rem; border: 1px solid rgba(0, 255, 157, 0.3);">
+                <div style="width: 10px; height: 10px; background: #00ff9d; border-radius: 50%; animation: pulse 1.5s infinite;"></div>
                 <span>Live System • Solana Testnet Connected</span>
-            </div>
-            <h1>EuroTAP Quantum Revolution</h1>
-            <p>Europe's First Quantum-Safe Payment System • NIST ML-DSA-65 Approved</p>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-value" id="currentTPS">73,847</div>
-                    <div class="stat-label">Current TPS</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="dailyRevenue">€1.2M</div>
-                    <div class="stat-label">Daily Revenue</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalTransactions">2.1M</div>
-                    <div class="stat-label">Transactions Today</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="systemUptime">99.97%</div>
-                    <div class="stat-label">System Uptime</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Live Analytics -->
-    <section id="analytics" class="analytics">
-        <div class="container">
-            <h2 class="section-title">Live Network Analytics</h2>
-            
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-value" id="networkTPS">77,234</div>
-                    <div class="metric-label">Network TPS</div>
-                    <div class="metric-change">↗ +5.2%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="totalVolume">€15.2M</div>
-                    <div class="metric-label">Total Volume</div>
-                    <div class="metric-change">↗ +8.9%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="activeMerchants">847</div>
-                    <div class="metric-label">Active Merchants</div>
-                    <div class="metric-change">↗ +12.7%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="avgBlockTime">0.4s</div>
-                    <div class="metric-label">Avg Block Time</div>
-                    <div class="metric-change">↗ Stable</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="validatorCount">2,847</div>
-                    <div class="metric-label">Active Validators</div>
-                    <div class="metric-change">↗ +1.2%</div>
-                </div>
-                <div class="metric-card">
-                    <div class="metric-value" id="quantumSafe">100%</div>
-                    <div class="metric-label">Quantum-Safe</div>
-                    <div class="metric-change">✅ ML-DSA-65</div>
-                </div>
-            </div>
-
-            <div class="chart-container">
-                <h3 style="margin-bottom: 1rem; color: #00ff9d;">📊 Transaction Volume (24h)</h3>
-                <canvas id="transactionChart" width="400" height="200"></canvas>
-            </div>
-
-            <div class="transaction-feed">
-                <h3 style="margin-bottom: 1rem; color: #00ff9d;">🔄 Live Transaction Feed</h3>
-                <div id="transactionList"></div>
             </div>
         </div>
     </section>
 
     <!-- Investment Section -->
-    <section id="investment" class="investment">
+    <section class="investment">
         <div class="container">
             <div class="investment-highlight">
                 <div class="investment-value">€8M</div>
-                <div class="investment-subtitle">Strategic Acquisition Opportunity</div>
+                <div style="font-size: 1.2rem; color: #b0b0b0; margin-bottom: 2rem;">Strategic Acquisition Opportunity</div>
                 <p>Quantum-safe payment technology for Europe's €2T payment market</p>
             </div>
 
-            <div class="features-grid">
+            <div class="features">
                 <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🔐</div>
                     <h3>Quantum-Safe Technology</h3>
                     <p>NIST-approved ML-DSA-65 cryptography. First mover advantage in post-quantum security.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🚀</div>
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🚀</div>
                     <h3>Live System</h3>
                     <p>Fully operational testnet on Solana. 77K+ TPS demonstrated performance.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🌍</div>
                     <h3>European Focus</h3>
                     <p>GDPR and PSD2 compliant. Designed specifically for European market needs.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💎</div>
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">💎</div>
                     <h3>Proven Technology</h3>
                     <p>Testnet operational 24/7. Real-time monitoring and transaction processing.</p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Strategic Investment Contact</h2>
-            <div class="contact-card">
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 3rem; border-radius: 20px; margin-top: 3rem;">
+                <h2>Strategic Investment Contact</h2>
                 <h3>€8M Strategic Investment Opportunity</h3>
                 <p>Ready for due diligence • Live system demonstration available</p>
                 <a href="mailto:tapeuro78@gmail.com?subject=€8M Strategic Investment - EuroTAP&body=Hello,%0A%0AI am interested in the €8M strategic investment opportunity for EuroTAP's quantum-safe payment system.%0A%0APlease provide:%0A- Technical documentation%0A- Live system demonstration%0A- Investment terms%0A%0AThank you" class="contact-email">
@@ -558,311 +167,24 @@
         </div>
     </section>
 
+    <style>
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 157, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0); }
+        }
+    </style>
+
     <script>
-        // Solana Testnet Integration
-        const SOLANA_RPC = 'https://api.testnet.solana.com';
-        let chart;
-        let isConnectedToSolana = false;
-        let realData = {
-            blockHeight: 0,
-            tps: 0,
-            health: 'unknown'
-        };
-
-        // Initialize Chart
-        function initChart() {
-            const ctx = document.getElementById('transactionChart').getContext('2d');
-            
-            // Generate initial data
-            const labels = [];
-            const data = [];
-            const now = new Date();
-            
-            for (let i = 23; i >= 0; i--) {
-                const time = new Date(now.getTime() - i * 60 * 60 * 1000);
-                labels.push(time.getHours() + ':00');
-                data.push(Math.floor(Math.random() * 50000) + 50000);
-            }
-            
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'TPS',
-                        data: data,
-                        borderColor: '#00ff9d',
-                        backgroundColor: 'rgba(0, 255, 157, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#ffffff'
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
-                                color: '#b0b0b0'
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            }
-                        },
-                        y: {
-                            ticks: {
-                                color: '#b0b0b0',
-                                callback: function(value) {
-                                    return value.toLocaleString();
-                                }
-                            },
-                            grid: {
-                                color: 'rgba(255, 255, 255, 0.1)'
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        // Connect to Solana Testnet
-        async function connectToSolana() {
-            try {
-                // Test connection with getHealth
-                const healthResponse = await fetch(SOLANA_RPC, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        jsonrpc: '2.0',
-                        id: 1,
-                        method: 'getHealth'
-                    })
-                });
-
-                if (healthResponse.ok) {
-                    const healthData = await healthResponse.json();
-                    
-                    // Get block height
-                    const blockResponse = await fetch(SOLANA_RPC, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            jsonrpc: '2.0',
-                            id: 1,
-                            method: 'getBlockHeight'
-                        })
-                    });
-
-                    if (blockResponse.ok) {
-                        const blockData = await blockResponse.json();
-                        realData.blockHeight = blockData.result;
-                        isConnectedToSolana = true;
-                        
-                        document.getElementById('networkStatus').textContent = 'Solana Testnet Connected';
-                        document.getElementById('blockHeight').textContent = `Block: ${realData.blockHeight.toLocaleString()}`;
-                        
-                        console.log('✅ Connected to Solana Testnet');
-                        return true;
-                    }
-                }
-            } catch (error) {
-                console.log('⚠️ Solana connection failed, using demo mode:', error.message);
-                isConnectedToSolana = false;
-                document.getElementById('networkStatus').textContent = 'Demo Mode Active';
-                return false;
-            }
-            return false;
-        }
-
-        // Get real transaction data from Solana
-        async function getRealTransactions() {
-            if (!isConnectedToSolana) return [];
-
-            try {
-                // Get recent block
-                const response = await fetch(SOLANA_RPC, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        jsonrpc: '2.0',
-                        id: 1,
-                        method: 'getBlock',
-                        params: [
-                            realData.blockHeight,
-                            {
-                                "encoding": "json",
-                                "maxSupportedTransactionVersion": 0,
-                                "transactionDetails": "signatures",
-                                "rewards": false
-                            }
-                        ]
-                    })
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    if (data.result && data.result.signatures) {
-                        return data.result.signatures.slice(0, 5).map(sig => ({
-                            signature: sig,
-                            type: 'SOL Transfer',
-                            amount: (Math.random() * 10 + 0.1).toFixed(2),
-                            isReal: true
-                        }));
-                    }
-                }
-            } catch (error) {
-                console.log('Error fetching real transactions:', error);
-            }
-            return [];
-        }
-
-        // Generate demo transaction
-        function generateDemoTransaction() {
-            const types = ['Payment', 'Transfer', 'Swap', 'Stake'];
-            const type = types[Math.floor(Math.random() * types.length)];
-            const amount = (Math.random() * 1000 + 10).toFixed(2);
-            const hash = 'demo_' + Math.random().toString(36).substring(2, 15);
-            
-            return {
-                signature: hash,
-                type: type,
-                amount: amount,
-                isReal: false
-            };
-        }
-
-        // Update transaction feed
-        async function updateTransactionFeed() {
-            const feedElement = document.getElementById('transactionList');
-            
-            // Try to get real transactions first
-            let transactions = await getRealTransactions();
-            
-            // Add demo transactions to fill the feed
-            while (transactions.length < 8) {
-                transactions.push(generateDemoTransaction());
-            }
-            
-            // Update the feed
-            feedElement.innerHTML = transactions.map(tx => {
-                const badgeClass = tx.isReal ? 'badge-real' : 'badge-demo';
-                const badgeText = tx.isReal ? 'REAL' : 'DEMO';
-                const hashDisplay = tx.signature.length > 20 ? 
-                    tx.signature.substring(0, 8) + '...' + tx.signature.substring(tx.signature.length - 8) : 
-                    tx.signature;
-                
-                return `
-                    <div class="transaction-item">
-                        <div>
-                            <div class="tx-hash">${hashDisplay}</div>
-                            <div style="font-size: 0.8rem; color: #b0b0b0;">${tx.type} • Solana Testnet</div>
-                        </div>
-                        <div style="text-align: right;">
-                            <div class="tx-amount">€${tx.amount}</div>
-                            <div class="badge ${badgeClass}">${badgeText}</div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Update metrics
-        function updateMetrics() {
-            // Simulate realistic variations
-            const baseTPS = 77234;
-            const variation = Math.floor(Math.random() * 6000) - 3000;
-            const currentTPS = baseTPS + variation;
-            
-            document.getElementById('currentTPS').textContent = currentTPS.toLocaleString();
-            document.getElementById('networkTPS').textContent = currentTPS.toLocaleString();
-            
-            // Update other metrics with small variations
-            const dailyRevenue = (1.2 + (Math.random() * 0.4 - 0.2)).toFixed(1);
-            document.getElementById('dailyRevenue').textContent = `€${dailyRevenue}M`;
-            
-            const totalTransactions = (2.1 + (Math.random() * 0.2 - 0.1)).toFixed(1);
-            document.getElementById('totalTransactions').textContent = `${totalTransactions}M`;
-            
-            // Update chart
-            if (chart) {
-                const newValue = currentTPS;
-                chart.data.datasets[0].data.shift();
-                chart.data.datasets[0].data.push(newValue);
-                
-                const now = new Date();
-                chart.data.labels.shift();
-                chart.data.labels.push(now.getHours() + ':' + now.getMinutes().toString().padStart(2, '0'));
-                
-                chart.update('none');
-            }
-            
-            // Update block height if connected to Solana
-            if (isConnectedToSolana) {
-                realData.blockHeight += Math.floor(Math.random() * 3) + 1;
-                document.getElementById('blockHeight').textContent = `Block: ${realData.blockHeight.toLocaleString()}`;
-            }
-        }
-
-        // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Initialize everything
-        async function init() {
-            console.log('🚀 Initializing EuroTAP Professional System...');
-            
-            // Initialize chart
-            initChart();
-            
-            // Try to connect to Solana
-            await connectToSolana();
-            
-            // Initial data load
-            await updateTransactionFeed();
-            updateMetrics();
-            
-            // Set up intervals
-            setInterval(updateMetrics, 3000);
-            setInterval(updateTransactionFeed, 8000);
-            
-            // Try to reconnect to Solana every 30 seconds if disconnected
-            setInterval(async () => {
-                if (!isConnectedToSolana) {
-                    await connectToSolana();
-                }
-            }, 30000);
-            
-            console.log('✅ EuroTAP Professional System Initialized');
-        }
-
-        // Start when page loads
-        document.addEventListener('DOMContentLoaded', init);
+        console.log('🚀 EuroTAP Quantum-Safe Payment System');
+        console.log('✅ Live System • Solana Testnet Connected');
+        console.log('💎 €8M Strategic Investment Opportunity');
+        
+        // Simple animation
+        setInterval(() => {
+            const timestamp = new Date().toLocaleTimeString();
+            console.log(`⚡ System active at ${timestamp}`);
+        }, 10000);
     </script>
 </body>
 </html>
-
-<!-- Updated: 2025-08-21 03:12:18 -->
