@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 Mobile Terminal Demo | EuroTAP</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #000000, #0a0a0a, #1a1a2e, #16213e);
+            color: white;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 30px 0; border-bottom: 2px solid rgba(0, 255, 136, 0.3); margin-bottom: 30px; }
+        .logo { font-size: 2rem; font-weight: bold; margin-bottom: 10px; background: linear-gradient(45deg, #00ff88, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-title { font-size: 1.8rem; color: #00ff88; margin-bottom: 10px; }
+        .testnet-status { 
+            background: rgba(0, 255, 136, 0.1); 
+            border: 1px solid #00ff88; 
+            border-radius: 10px; 
+            padding: 15px; 
+            margin: 20px 0; 
+            text-align: center; 
+        }
+        .phone-simulator { 
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a); 
+            border-radius: 30px; 
+            padding: 15px; 
+            width: 320px; 
+            margin: 0 auto; 
+            border: 3px solid #333; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+        }
+        .phone-screen { 
+            background: #000; 
+            border-radius: 20px; 
+            padding: 20px; 
+            min-height: 600px; 
+            border: 2px solid #00ff88; 
+        }
+        .demo-section { 
+            margin: 20px 0; 
+            padding: 15px; 
+            background: rgba(0, 255, 136, 0.1); 
+            border-radius: 10px; 
+            border: 1px solid rgba(0, 255, 136, 0.3); 
+        }
+        .demo-btn { 
+            width: 100%; 
+            padding: 12px; 
+            background: linear-gradient(45deg, #00ff88, #00ccff); 
+            border: none; 
+            border-radius: 8px; 
+            color: #000; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin: 10px 0; 
+            transition: all 0.3s ease;
+        }
+        .demo-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4); }
+        .amount-input { 
+            width: 100%; 
+            padding: 10px; 
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(0, 255, 136, 0.3); 
+            border-radius: 5px; 
+            color: white; 
+            text-align: center; 
+            margin: 10px 0; 
+        }
+        .amount-input:focus { outline: none; border-color: #00ff88; }
+        .demo-result { 
+            margin-top: 10px; 
+            padding: 10px; 
+            background: rgba(0, 0, 0, 0.3); 
+            border-radius: 5px; 
+            border-left: 3px solid #00ff88; 
+            font-family: monospace; 
+            font-size: 0.9rem; 
+            display: none; 
+        }
+        .demo-result.show { display: block; animation: slideDown 0.3s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            text-align: center;
+        }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+        @media (max-width: 768px) {
+            .phone-simulator { width: 100%; max-width: 320px; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo"> EuroTAP</div>
+            <h1 class="demo-title"> Mobile Terminal Demo</h1>
+            <p>Transform any smartphone into a quantum-safe payment terminal</p>
+        </header>
+
+        <div class="testnet-status" id="testnetStatus">
+             Connecting to EuroTAP Testnet...
+        </div>
+
+        <div style="display: flex; justify-content: center;">
+            <div class="phone-simulator">
+                <div class="phone-screen">
+                    <div style="text-align: center; padding: 10px 0; border-bottom: 1px solid rgba(0, 255, 136, 0.3); margin-bottom: 20px;">
+                        <div style="color: #00ff88; font-size: 1.2rem; font-weight: bold;">EuroTAP Mobile</div>
+                        <div style="font-size: 0.8rem; color: #ccc;">Quantum-Safe Payment Terminal</div>
+                    </div>
+
+                    <div class="demo-section">
+                        <div style="color: #00ff88; font-size: 1rem; margin-bottom: 10px; font-weight: bold;">📡 NFC Payment</div>
+                        <input type="number" class="amount-input" id="nfcAmount" placeholder="Enter amount (€)" value="25.50">
+                        <button class="demo-btn" onclick="simulateNFC()">Tap to Pay with NFC</button>
+                        <div class="demo-result" id="nfcResult"></div>
+                    </div>
+
+                    <div class="demo-section">
+                        <div style="color: #00ff88; font-size: 1rem; margin-bottom: 10px; font-weight: bold;"> QR Code Payment</div>
+                        <input type="number" class="amount-input" id="qrAmount" placeholder="Enter amount (€)" value="15.75">
+                        <button class="demo-btn" onclick="simulateQR()">Generate QR Payment</button>
+                        <div class="demo-result" id="qrResult"></div>
+                    </div>
+
+                    <div class="demo-section">
+                        <div style="color: #00ff88; font-size: 1rem; margin-bottom: 10px; font-weight: bold;"> Biometric Security</div>
+                        <button class="demo-btn" onclick="simulateBiometric()">Authenticate with Fingerprint</button>
+                        <div class="demo-result" id="biometricResult"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon"></span>
+                <h3>Quantum-Safe Security</h3>
+                <p>ML-DSA-65 post-quantum cryptography protects against future quantum attacks</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon"></span>
+                <h3>Instant Payments</h3>
+                <p>Process payments in under 3 seconds with quantum-validated transactions</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🌍</span>
+                <h3>Europe-Wide Coverage</h3>
+                <p>Works across all EU countries with unified quantum payment infrastructure</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💰</span>
+                <h3>Low Fees</h3>
+                <p>Only 1% transaction fee - 50-70% cheaper than traditional payment systems</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let testnetData = null;
+        let transactionCounter = 1;
+
+        // Receber dados do site principal
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'EUROTAP_TESTNET_DATA') {
+                testnetData = event.data.data;
+                updateTestnetStatus();
+                console.log(' Connected to EuroTAP Testnet:', testnetData);
+            }
+        });
+
+        function updateTestnetStatus() {
+            const statusEl = document.getElementById('testnetStatus');
+            if (testnetData) {
+                statusEl.innerHTML = `
+                     <strong>Connected to EuroTAP Testnet</strong><br>
+                     TPS: ${testnetData.currentTPS} | Nodes: ${testnetData.connectedNodes} | Status: ${testnetData.networkStatus.toUpperCase()}
+                `;
+                statusEl.style.borderColor = '#00ff88';
+            }
+        }
+
+        function simulateNFC() {
+            const amount = document.getElementById('nfcAmount').value || '25.50';
+            const result = document.getElementById('nfcResult');
+            
+            result.innerHTML = '🔄 Processing NFC payment...';
+            result.classList.add('show');
+            
+            setTimeout(() => {
+                const txHash = generateTxHash();
+                result.innerHTML = `
+                     NFC Payment Successful!<br>
+                     Amount: €${amount}<br>
+                     TX Hash: ${txHash}<br>
+                     Time: ${new Date().toLocaleTimeString()}<br>
+                     Quantum-Safe: ML-DSA-65<br>
+                     Network: ${testnetData?.networkStatus || 'Testnet'}
+                `;
+                
+                // Enviar transação para site principal
+                sendTransactionToMain({
+                    hash: txHash,
+                    amount: amount,
+                    type: 'NFC Payment',
+                    method: 'mobile_terminal'
+                });
+            }, 2000);
+        }
+
+        function simulateQR() {
+            const amount = document.getElementById('qrAmount').value || '15.75';
+            const result = document.getElementById('qrResult');
+            
+            result.innerHTML = ' Generating QR code...';
+            result.classList.add('show');
+            
+            setTimeout(() => {
+                const txHash = generateTxHash();
+                result.innerHTML = `
+                     QR Payment Processed!<br>
+                     Amount: €${amount}<br>
+                     TX Hash: ${txHash}<br>
+                     Time: ${new Date().toLocaleTimeString()}<br>
+                     Quantum Encrypted<br>
+                     TPS: ${testnetData?.currentTPS || '1247'}
+                `;
+                
+                sendTransactionToMain({
+                    hash: txHash,
+                    amount: amount,
+                    type: 'QR Payment',
+                    method: 'mobile_terminal'
+                });
+            }, 1500);
+        }
+
+        function simulateBiometric() {
+            const result = document.getElementById('biometricResult');
+            
+            result.innerHTML = ' Place finger on sensor...';
+            result.classList.add('show');
+            
+            setTimeout(() => {
+                result.innerHTML = ' Scanning fingerprint...';
+                
+                setTimeout(() => {
+                    result.innerHTML = `
+                        ✅ Biometric Authentication Success!<br>
+                        👤 User ID: BIO${Math.random().toString(36).substring(2, 8).toUpperCase()}<br>
+                        🔐 Security Level: Quantum-Safe<br>
+                        ⏰ Authenticated: ${new Date().toLocaleTimeString()}<br>
+                        ��️ ML-DSA-65 Verified
+                    `;
+                }, 1000);
+            }, 800);
+        }
+
+        function generateTxHash() {
+            return '0x' + Math.random().toString(16).substring(2, 18) + Math.random().toString(16).substring(2, 18);
+        }
+
+        function sendTransactionToMain(transaction) {
+            try {
+                window.opener.postMessage({
+                    type: 'DEMO_TRANSACTION',
+                    transaction: transaction,
+                    source: 'mobile_demo',
+                    timestamp: new Date().toISOString()
+                }, '*');
+                console.log(' Transaction sent to main site:', transaction);
+            } catch (error) {
+                console.log('Demo running independently');
+            }
+        }
+
+        // Solicitar dados do testnet quando carregar
+        setTimeout(() => {
+            try {
+                window.opener.postMessage({
+                    type: 'DEMO_REQUEST_DATA',
+                    source: 'mobile_demo'
+                }, '*');
+            } catch (error) {
+                console.log('Demo running independently');
+                // Simular dados se não conectado ao site principal
+                testnetData = {
+                    currentTPS: '1247',
+                    networkStatus: 'demo',
+                    connectedNodes: '37'
+                };
+                updateTestnetStatus();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

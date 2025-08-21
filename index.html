@@ -1342,13 +1342,181 @@
             }
         }
         
-        function openDemo(type) {
-            const demoUrls = {
-                mobile: '#mobile-demo',
-                web: '#web-demo', 
-                crypto: '#crypto-demo',
-                simulator: '#quantum-simulator'
+                function openDemo(type) {
+            const demos = {
+                mobile: {
+                    title: ' Mobile Terminal',
+                    url: './demos/mobile-terminal.html',
+                    description: 'Transform any smartphone into a quantum-safe payment terminal'
+                },
+                web: {
+                    title: ' Web Integration', 
+                    url: './demos/web-terminal.html',
+                    description: 'Direct browser integration with European banking systems'
+                },
+                crypto: {
+                    title: ' Quantum Cryptography',
+                    url: './demos/quantum-crypto.html', 
+                    description: 'ML-DSA-65 post-quantum cryptography demonstration'
+                },
+                simulator: {
+                    title: '⚛️ Quantum Simulator',
+                    url: './demos/quantum-simulator.html',
+                    description: 'Simulate quantum attacks vs EuroTAP protection'
+                }
             };
+            
+            const demo = demos[type];
+            if (demo) {
+                // Abrir demo em nova aba conectada ao testnet
+                const demoWindow = window.open(demo.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
+                
+                // Passar dados do testnet para o demo
+                if (demoWindow) {
+                    setTimeout(() => {
+                        try {
+                            const testnetData = {
+                                currentTPS: document.getElementById('currentTPS')?.textContent || '1247',
+                                networkStatus: isConnected ? 'connected' : 'demo',
+                                connectedNodes: document.getElementById('activeNodes')?.textContent || '37',
+                                totalTransactions: document.getElementById('totalTransactions')?.textContent || '1,847,293',
+                                totalVolume: document.getElementById('totalVolume')?.textContent || '€24.7M',
+                                apiEndpoint: testnetConfig?.apiEndpoint || 'wss://api.eurotap.network/testnet/ws',
+                                isConnected: typeof isConnected !== 'undefined' ? isConnected : false,
+                                timestamp: new Date().toISOString()
+                            };
+                            
+                            demoWindow.postMessage({
+                                type: 'EUROTAP_TESTNET_DATA',
+                                data: testnetData,
+                                source: 'main_site'
+                            }, '*');
+                            
+                            console.log('🔗 Demo connected to testnet:', testnetData);
+                        } catch (error) {
+                            console.log('Demo opened successfully');
+                        }
+                    }, 2000);
+                }
+                
+                // Mostrar notificação
+                showDemoNotification(demo.title, demo.description);
+            }
+        }
+        
+        function showDemoNotification(title, description) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(0, 255, 136, 0.9), rgba(0, 204, 255, 0.9));
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                z-index: 10000;
+                max-width: 300px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                animation: slideInDemo 0.3s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 5px;">✅ ${title} Demo Opened</div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">${description}</div>
+                <div style="font-size: 0.8rem; margin-top: 8px; opacity: 0.7;">🔗 Connected to EuroTAP Testnet</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 4000);
+        }
+        
+        // Listener para dados dos demos
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'DEMO_TRANSACTION') {
+                // Adicionar transação do demo ao feed principal
+                if (typeof addRealTransaction === 'function') {
+                    addRealTransaction(event.data.transaction);
+                } else if (typeof addDemoTransaction === 'function') {
+                    addDemoTransaction();
+                }
+                console.log('🔗 Transaction from demo:', event.data.transaction);
+                
+                // Mostrar notificação de transação
+                showTransactionNotification(event.data.transaction);
+            }
+            
+            if (event.data.type === 'DEMO_REQUEST_DATA') {
+                // Demo solicitou dados - enviar dados atuais
+                const currentData = {
+                    currentTPS: document.getElementById('currentTPS')?.textContent || '1247',
+                    networkStatus: isConnected ? 'connected' : 'demo',
+                    connectedNodes: document.getElementById('activeNodes')?.textContent || '37',
+                    totalTransactions: document.getElementById('totalTransactions')?.textContent || '1,847,293',
+                    timestamp: new Date().toISOString()
+                };
+                
+                event.source.postMessage({
+                    type: 'EUROTAP_TESTNET_DATA',
+                    data: currentData,
+                    source: 'main_site'
+                }, '*');
+            }
+        });
+        
+        function showTransactionNotification(transaction) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(0, 255, 136, 0.9), rgba(0, 204, 255, 0.9));
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                z-index: 10000;
+                max-width: 300px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                animation: slideInDemo 0.3s ease;
+            `;
+            
+            notification.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 5px;">💳 New Transaction</div>
+                <div style="font-size: 0.9rem;">€${transaction.amount} - ${transaction.type}</div>
+                <div style="font-size: 0.8rem; margin-top: 5px; opacity: 0.7;">From: ${transaction.method}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.opacity = '0';
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => notification.remove(), 300);
+                }
+            }, 3000);
+        }
+        
+        // Adicionar estilos para animações dos demos
+        if (!document.getElementById('demoStyles')) {
+            const demoStyles = document.createElement('style');
+            demoStyles.id = 'demoStyles';
+            demoStyles.textContent = `
+                @keyframes slideInDemo {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(demoStyles);
+        };
             
             // Create demo modal or redirect
             switch(type) {
@@ -1491,3 +1659,4 @@
     </script>
 </body>
 </html>
+
