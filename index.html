@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EuroTAP | Europe's First Quantum-Safe Payment Revolution</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script> <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -1353,8 +1353,180 @@
         console.log('   - EuroTAP.reconnect() - Reconectar à testnet');
         console.log('   - EuroTAP.getStatus() - Ver status da conexão');
         console.log('   - EuroTAP.sendCommand(cmd) - Enviar comando');
-        console.log('   - EuroTAP.startDemo() - Forçar modo demo');
+        console.log('   - EuroTAP.startDemo() - Forçar modo demo'); // ====================================
+        // 🤖 AUTOMAÇÃO SOLANA - CÓDIGO COMPLETO
+        // ====================================
+
+        let solanaConnection = null;
+        let walletKeypair = null;
+        let autoTransactionInterval = null;
+        let isAutoTransactionActive = false;
+
+        async function initializeSolanaConnection() {
+            try {
+                console.log('🔗 Conectando à Solana Testnet para transações...');
+                
+                if (!window.solanaWeb3) {
+                    console.error('❌ Solana Web3 não carregado');
+                    return false;
+                }
+                
+                const { Connection, clusterApiUrl, Keypair } = window.solanaWeb3;
+                
+                solanaConnection = new Connection(clusterApiUrl('testnet'), 'confirmed');
+                walletKeypair = Keypair.generate();
+                
+                console.log('✅ Solana conectada!');
+                console.log('🔑 Wallet:', walletKeypair.publicKey.toString());
+                
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Erro Solana:', error);
+                return false;
+            }
+        }
+
+        async function requestAirdrop() {
+            try {
+                console.log('💧 Solicitando SOL testnet...');
+                
+                const { LAMPORTS_PER_SOL } = window.solanaWeb3;
+                
+                const airdropSignature = await solanaConnection.requestAirdrop(
+                    walletKeypair.publicKey,
+                    LAMPORTS_PER_SOL
+                );
+                
+                await solanaConnection.confirmTransaction(airdropSignature);
+                
+                const balance = await solanaConnection.getBalance(walletKeypair.publicKey);
+                console.log('✅ SOL recebido:', balance / LAMPORTS_PER_SOL);
+                
+                return true;
+                
+            } catch (error) {
+                console.error('❌ Erro airdrop:', error);
+                return false;
+            }
+        }
+
+        async function createAutoTransaction() {
+            try {
+                const { Keypair, LAMPORTS_PER_SOL, SystemProgram, Transaction } = window.solanaWeb3;
+                
+                const destinationWallet = Keypair.generate();
+                const amount = Math.random() * 0.05 + 0.001;
+                const lamports = Math.floor(amount * LAMPORTS_PER_SOL);
+                
+                const balance = await solanaConnection.getBalance(walletKeypair.publicKey);
+                if (balance < lamports + 5000) {
+                    await requestAirdrop();
+                }
+                
+                const transaction = new Transaction().add(
+                    SystemProgram.transfer({
+                        fromPubkey: walletKeypair.publicKey,
+                        toPubkey: destinationWallet.publicKey,
+                        lamports: lamports,
+                    })
+                );
+                
+                const { blockhash } = await solanaConnection.getLatestBlockhash();
+                transaction.recentBlockhash = blockhash;
+                transaction.feePayer = walletKeypair.publicKey;
+                
+                transaction.sign(walletKeypair);
+                
+                const signature = await solanaConnection.sendRawTransaction(transaction.serialize());
+                
+                console.log('🚀 Transação:', signature.substring(0, 8) + '...');
+                
+                addRealTransaction({
+                    hash: signature.substring(0, 8) + '...',
+                    type: 'transfer',
+                    amount: amount.toFixed(3),
+                    from_country: 'US',
+                    timestamp: Date.now(),
+                    confirmed: true
+                });
+                
+                if (window.networkData) {
+                    window.networkData.totalTransactions += 1;
+                    updateMetricsDisplay();
+                }
+                
+                return signature;
+                
+            } catch (error) {
+                console.error('❌ Erro transação:', error);
+            }
+        }
+
+        async function startAutoTransactions() {
+            if (isAutoTransactionActive) {
+                console.log('⚠️ Já ativo');
+                return;
+            }
+            
+            console.log('🤖 Iniciando automação...');
+            
+            if (!solanaConnection) {
+                const connected = await initializeSolanaConnection();
+                if (!connected) return;
+            }
+            
+            await requestAirdrop();
+            
+            isAutoTransactionActive = true;
+            
+            autoTransactionInterval = setInterval(async () => {
+                if (isAutoTransactionActive) {
+                    console.log('🔄 Nova transação...');
+                    await createAutoTransaction();
+                }
+            }, 20000);
+            
+            console.log('✅ Automação ativa!');
+            
+            const banner = document.querySelector('.real-testnet-banner');
+            if (banner) {
+                banner.textContent = '🤖 AUTOMATED TRANSACTIONS ACTIVE - Real Solana Testnet';
+            }
+        }
+
+        function stopAutoTransactions() {
+            console.log('🛑 Parando automação...');
+            isAutoTransactionActive = false;
+            if (autoTransactionInterval) {
+                clearInterval(autoTransactionInterval);
+                autoTransactionInterval = null;
+            }
+            console.log('✅ Parado');
+        }
+
+        setTimeout(() => {
+            if (!window.EuroTAP) window.EuroTAP = {};
+            
+            window.EuroTAP.startAutoTx = startAutoTransactions;
+            window.EuroTAP.stopAutoTx = stopAutoTransactions;
+            window.EuroTAP.createTx = createAutoTransaction;
+            window.EuroTAP.requestAirdrop = requestAirdrop;
+            
+            setTimeout(async () => {
+                if (window.solanaWeb3) {
+                    console.log('🔗 Inicializando Solana...');
+                    await initializeSolanaConnection();
+                    console.log('🤖 Digite: EuroTAP.startAutoTx() para começar');
+                }
+            }, 3000);
+        }, 2000);
+
+        console.log('🤖 Automação Solana carregada!');
+
+
     </script>
 </body>
-</html> 
- 
+</html>
+ 
+ 
