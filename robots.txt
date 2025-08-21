@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://eutotap.github.io/eurotap-hypertech/sitemap.xml

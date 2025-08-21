@@ -1,22 +1,5 @@
-﻿# Backups
-*backup*
-backup*/
-encontrados*/
-*.backup
-*.bak
-
-# Large files
-*.zip
-*.rar
-*.tar.gz
-
-# OS files
+﻿*.log
+*.tmp
+node_modules/
 .DS_Store
 Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-
-# Node modules
-node_modules/
