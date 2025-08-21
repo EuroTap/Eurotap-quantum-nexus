@@ -1,57 +1,22 @@
-﻿# Arquivos sensíveis - NUNCA committar
-*.env*
-*.key
-*.pem
-*.p12
-*.secret
-config/
-secrets/
-private/
+﻿# Backups
+*backup*
+backup*/
+encontrados*/
+*.backup
+*.bak
 
-# Código de produção
-eurotap-backend/
-poc-novo-banco/
-MAINNET-PRODUCTION/
-TESTNET-TO-MAINNET/
-eurotap-os/
-eurotap-professional/
-core/
+# Large files
+*.zip
+*.rar
+*.tar.gz
 
-# Desenvolvimento
-tests/
-tools/
-node_modules/
-.nyc_output/
-coverage/
-
-# Scripts internos
-src/scripts/
-src/automation/
-src/website/dashboard.html
-src/website/admin.html
-
-# Documentação interna
-documentation/
-docs-internal/
-
-# Backups
-backup-*/
-*.backup*
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
+# OS files
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-logs/
+# IDE files
+.vscode/
+.idea/
 
-# Temporary
-tmp/
-temp/
+# Node modules
+node_modules/
