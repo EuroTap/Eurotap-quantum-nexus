@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EuroTAP Web Terminal - Quantum-Safe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', 'Consolas', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #00ff88;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 102, 255, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 102, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: #0066ff;
+            transform: translateY(-2px);
+        }
+        
+        .terminal-container {
+            width: 100vw;
+            height: 100vh;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            background: linear-gradient(90deg, #1a1a2e, #16213e);
+            padding: 15px 30px;
+            border-bottom: 2px solid #00ff88;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .terminal-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .terminal-status {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #00ff88;
+            animation: pulse 2s infinite;
+        }
+        
+        .terminal-screen {
+            height: calc(100vh - 80px);
+            padding: 20px;
+            background: #0a0a0a;
+            overflow-y: auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .terminal-line {
+            margin-bottom: 10px;
+            animation: typewriter 0.5s ease-out;
+        }
+        
+        .prompt {
+            color: #0066ff;
+            font-weight: bold;
+        }
+        
+        .command {
+            color: #ffaa00;
+            margin-left: 10px;
+        }
+        
+        .output {
+            color: #ffffff;
+            margin-left: 20px;
+            opacity: 0.9;
+        }
+        
+        .success {
+            color: #00ff88;
+        }
+        
+        .warning {
+            color: #ff6600;
+        }
+        
+        .error {
+            color: #ff3366;
+        }
+        
+        .quantum-safe {
+            color: #00ffff;
+            font-weight: bold;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .cursor {
+            background: #00ff88;
+            animation: blink 1s infinite;
+        }
+        
+        .payment-simulation {
+            position: fixed;
+            top: 50%;
+            right: 30px;
+            transform: translateY(-50%);
+            background: rgba(26, 26, 46, 0.95);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .payment-header {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+        
+        .payment-amount {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffaa00;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px #ffaa00;
+        }
+        
+        .payment-info {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .payment-buttons {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+        
+        .btn.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .stats-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            background: rgba(26, 26, 46, 0.95);
+            border: 1px solid #0066ff;
+            border-radius: 10px;
+            padding: 15px;
+            width: 300px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0, 102, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #0066ff;
+        }
+        
+        @keyframes typewriter {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        @media (max-width: 768px) {
+            .payment-simulation,
+            .stats-panel {
+                position: relative;
+                width: 100%;
+                margin: 20px 0;
+                right: auto;
+                transform: none;
+            }
+            
+            .terminal-screen {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Voltar ao Site</a>
+    
+    <canvas class="matrix-bg" id="matrix"></canvas>
+    
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title">
+                EuroTAP Quantum Web Terminal v1.0
+            </div>
+            <div class="terminal-status">
+                <div class="status-indicator">
+                    <span class="status-dot"></span>
+                    <span>QUANTUM-SAFE</span>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot" style="background: #0066ff;"></span>
+                    <span>EU COMPLIANT</span>
+                </div>
+                <div class="status-indicator">
+                    <span class="status-dot" style="background: #ffaa00;"></span>
+                    <span>ONLINE</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="terminal-screen" id="terminal">
+            <div class="terminal-line">
+                <span class="success">========================================</span>
+            </div>
+            <div class="terminal-line">
+                <span class="quantum-safe">🔮 EUROTAP QUANTUM TERMINAL INICIANDO...</span>
+            </div>
+            <div class="terminal-line">
+                <span class="success">========================================</span>
+            </div>
+            <div class="terminal-line">
+                <span class="prompt">system@eurotap:~$</span>
+                <span class="command">inicializar_sistema_quantum</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output success">✅ Carregando módulos quantum-safe...</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output success">✅ ML-DSA-65 criptografia ativada</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output success">✅ Compliance UE verificado (GDPR + PCI-DSS + PSD2)</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output success">✅ Conectando com rede de pagamentos européia...</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output warning">⚠️  Detectados 25M PMEs vulneráveis na UE</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output quantum-safe">🔮 Sistema pronto para pagamentos quantum-safe</span>
+            </div>
+            <div class="terminal-line">
+                <span class="prompt">payment@eurotap:~$</span>
+                <span class="command">status_sistema</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">📊 RELATÓRIO DO SISTEMA:</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">   🔐 Criptografia: ML-DSA-65 NIST (ATIVA)</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">   🛡️  Proteção Quantum: 100% Operacional</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">   🇪🇺 Compliance UE: Todos os regulamentos</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">   ⚡ Performance: 99.99% uptime</span>
+            </div>
+            <div class="terminal-line">
+                <span class="output">   💳 Processamento: Tempo real</span>
+            </div>
+            <div class="terminal-line">
+                <span class="prompt">terminal@eurotap:~$</span>
+                <span class="cursor">_</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="payment-simulation">
+        <div class="payment-header">💳 Simulação de Pagamento</div>
+        <div class="payment-amount" id="amount">€127,50</div>
+        <div class="payment-info">
+            <div>🔮 Quantum-Safe: <span class="success">Ativo</span></div>
+            <div>🛡️ Segurança: <span class="success">ML-DSA-65</span></div>
+            <div>🇪🇺 Compliance: <span class="success">100%</span></div>
+        </div>
+        <div class="payment-buttons">
+            <button class="btn" onclick="processPayment()">
+                🚀 Processar Pagamento
+            </button>
+            <button class="btn secondary" onclick="showReceipt()">
+                🧾 Gerar Recibo
+            </button>
+            <button class="btn secondary" onclick="showAnalytics()">
+                📊 Ver Analytics
+            </button>
+        </div>
+    </div>
+    
+    <div class="stats-panel">
+        <div style="text-align: center; margin-bottom: 10px; font-weight: bold; color: #0066ff;">
+            📊 Estatísticas em Tempo Real
+        </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value" id="transactions">156</div>
+                <div>Transações</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="revenue">€12.4k</div>
+                <div>Receita</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">100%</div>
+                <div>Segurança</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">⚡</div>
+                <div>Quantum</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix background effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const matrix = "EUROTAPQUANTUMSAFE0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const drops = [];
+        
+        for (let x = 0; x < canvas.width / 10; x++) {
+            drops[x] = 1;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff88';
+            ctx.font = '15px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrix[Math.floor(Math.random() * matrix.length)];
+                ctx.fillText(text, i * 10, drops[i] * 10);
+                
+                if (drops[i] * 10 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 35);
+        
+        // Terminal functionality
+        let transactionCount = 156;
+        let totalRevenue = 12400;
+        const terminal = document.getElementById('terminal');
+        
+        function addTerminalLine(content, className = '') {
+            const line = document.createElement('div');
+            line.className = `terminal-line ${className}`;
+            line.innerHTML = content;
+            
+            // Remove cursor line
+            const cursor = terminal.querySelector('.cursor');
+            if (cursor) cursor.parentElement.remove();
+            
+            terminal.appendChild(line);
+            
+            // Add new cursor line
+            const cursorLine = document.createElement('div');
+            cursorLine.className = 'terminal-line';
+            cursorLine.innerHTML = '<span class="prompt">terminal@eurotap:~$</span> <span class="cursor">_</span>';
+            terminal.appendChild(cursorLine);
+            
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+        
+        function processPayment() {
+            const newAmount = Math.random() * 500 + 50;
+            const formatted = '€' + newAmount.toFixed(2).replace('.', ',');
+            
+            addTerminalLine('<span class="prompt">payment@eurotap:~$</span> <span class="command">processar_pagamento --quantum-safe</span>');
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">🔮 Iniciando processamento quantum-safe...</span>');
+            }, 500);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output">📡 Conectando com gateway ML-DSA-65...</span>');
+            }, 1000);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">✅ Pagamento autorizado: ' + formatted + '</span>');
+            }, 1500);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">✅ Assinatura digital aplicada</span>');
+            }, 2000);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">✅ Recibo quantum-safe gerado</span>');
+            }, 2500);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output quantum-safe">🎉 TRANSAÇÃO COMPLETADA COM SUCESSO!</span>');
+            }, 3000);
+            
+            // Update display
+            document.getElementById('amount').textContent = formatted;
+            
+            // Update stats
+            transactionCount++;
+            totalRevenue += newAmount;
+            document.getElementById('transactions').textContent = transactionCount;
+            document.getElementById('revenue').textContent = '€' + (totalRevenue/1000).toFixed(1) + 'k';
+        }
+        
+        function showReceipt() {
+            addTerminalLine('<span class="prompt">receipt@eurotap:~$</span> <span class="command">gerar_recibo_digital</span>');
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output">📄 Gerando recibo digital quantum-safe...</span>');
+            }, 500);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">✅ GDPR compliance verificado</span>');
+            }, 1000);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">✅ Assinatura digital ML-DSA-65 aplicada</span>');
+            }, 1500);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output success">✅ Recibo enviado automaticamente</span>');
+            }, 2000);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output quantum-safe">📧 Recibo entregue com sucesso!</span>');
+            }, 2500);
+        }
+        
+        function showAnalytics() {
+            addTerminalLine('<span class="prompt">analytics@eurotap:~$</span> <span class="command">exibir_dashboard --tempo-real</span>');
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output">📊 Carregando analytics quantum-safe...</span>');
+            }, 500);
+            
+            setTimeout(() => {
+                addTerminalLine('<span class="output">┌─ DASHBOARD EUROTAP ─────────────────┐</span>');
+                addTerminalLine('<span class="output">│ 🔮 Quantum Protection: 100% ATIVO  │</span>');
+                addTerminalLine('<span class="output">│ 🛡️  ML-DSA-65: FUNCIONANDO         │</span>');
+                addTerminalLine('<span class="output">│ 🇪🇺 EU Compliance: TOTAL           │</span>');
+                addTerminalLine('<span class="output">│ ⚡ Uptime: 99.99%                  │</span>');
+                addTerminalLine('<span class="output">│ 💳 Transações: ' + transactionCount + ' processadas    │</span>');
+                addTerminalLine('<span class="output">│ 💰 Receita: €' + (totalRevenue/1000).toFixed(1) + 'k gerados        │</span>');
+                addTerminalLine('<span class="output">└─────────────────────────────────────┘</span>');
+            }, 1000);
+        }
+        
+        // Auto-simulation
+        setInterval(() => {
+            if (Math.random() > 0.9) {
+                const autoAmount = Math.random() * 200 + 25;
+                transactionCount++;
+                totalRevenue += autoAmount;
+                document.getElementById('transactions').textContent = transactionCount;
+                document.getElementById('revenue').textContent = '€' + (totalRevenue/1000).toFixed(1) + 'k';
+                
+                addTerminalLine('<span class="output success">🔔 Transação automática: €' + autoAmount.toFixed(2) + ' processada</span>');
+            }
+        }, 8000);
+        
+        // Resize handler
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        console.log('🔮 EuroTAP Web Terminal loaded successfully!');
+        console.log('💳 Quantum-safe payment processing ready!');
+    </script>
+</body>
+</html>
+
+

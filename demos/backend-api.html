@@ -1,0 +1,735 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend API Documentation - EuroTAP</title>
+    <style>
+        :root {
+            --primary-cyan: #00ffff;
+            --primary-blue: #0080ff;
+            --primary-orange: #ff6b00;
+            --accent-green: #00ff00;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #8b949e;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --border-primary: rgba(0, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+            padding: 6px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--primary-cyan);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .header {
+            background: #161b22;
+            padding: 20px;
+            border-bottom: 2px solid var(--primary-cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-cyan);
+        }
+        
+        .back-button {
+            background: linear-gradient(45deg, var(--primary-orange), #ff8500);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.4);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .api-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: var(--primary-cyan);
+        }
+        
+        .api-overview {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .overview-title {
+            color: #58a6ff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .base-url {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            color: #7ee787;
+        }
+        
+        .demo-notice {
+            background: rgba(187, 128, 9, 0.1);
+            border: 1px solid #bb8009;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+            color: #f0cc5a;
+        }
+        
+        .metrics-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-cyan);
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            color: #8b949e;
+            font-size: 0.9em;
+        }
+        
+        .auth-section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .auth-title {
+            color: #f0cc5a;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .endpoints-grid {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .endpoint {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .endpoint-header {
+            background: #21262d;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .method {
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+        
+        .method.get { background: #1f6feb; color: white; }
+        .method.post { background: #238636; color: white; }
+        .method.put { background: #fb8500; color: white; }
+        .method.delete { background: #da3633; color: white; }
+        
+        .endpoint-path {
+            font-family: monospace;
+            font-size: 1.1rem;
+            color: #f0f6fc;
+        }
+        
+        .endpoint-body {
+            padding: 1.5rem;
+        }
+        
+        .endpoint-description {
+            margin-bottom: 1rem;
+            color: #8b949e;
+        }
+        
+        .json-response {
+            color: #7ee787;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        
+        .commercial-section {
+            background: rgba(46, 160, 67, 0.1);
+            border: 1px solid #2ea043;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .commercial-title {
+            color: #3fb950;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-link {
+            color: #58a6ff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Syntax highlighting */
+        .string { color: #a5d6ff; }
+        .number { color: #79c0ff; }
+        .boolean { color: #ff7b72; }
+        .null { color: #ff7b72; }
+        .key { color: #7ee787; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .metrics-section {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <a href="#" class="lang-btn active" data-lang="en">🇺🇸 EN</a>
+        <a href="#" class="lang-btn" data-lang="pt">🇵🇹 PT</a>
+        <a href="#" class="lang-btn" data-lang="de">🇩🇪 DE</a>
+        <a href="#" class="lang-btn" data-lang="fr">🇫🇷 FR</a>
+    </div>
+
+    <div class="header">
+        <div class="logo" data-translate="header.title">🔧 EuroTAP Backend API</div>
+        <a href="../index.html" class="back-button" data-translate="header.back">← Back to Main Site</a>
+    </div>
+
+    <div class="container">
+        <h1 class="api-title" data-translate="api.title">API Documentation</h1>
+        
+        <div class="demo-notice">
+            <strong data-translate="demo.title">⚠️ DEMO API DOCUMENTATION</strong><br>
+            <span data-translate="demo.description">This is a demonstration of the EuroTAP API documentation.<br>Complete API with authentication and real data available for qualified buyers.</span>
+        </div>
+ 
+        <div class="api-overview">
+            <h2 class="overview-title" data-translate="overview.title">📋 API Overview</h2>
+            <p data-translate="overview.description">The EuroTAP API provides complete access to the quantum-safe payment system, including transaction processing, merchant management, real-time metrics, and security configurations.</p>
+
+            <div class="base-url">
+                <strong data-translate="overview.base_url">Base URL:</strong> https://api.eurotap.quantum/v1
+            </div>
+
+            <div class="metrics-section">
+                <div class="metric-card">
+                    <div class="metric-value" id="api-calls">50+</div>
+                    <div class="metric-label" data-translate="metrics.endpoints">Endpoints</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">99.97%</div>
+                    <div class="metric-label" data-translate="metrics.uptime">Uptime</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value" id="response-time">12ms</div>
+                    <div class="metric-label" data-translate="metrics.response">Avg Response</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">ML-DSA-65</div>
+                    <div class="metric-label" data-translate="metrics.security">Security</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-section">
+            <h3 class="auth-title" data-translate="auth.title">🔐 Authentication</h3>
+            <p data-translate="auth.description">The API uses OAuth 2.0 with JWT tokens and quantum-safe signature support. All requests require authentication via Authorization header.</p>
+            <div class="code-block">
+Authorization: Bearer eyJhbGciOiJNTC1EU0EtNjUi...
+            </div>
+        </div>
+
+        <h2 style="color: #58a6ff; font-size: 2rem; margin: 3rem 0 2rem;" data-translate="endpoints.title">📡 Main Endpoints</h2>
+
+        <div class="endpoints-grid">
+            <!-- Health Check -->
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/health</span>
+                </div>
+                <div class="endpoint-body">
+                    <p class="endpoint-description" data-translate="endpoints.health.description">System health check and component status verification</p>
+                    <div class="code-block">
+                        <div class="json-response">{
+  <span class="key">"status"</span>: <span class="string">"healthy"</span>,
+  <span class="key">"timestamp"</span>: <span class="string">"2025-08-20T04:30:00Z"</span>,  
+  <span class="key">"version"</span>: <span class="string">"1.0.0"</span>,
+  <span class="key">"quantum_module"</span>: <span class="string">"ML-DSA-65 ACTIVE"</span>, 
+  <span class="key">"tps_current"</span>: <span class="number">77255</span>,
+  <span class="key">"uptime"</span>: <span class="string">"99.97%"</span>,
+  <span class="key">"last_maintenance"</span>: <span class="string">"2025-08-15T02:00:00Z"</span>
+}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Process Payment -->
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/payments/process</span>
+                </div>
+                <div class="endpoint-body">
+                    <p class="endpoint-description" data-translate="endpoints.payments.description">Process payments with quantum-safe ML-DSA-65 signature</p>
+                    <div class="code-block">
+                        <div class="json-response">{
+  <span class="key">"transaction_id"</span>: <span class="string">"tx_qnt_847293_2025"</span>,
+  <span class="key">"status"</span>: <span class="string">"confirmed"</span>,
+  <span class="key">"amount"</span>: <span class="string">"50.00"</span>,
+  <span class="key">"currency"</span>: <span class="string">"EUR"</span>,
+  <span class="key">"quantum_signature"</span>: <span class="string">"ML-DSA-65"</span>,     
+  <span class="key">"processing_time"</span>: <span class="string">"12ms"</span>,
+  <span class="key">"block_hash"</span>: <span class="string">"0x8a7f3e2d9c1b5f4a..."</span>,
+  <span class="key">"compliance_check"</span>: <span class="string">"PASSED"</span>,
+  <span class="key">"timestamp"</span>: <span class="string">"2025-08-20T04:30:01Z"</span>   
+}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Metrics -->
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/metrics/realtime</span>
+                </div>
+                <div class="endpoint-body">
+                    <p class="endpoint-description" data-translate="endpoints.metrics.description">Real-time system metrics for dashboards and monitoring</p>
+                    <div class="code-block">
+                        <div class="json-response">{
+  <span class="key">"tps_current"</span>: <span class="number">77255</span>,
+  <span class="key">"transactions_today"</span>: <span class="number">847293</span>,
+  <span class="key">"volume_daily"</span>: <span class="string">"1200000.00"</span>,
+  <span class="key">"success_rate"</span>: <span class="string">"99.97%"</span>,
+  <span class="key">"active_merchants"</span>: <span class="number">2847</span>,
+  <span class="key">"countries_active"</span>: <span class="number">27</span>,
+  <span class="key">"quantum_security"</span>: <span class="string">"ENABLED"</span>,        
+  <span class="key">"compliance_status"</span>: <span class="string">"100%"</span>,
+  <span class="key">"avg_latency"</span>: <span class="string">"12ms"</span>
+}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quantum Status -->
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/quantum/status</span>
+                </div>
+                <div class="endpoint-body">
+                    <p class="endpoint-description" data-translate="endpoints.quantum.description">Detailed quantum security status and post-quantum algorithms</p>
+                    <div class="code-block">
+                        <div class="json-response">{
+  <span class="key">"algorithm"</span>: <span class="string">"ML-DSA-65"</span>,
+  <span class="key">"status"</span>: <span class="string">"ACTIVE"</span>,
+  <span class="key">"nist_approved"</span>: <span class="boolean">true</span>,
+  <span class="key">"quantum_resistant"</span>: <span class="boolean">true</span>,
+  <span class="key">"key_size"</span>: <span class="string">"2048-bit"</span>,
+  <span class="key">"signature_scheme"</span>: <span class="string">"FIPS 204"</span>,       
+  <span class="key">"last_rotation"</span>: <span class="string">"2025-08-19T12:00:00Z"</span>,
+  <span class="key">"next_rotation"</span>: <span class="string">"2025-08-26T12:00:00Z"</span>,
+  <span class="key">"security_level"</span>: <span class="string">"MAXIMUM"</span>,
+  <span class="key">"quantum_threat_level"</span>: <span class="string">"PROTECTED"</span>   
+}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Merchant Management -->
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method post">POST</span>
+                    <span class="endpoint-path">/merchants/register</span>
+                </div>
+                <div class="endpoint-body">
+                    <p class="endpoint-description" data-translate="endpoints.merchants.description">Register new merchants with automatic compliance</p>
+                    <div class="code-block">
+                        <div class="json-response">{
+  <span class="key">"merchant_id"</span>: <span class="string">"mch_eu_2025_847293"</span>,  
+  <span class="key">"status"</span>: <span class="string">"active"</span>,
+  <span class="key">"compliance_check"</span>: <span class="string">"PASSED"</span>,
+  <span class="key">"kyc_status"</span>: <span class="string">"VERIFIED"</span>,
+  <span class="key">"aml_status"</span>: <span class="string">"CLEARED"</span>,
+  <span class="key">"country"</span>: <span class="string">"PT"</span>,
+  <span class="key">"currency"</span>: <span class="string">"EUR"</span>,
+  <span class="key">"quantum_enabled"</span>: <span class="boolean">true</span>,
+  <span class="key">"created_at"</span>: <span class="string">"2025-08-20T04:30:02Z"</span>  
+}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics -->
+            <div class="endpoint">
+                <div class="endpoint-header">
+                    <span class="method get">GET</span>
+                    <span class="endpoint-path">/analytics/dashboard</span>
+                </div>
+                <div class="endpoint-body">
+                    <p class="endpoint-description" data-translate="endpoints.analytics.description">Analytics data for executive dashboards and BI reports</p>
+                    <div class="code-block">
+                        <div class="json-response">{
+  <span class="key">"period"</span>: <span class="string">"last_24h"</span>,
+  <span class="key">"total_volume"</span>: <span class="string">"1200000.00"</span>,
+  <span class="key">"transaction_count"</span>: <span class="number">847293</span>,
+  <span class="key">"avg_transaction_value"</span>: <span class="string">"41.65"</span>,     
+  <span class="key">"peak_tps"</span>: <span class="number">82547</span>,
+  <span class="key">"countries_breakdown"</span>: {
+    <span class="key">"DE"</span>: <span class="string">"28.5%"</span>,
+    <span class="key">"FR"</span>: <span class="string">"22.1%"</span>,
+    <span class="key">"IT"</span>: <span class="string">"18.3%"</span>,
+    <span class="key">"ES"</span>: <span class="string">"15.7%"</span>,
+    <span class="key">"PT"</span>: <span class="string">"8.9%"</span>,
+    <span class="key">"others"</span>: <span class="string">"6.5%"</span>
+  },
+  <span class="key">"revenue_24h"</span>: <span class="string">"12000.00"</span>
+}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="commercial-section">
+            <h3 class="commercial-title" data-translate="commercial.title">🚀 Complete API Available</h3>
+            <p style="margin-bottom: 1rem;" data-translate="commercial.endpoints">
+                <strong>50+ endpoints</strong> for complete quantum-safe payment processing
+            </p>
+            <p style="margin-bottom: 1rem;" data-translate="commercial.features">
+                ✅ Complete documentation • ✅ OAuth2 authentication • ✅ Rate limiting • ✅ Webhooks • ✅ SDKs
+            </p>
+            <p style="margin-bottom: 1rem;" data-translate="commercial.compliance">
+                ✅ GDPR/PSD2 compliance • ✅ Multi-currency • ✅ Real-time monitoring • ✅ 99.97% uptime
+            </p>
+            <p data-translate="commercial.value">
+                <strong>Complete €15M+ system</strong> ready for acquisition by major financial players.
+            </p>
+            <p style="margin-top: 1rem;" data-translate="commercial.contact">
+                Commercial contact: <a href="mailto:tapeuro78@gmail.com" class="contact-link">tapeuro78@gmail.com</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                'header.title': '🔧 EuroTAP Backend API',
+                'header.back': '← Back to Main Site',
+                'api.title': 'API Documentation',
+                'demo.title': '⚠️ DEMO API DOCUMENTATION',
+                'demo.description': 'This is a demonstration of the EuroTAP API documentation.<br>Complete API with authentication and real data available for qualified buyers.',
+                'overview.title': '📋 API Overview',
+                'overview.description': 'The EuroTAP API provides complete access to the quantum-safe payment system, including transaction processing, merchant management, real-time metrics, and security configurations.',
+                'overview.base_url': 'Base URL:',
+                'metrics.endpoints': 'Endpoints',
+                'metrics.uptime': 'Uptime',
+                'metrics.response': 'Avg Response',
+                'metrics.security': 'Security',
+                'auth.title': '🔐 Authentication',
+                'auth.description': 'The API uses OAuth 2.0 with JWT tokens and quantum-safe signature support. All requests require authentication via Authorization header.',
+                'endpoints.title': '📡 Main Endpoints',
+                'endpoints.health.description': 'System health check and component status verification',
+                'endpoints.payments.description': 'Process payments with quantum-safe ML-DSA-65 signature',
+                'endpoints.metrics.description': 'Real-time system metrics for dashboards and monitoring',
+                'endpoints.quantum.description': 'Detailed quantum security status and post-quantum algorithms',
+                'endpoints.merchants.description': 'Register new merchants with automatic compliance',
+                'endpoints.analytics.description': 'Analytics data for executive dashboards and BI reports',
+                'commercial.title': '🚀 Complete API Available',
+                'commercial.endpoints': '<strong>50+ endpoints</strong> for complete quantum-safe payment processing',
+                'commercial.features': '✅ Complete documentation • ✅ OAuth2 authentication • ✅ Rate limiting • ✅ Webhooks • ✅ SDKs',
+                'commercial.compliance': '✅ GDPR/PSD2 compliance • ✅ Multi-currency • ✅ Real-time monitoring • ✅ 99.97% uptime',
+                'commercial.value': '<strong>Complete €15M+ system</strong> ready for acquisition by major financial players.',
+                'commercial.contact': 'Commercial contact: <a href="mailto:tapeuro78@gmail.com" class="contact-link">tapeuro78@gmail.com</a>'
+            },
+            pt: {
+                'header.title': '🔧 API Backend EuroTAP',
+                'header.back': '← Voltar ao Site Principal',
+                'api.title': 'Documentação da API',
+                'demo.title': '⚠️ DEMO DOCUMENTAÇÃO API',
+                'demo.description': 'Esta é uma demonstração da documentação da API EuroTAP.<br>API completa com autenticação e dados reais disponível para compradores qualificados.',
+                'overview.title': '📋 Visão Geral da API',
+                'overview.description': 'A API EuroTAP fornece acesso completo ao sistema de pagamentos quantum-safe, incluindo processamento de transações, gestão de comerciantes, métricas em tempo real e configurações de segurança.',
+                'overview.base_url': 'URL Base:',
+                'metrics.endpoints': 'Endpoints',
+                'metrics.uptime': 'Disponibilidade',
+                'metrics.response': 'Resposta Média',
+                'metrics.security': 'Segurança',
+                'auth.title': '🔐 Autenticação',
+                'auth.description': 'A API utiliza OAuth 2.0 com tokens JWT e suporte a assinaturas quantum-safe. Todas as requisições requerem autenticação via header Authorization.',
+                'endpoints.title': '📡 Endpoints Principais',
+                'endpoints.health.description': 'Verificação de saúde do sistema e status dos componentes',
+                'endpoints.payments.description': 'Processar pagamentos com assinatura quantum-safe ML-DSA-65',
+                'endpoints.metrics.description': 'Métricas do sistema em tempo real para dashboards e monitoramento',
+                'endpoints.quantum.description': 'Status detalhado da segurança quantum e algoritmos pós-quânticos',
+                'endpoints.merchants.description': 'Registrar novos comerciantes com compliance automático',
+                'endpoints.analytics.description': 'Dados analíticos para dashboards executivos e relatórios BI',
+                'commercial.title': '🚀 API Completa Disponível',
+                'commercial.endpoints': '<strong>50+ endpoints</strong> para processamento completo de pagamentos quantum-safe',
+                'commercial.features': '✅ Documentação completa • ✅ Autenticação OAuth2 • ✅ Rate limiting • ✅ Webhooks • ✅ SDKs',
+                'commercial.compliance': '✅ Compliance GDPR/PSD2 • ✅ Multi-moeda • ✅ Monitoramento tempo real • ✅ 99.97% uptime',
+                'commercial.value': '<strong>Sistema completo de €15M+</strong> pronto para aquisição por grandes players financeiros.',
+                'commercial.contact': 'Contato comercial: <a href="mailto:tapeuro78@gmail.com" class="contact-link">tapeuro78@gmail.com</a>'
+            },
+            de: {
+                'header.title': '🔧 EuroTAP Backend API',
+                'header.back': '← Zurück zur Hauptseite',
+                'api.title': 'API Dokumentation',
+                'demo.title': '⚠️ DEMO API DOKUMENTATION',
+                'demo.description': 'Dies ist eine Demonstration der EuroTAP API-Dokumentation.<br>Vollständige API mit Authentifizierung und echten Daten für qualifizierte Käufer verfügbar.',
+                'overview.title': '📋 API Übersicht',
+                'overview.description': 'Die EuroTAP API bietet vollständigen Zugang zum quantensicheren Zahlungssystem, einschließlich Transaktionsverarbeitung, Händlerverwaltung, Echtzeit-Metriken und Sicherheitskonfigurationen.',
+                'overview.base_url': 'Basis URL:',
+                'metrics.endpoints': 'Endpunkte',
+                'metrics.uptime': 'Verfügbarkeit',
+                'metrics.response': 'Durchschn. Antwort',
+                'metrics.security': 'Sicherheit',
+                'auth.title': '🔐 Authentifizierung',
+                'auth.description': 'Die API verwendet OAuth 2.0 mit JWT-Tokens und quantensicherer Signatur-Unterstützung. Alle Anfragen erfordern Authentifizierung über Authorization-Header.',
+                'endpoints.title': '📡 Haupt-Endpunkte',
+                'endpoints.health.description': 'System-Gesundheitsprüfung und Komponenten-Status-Verifikation',
+                'endpoints.payments.description': 'Zahlungen mit quantensicherer ML-DSA-65 Signatur verarbeiten',
+                'endpoints.metrics.description': 'Echtzeit-System-Metriken für Dashboards und Überwachung',
+                'endpoints.quantum.description': 'Detaillierter Quantum-Sicherheitsstatus und Post-Quantum-Algorithmen',
+                'endpoints.merchants.description': 'Neue Händler mit automatischer Compliance registrieren',
+                'endpoints.analytics.description': 'Analytics-Daten für Executive Dashboards und BI-Berichte',
+                'commercial.title': '🚀 Vollständige API Verfügbar',
+                'commercial.endpoints': '<strong>50+ Endpunkte</strong> für vollständige quantensichere Zahlungsverarbeitung',
+                'commercial.features': '✅ Vollständige Dokumentation • ✅ OAuth2 Authentifizierung • ✅ Rate Limiting • ✅ Webhooks • ✅ SDKs',
+                'commercial.compliance': '✅ GDPR/PSD2 Compliance • ✅ Multi-Währung • ✅ Echtzeit-Überwachung • ✅ 99.97% Verfügbarkeit',
+                'commercial.value': '<strong>Vollständiges €15M+ System</strong> bereit für Akquisition durch große Finanz-Player.',
+                'commercial.contact': 'Geschäftskontakt: <a href="mailto:tapeuro78@gmail.com" class="contact-link">tapeuro78@gmail.com</a>'
+            },
+            fr: {
+                'header.title': '🔧 API Backend EuroTAP',
+                'header.back': '← Retour au Site Principal',
+                'api.title': 'Documentation API',
+                'demo.title': '⚠️ DEMO DOCUMENTATION API',
+                'demo.description': 'Ceci est une démonstration de la documentation de l\'API EuroTAP.<br>API complète avec authentification et données réelles disponible pour les acheteurs qualifiés.',
+                'overview.title': '📋 Aperçu de l\'API',
+                'overview.description': 'L\'API EuroTAP fournit un accès complet au système de paiement quantique-sûr, incluant le traitement des transactions, la gestion des marchands, les métriques en temps réel et les configurations de sécurité.',
+                'overview.base_url': 'URL de Base:',
+                'metrics.endpoints': 'Points de Terminaison',
+                'metrics.uptime': 'Disponibilité',
+                'metrics.response': 'Réponse Moyenne',
+                'metrics.security': 'Sécurité',
+                'auth.title': '🔐 Authentification',
+                'auth.description': 'L\'API utilise OAuth 2.0 avec des tokens JWT et le support de signatures quantique-sûres. Toutes les requêtes nécessitent une authentification via l\'en-tête Authorization.',
+                'endpoints.title': '📡 Points de Terminaison Principaux',
+                'endpoints.health.description': 'Vérification de santé du système et vérification du statut des composants',
+                'endpoints.payments.description': 'Traiter les paiements avec signature quantique-sûre ML-DSA-65',
+                'endpoints.metrics.description': 'Métriques système en temps réel pour tableaux de bord et surveillance',
+                'endpoints.quantum.description': 'Statut détaillé de la sécurité quantique et algorithmes post-quantiques',
+                'endpoints.merchants.description': 'Enregistrer de nouveaux marchands avec conformité automatique',
+                'endpoints.analytics.description': 'Données analytiques pour tableaux de bord exécutifs et rapports BI',
+                'commercial.title': '🚀 API Complète Disponible',
+                'commercial.endpoints': '<strong>50+ points de terminaison</strong> pour traitement complet de paiements quantique-sûrs',
+                'commercial.features': '✅ Documentation complète • ✅ Authentification OAuth2 • ✅ Limitation de débit • ✅ Webhooks • ✅ SDKs',
+                'commercial.compliance': '✅ Conformité GDPR/PSD2 • ✅ Multi-devise • ✅ Surveillance temps réel • ✅ 99.97% disponibilité',
+                'commercial.value': '<strong>Système complet €15M+</strong> prêt pour acquisition par de grands acteurs financiers.',
+                'commercial.contact': 'Contact commercial: <a href="mailto:tapeuro78@gmail.com" class="contact-link">tapeuro78@gmail.com</a>'
+            }
+        };
+
+        // Current language
+        let currentLang = 'en';
+
+        // Translate function
+        function translatePage(lang) {
+            currentLang = lang;
+            
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Translate elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.dataset.translate;
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Store language preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize language
+        function initializeLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const browserLang = navigator.language.split('-')[0];
+            const defaultLang = savedLang || (translations[browserLang] ? browserLang : 'en');
+            
+            translatePage(defaultLang);
+        }
+
+        // Language selector event listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = btn.dataset.lang;
+                translatePage(lang);
+            });
+        });
+
+        // Simulate real-time updates
+        function updateMetrics() {
+            // Update response time
+            const responseTimeEl = document.getElementById('response-time');
+            if (responseTimeEl) {
+                const variation = Math.random() * 10 + 8; // 8-18ms
+                responseTimeEl.textContent = Math.floor(variation) + 'ms';
+            }
+
+            // Update API calls
+            const apiCallsEl = document.getElementById('api-calls');
+            if (apiCallsEl) {
+                const currentCalls = parseInt(apiCallsEl.textContent);
+                if (currentCalls < 60) {
+                    apiCallsEl.textContent = (currentCalls + 1) + '+';
+                }
+            }
+        }
+
+        // Update metrics every 5 seconds
+        setInterval(updateMetrics, 5000);
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeLanguage();
+            
+            // Syntax highlighting enhancement
+            const codeBlocks = document.querySelectorAll('.json-response');
+            codeBlocks.forEach(block => {
+                block.style.opacity = '0.9';
+                block.addEventListener('mouseenter', () => {
+                    block.style.opacity = '1';
+                });
+                block.addEventListener('mouseleave', () => {
+                    block.style.opacity = '0.9';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

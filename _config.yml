@@ -1,0 +1,22 @@
+﻿# GitHub Pages Configuration
+name: EuroTAP Quantum Revolution
+description: Europe's First Quantum-Safe Payment System
+baseurl: ""
+url: "https://eurotap.github.io"
+
+# Disable Jekyll
+plugins: []
+theme: null
+markdown: kramdown
+
+# Static site settings
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .bundle
+  - .git
+  - .gitignore

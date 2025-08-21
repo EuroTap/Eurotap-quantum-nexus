@@ -1,0 +1,613 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Dashboard - EuroTAP</title>
+    <style>
+        :root {
+            --primary-cyan: #00ffff;
+            --primary-blue: #0080ff;
+            --primary-orange: #ff6b00;
+            --accent-green: #00ff00;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #8b949e;
+            --bg-primary: #0f0f23;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --border-primary: rgba(0, 255, 255, 0.2);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border-primary);
+            color: var(--text-primary);
+            padding: 6px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--primary-cyan);
+            color: var(--bg-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .header {
+            background: rgba(15, 15, 35, 0.95);
+            padding: 20px;
+            border-bottom: 2px solid var(--primary-cyan);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-cyan);
+        }
+        
+        .back-button {
+            background: linear-gradient(45deg, var(--primary-orange), #ff8500);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 0, 0.4);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .dashboard-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--text-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .metric-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            border: 2px solid var(--border-primary);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 255, 255, 0.2);
+            border-color: var(--primary-cyan);
+        }
+        
+        .metric-card:hover::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+        
+        .metric-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: var(--primary-cyan);
+            margin-bottom: 10px;
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .metric-change {
+            font-size: 0.9em;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .positive { color: var(--accent-green); }
+        .negative { color: #ff4444; }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .chart-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-primary);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .chart-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: var(--primary-cyan);
+        }
+        
+        .fake-chart {
+            height: 300px;
+            background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(0, 128, 255, 0.1));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.6;
+        }
+        
+        .alerts-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+        }
+        
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .alert-icon {
+            font-size: 1.5em;
+        }
+        
+        .status-indicators {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .status-online { background: var(--accent-green); }
+        .status-warning { background: #ffff00; }
+        .status-offline { background: #ff4444; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 0, 0); }
+        }
+        
+        @media (max-width: 768px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector -->
+    <div class="language-selector">
+        <a href="#" class="lang-btn active" data-lang="en">🇺🇸 EN</a>
+        <a href="#" class="lang-btn" data-lang="pt">🇵🇹 PT</a>
+        <a href="#" class="lang-btn" data-lang="de">🇩🇪 DE</a>
+        <a href="#" class="lang-btn" data-lang="fr">🇫🇷 FR</a>
+    </div>
+
+    <header class="header">
+        <div class="logo" data-translate="header.title">📊 Executive Dashboard - EuroTAP</div>
+        <a href="../index.html" class="back-button" data-translate="header.back">← Back to Main Site</a>
+    </header>
+
+    <div class="container">
+        <h1 class="dashboard-title" data-translate="dashboard.title">Enterprise Analytics</h1>
+        
+        <!-- Key Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="revenue">€1.2M</div>
+                <div class="metric-label" data-translate="metrics.revenue">Daily Revenue</div>
+                <div class="metric-change positive">↗ +24.5%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="transactions">2.1M</div>
+                <div class="metric-label" data-translate="metrics.transactions">Transactions/Day</div>
+                <div class="metric-change positive">↗ +18.3%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="tps">77,234</div>
+                <div class="metric-label" data-translate="metrics.tps">Average TPS</div>
+                <div class="metric-change positive">↗ +5.2%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value">99.97%</div>
+                <div class="metric-label" data-translate="metrics.uptime">Uptime</div>
+                <div class="metric-change positive">↗ +0.1%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value">847</div>
+                <div class="metric-label" data-translate="metrics.merchants">Active Merchants</div>
+                <div class="metric-change positive">↗ +12.7%</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value">€15.2M</div>
+                <div class="metric-label" data-translate="metrics.system_value">System Value</div>
+                <div class="metric-change positive">↗ +8.9%</div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-card">
+                <h3 class="chart-title" data-translate="charts.volume.title">📈 Transaction Volume (24h)</h3>
+                <div class="fake-chart">
+                    <div data-translate="charts.volume.content">
+                        Real-time volume chart<br>
+                        📊 Peak: €156K/hour at 14:30<br>
+                        ⚡ Growth: +24.5% vs yesterday
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h3 class="chart-title" data-translate="charts.alerts.title">🚨 System Alerts</h3>
+                <div class="alerts-section">
+                    <div class="alert-item">
+                        <span class="alert-icon">✅</span>
+                        <div>
+                            <strong data-translate="alerts.quantum.title">Quantum Encryption</strong><br>
+                            <span data-translate="alerts.quantum.status">ML-DSA-65 operational</span>
+                        </div>
+                    </div>
+                    <div class="alert-item">
+                        <span class="alert-icon">⚡</span>
+                        <div>
+                            <strong data-translate="alerts.performance.title">Performance</strong><br>
+                            <span data-translate="alerts.performance.status">TPS above average</span>
+                        </div>
+                    </div>
+                    <div class="alert-item">
+                        <span class="alert-icon">🔐</span>
+                        <div>
+                            <strong data-translate="alerts.security.title">Security</strong><br>
+                            <span data-translate="alerts.security.status">Zero incidents</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- System Status -->
+        <div class="chart-card">
+            <h3 class="chart-title" data-translate="status.title">🖥️ Component Status</h3>
+            <div class="status-indicators">
+                <div class="status-item">
+                    <div class="status-dot status-online"></div>
+                    <span data-translate="status.backend">Backend API Enterprise</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot status-online"></div>
+                    <span data-translate="status.blockchain">Blockchain Solana</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot status-online"></div>
+                    <span data-translate="status.frontend">Frontend PWA</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot status-online"></div>
+                    <span data-translate="status.mobile">Mobile App</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot status-online"></div>
+                    <span data-translate="status.analytics">Analytics BI</span>
+                </div>
+                <div class="status-item">
+                    <div class="status-dot status-warning"></div>
+                    <span data-translate="status.redis">Cache Redis (Load Balancing)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            en: {
+                'header.title': '📊 Executive Dashboard - EuroTAP',
+                'header.back': '← Back to Main Site',
+                'dashboard.title': 'Enterprise Analytics',
+                'metrics.revenue': 'Daily Revenue',
+                'metrics.transactions': 'Transactions/Day',
+                'metrics.tps': 'Average TPS',
+                'metrics.uptime': 'Uptime',
+                'metrics.merchants': 'Active Merchants',
+                'metrics.system_value': 'System Value',
+                'charts.volume.title': '📈 Transaction Volume (24h)',
+                'charts.volume.content': 'Real-time volume chart<br>📊 Peak: €156K/hour at 14:30<br>⚡ Growth: +24.5% vs yesterday',
+                'charts.alerts.title': '🚨 System Alerts',
+                'alerts.quantum.title': 'Quantum Encryption',
+                'alerts.quantum.status': 'ML-DSA-65 operational',
+                'alerts.performance.title': 'Performance',
+                'alerts.performance.status': 'TPS above average',
+                'alerts.security.title': 'Security',
+                'alerts.security.status': 'Zero incidents',
+                'status.title': '🖥️ Component Status',
+                'status.backend': 'Backend API Enterprise',
+                'status.blockchain': 'Blockchain Solana',
+                'status.frontend': 'Frontend PWA',
+                'status.mobile': 'Mobile App',
+                'status.analytics': 'Analytics BI',
+                'status.redis': 'Cache Redis (Load Balancing)'
+            },
+            pt: {
+                'header.title': '📊 Dashboard Executivo - EuroTAP',
+                'header.back': '← Voltar ao Site Principal',
+                'dashboard.title': 'Analytics Empresariais',
+                'metrics.revenue': 'Receita Diária',
+                'metrics.transactions': 'Transações/Dia',
+                'metrics.tps': 'TPS Médio',
+                'metrics.uptime': 'Disponibilidade',
+                'metrics.merchants': 'Comerciantes Ativos',
+                'metrics.system_value': 'Valor do Sistema',
+                'charts.volume.title': '📈 Volume de Transações (24h)',
+                'charts.volume.content': 'Gráfico de volume em tempo real<br>📊 Pico: €156K/hora às 14:30<br>⚡ Crescimento: +24.5% vs ontem',
+                'charts.alerts.title': '🚨 Alertas do Sistema',
+                'alerts.quantum.title': 'Encriptação Quântica',
+                'alerts.quantum.status': 'ML-DSA-65 operacional',
+                'alerts.performance.title': 'Performance',
+                'alerts.performance.status': 'TPS acima da média',
+                'alerts.security.title': 'Segurança',
+                'alerts.security.status': 'Zero incidentes',
+                'status.title': '🖥️ Status dos Componentes',
+                'status.backend': 'Backend API Enterprise',
+                'status.blockchain': 'Blockchain Solana',
+                'status.frontend': 'Frontend PWA',
+                'status.mobile': 'App Mobile',
+                'status.analytics': 'Analytics BI',
+                'status.redis': 'Cache Redis (Load Balancing)'
+            },
+            de: {
+                'header.title': '📊 Executive Dashboard - EuroTAP',
+                'header.back': '← Zurück zur Hauptseite',
+                'dashboard.title': 'Unternehmensanalytik',
+                'metrics.revenue': 'Täglicher Umsatz',
+                'metrics.transactions': 'Transaktionen/Tag',
+                'metrics.tps': 'Durchschnittliche TPS',
+                'metrics.uptime': 'Verfügbarkeit',
+                'metrics.merchants': 'Aktive Händler',
+                'metrics.system_value': 'Systemwert',
+                'charts.volume.title': '📈 Transaktionsvolumen (24h)',
+                'charts.volume.content': 'Echtzeit-Volumen-Chart<br>📊 Spitze: €156K/Stunde um 14:30<br>⚡ Wachstum: +24.5% vs gestern',
+                'charts.alerts.title': '🚨 Systemwarnungen',
+                'alerts.quantum.title': 'Quantum-Verschlüsselung',
+                'alerts.quantum.status': 'ML-DSA-65 betriebsbereit',
+                'alerts.performance.title': 'Leistung',
+                'alerts.performance.status': 'TPS über dem Durchschnitt',
+                'alerts.security.title': 'Sicherheit',
+                'alerts.security.status': 'Null Vorfälle',
+                'status.title': '🖥️ Komponentenstatus',
+                'status.backend': 'Backend API Enterprise',
+                'status.blockchain': 'Blockchain Solana',
+                'status.frontend': 'Frontend PWA',
+                'status.mobile': 'Mobile App',
+                'status.analytics': 'Analytics BI',
+                'status.redis': 'Cache Redis (Load Balancing)'
+            },
+            fr: {
+                'header.title': '📊 Tableau de Bord Exécutif - EuroTAP',
+                'header.back': '← Retour au Site Principal',
+                'dashboard.title': 'Analytiques d\'Entreprise',
+                'metrics.revenue': 'Revenus Quotidiens',
+                'metrics.transactions': 'Transactions/Jour',
+                'metrics.tps': 'TPS Moyen',
+                'metrics.uptime': 'Disponibilité',
+                'metrics.merchants': 'Marchands Actifs',
+                'metrics.system_value': 'Valeur du Système',
+                'charts.volume.title': '📈 Volume de Transactions (24h)',
+                'charts.volume.content': 'Graphique de volume en temps réel<br>📊 Pic: €156K/heure à 14:30<br>⚡ Croissance: +24.5% vs hier',
+                'charts.alerts.title': '🚨 Alertes Système',
+                'alerts.quantum.title': 'Chiffrement Quantique',
+                'alerts.quantum.status': 'ML-DSA-65 opérationnel',
+                'alerts.performance.title': 'Performance',
+                'alerts.performance.status': 'TPS au-dessus de la moyenne',
+                'alerts.security.title': 'Sécurité',
+                'alerts.security.status': 'Zéro incident',
+                'status.title': '🖥️ Statut des Composants',
+                'status.backend': 'Backend API Enterprise',
+                'status.blockchain': 'Blockchain Solana',
+                'status.frontend': 'Frontend PWA',
+                'status.mobile': 'App Mobile',
+                'status.analytics': 'Analytics BI',
+                'status.redis': 'Cache Redis (Load Balancing)'
+            }
+        };
+
+        // Current language
+        let currentLang = 'en';
+
+        // Translate function
+        function translatePage(lang) {
+            currentLang = lang;
+            
+            // Update language buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.lang === lang) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Translate elements
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.dataset.translate;
+                if (translations[lang] && translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Store language preference
+            localStorage.setItem('preferredLanguage', lang);
+        }
+
+        // Initialize language
+        function initializeLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            const browserLang = navigator.language.split('-')[0];
+            const defaultLang = savedLang || (translations[browserLang] ? browserLang : 'en');
+            
+            translatePage(defaultLang);
+        }
+
+        // Language selector event listeners
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const lang = btn.dataset.lang;
+                translatePage(lang);
+            });
+        });
+
+        // Simulate real-time updates
+        function updateMetrics() {
+            // TPS variation
+            const baseTPS = 77234;
+            const variation = Math.floor(Math.random() * 2000) - 1000;
+            const newTPS = baseTPS + variation;
+            document.getElementById('tps').textContent = newTPS.toLocaleString();
+            
+            // Revenue variation
+            const baseRevenue = 1.2;
+            const revenueVar = (Math.random() * 0.2) - 0.1;
+            const newRevenue = (baseRevenue + revenueVar).toFixed(1);
+            document.getElementById('revenue').textContent = €M;
+            
+            // Transactions variation
+            const baseTx = 2.1;
+            const txVar = (Math.random() * 0.3) - 0.15;
+            const newTx = (baseTx + txVar).toFixed(1);
+            document.getElementById('transactions').textContent = ${newTx}M;
+        }
+        
+        // Update every 5 seconds
+        setInterval(updateMetrics, 5000);
+        
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeLanguage();
+            
+            // Add animations on load
+            const cards = document.querySelectorAll('.metric-card, .chart-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

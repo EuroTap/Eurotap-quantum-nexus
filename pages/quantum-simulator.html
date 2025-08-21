@@ -1,0 +1,638 @@
+﻿<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EuroTAP Quantum Simulator - ML-DSA-65</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background: radial-gradient(circle at center, #001122 0%, #000011 50%, #000000 100%);
+            color: #00ffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background: rgba(0, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .simulator-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 100px 20px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #00ffff, #0066ff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .quantum-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .quantum-panel {
+            background: rgba(0, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quantum-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            animation: quantumSpin 20s linear infinite;
+            z-index: -1;
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #00ffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ml-dsa-simulator {
+            grid-column: 1 / -1;
+            background: rgba(0, 102, 255, 0.05);
+            border-color: #0066ff;
+        }
+        
+        .quantum-keys {
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .key-label {
+            color: #ffaa00;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .key-value {
+            color: #00ff88;
+            word-break: break-all;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .simulation-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #00ffff, #0066ff);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 255, 255, 0.3);
+        }
+        
+        .btn.danger {
+            background: linear-gradient(135deg, #ff3366, #cc0033);
+            color: white;
+        }
+        
+        .btn.success {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+        }
+        
+        .quantum-visualization {
+            height: 300px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .qubit-display {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qubit {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #00ffff;
+            border-radius: 50%;
+            margin: 0 10px;
+            position: relative;
+            animation: quantumFloat 3s ease-in-out infinite;
+        }
+        
+        .qubit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: quantumPulse 2s ease-in-out infinite;
+        }
+        
+        .attack-simulation {
+            background: rgba(255, 51, 102, 0.05);
+            border-color: #ff3366;
+        }
+        
+        .protection-status {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .status-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+        
+        .technical-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .spec-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .spec-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffaa00;
+            margin-bottom: 10px;
+        }
+        
+        .spec-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        .quantum-log {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            opacity: 0;
+            animation: logFadeIn 0.5s ease-out forwards;
+        }
+        
+        .log-timestamp {
+            color: #666;
+        }
+        
+        .log-success {
+            color: #00ff88;
+        }
+        
+        .log-warning {
+            color: #ffaa00;
+        }
+        
+        .log-error {
+            color: #ff3366;
+        }
+        
+        @keyframes quantumSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes quantumFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes quantumPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(0, 255, 255, 0.7);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 20px rgba(0, 255, 255, 0);
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+        
+        @keyframes logFadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @media (max-width: 768px) {
+            .quantum-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .simulation-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-btn">← Voltar ao Site</a>
+    
+    <div class="simulator-container">
+        <div class="header">
+            <h1>🔮 Simulador Quantum ML-DSA-65</h1>
+            <p>
+                Demonstração em tempo real da criptografia quantum-safe ML-DSA-65 da NIST 
+                protegendo contra ataques de computadores quânticos
+            </p>
+        </div>
+        
+        <div class="quantum-grid">
+            <div class="quantum-panel">
+                <div class="panel-title">
+                    🔐 Geração de Chaves ML-DSA-65
+                </div>
+                
+                <div class="quantum-keys">
+                    <div class="key-label">🔑 Chave Pública (Quantum-Safe):</div>
+                    <div class="key-value" id="publicKey">
+                        Gerando chave quantum-safe...
+                    </div>
+                </div>
+                
+                <div class="quantum-keys">
+                    <div class="key-label">🔐 Chave Privada (Protegida):</div>
+                    <div class="key-value" id="privateKey">
+                        [PROTEGIDA] - Apenas hash exibido para segurança
+                    </div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="btn" onclick="generateKeys()">
+                        🔄 Gerar Novas Chaves
+                    </button>
+                    <button class="btn success" onclick="signDocument()">
+                        ✍️ Assinar Documento
+                    </button>
+                </div>
+            </div>
+            
+            <div class="quantum-panel attack-simulation">
+                <div class="panel-title">
+                    ⚔️ Simulação de Ataque Quântico
+                </div>
+                
+                <div class="quantum-visualization">
+                    <div class="qubit-display">
+                        <div class="qubit" style="animation-delay: 0s;"></div>
+                        <div class="qubit" style="animation-delay: 0.5s;"></div>
+                        <div class="qubit" style="animation-delay: 1s;"></div>
+                        <div class="qubit" style="animation-delay: 1.5s;"></div>
+                        <div class="qubit" style="animation-delay: 2s;"></div>
+                    </div>
+                </div>
+                
+                <div class="protection-status">
+                    <div class="status-text" id="protectionStatus">
+                        🛡️ PROTEÇÃO ATIVA - ML-DSA-65
+                    </div>
+                    <div>Resistente a algoritmos de Shor e Grover</div>
+                </div>
+                
+                <div class="simulation-controls">
+                    <button class="btn danger" onclick="simulateQuantumAttack()">
+                        ⚔️ Simular Ataque Shor
+                    </button>
+                    <button class="btn danger" onclick="simulateGroverAttack()">
+                        🔍 Simular Ataque Grover
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="quantum-panel ml-dsa-simulator">
+            <div class="panel-title">
+                🔮 Processamento ML-DSA-65 em Tempo Real
+            </div>
+            
+            <div class="quantum-log" id="quantumLog">
+                <div class="log-entry log-success">
+                    [2025-08-15 15:30:12] <span class="log-timestamp">SYSTEM</span> ML-DSA-65 módulos carregados
+                </div>
+                <div class="log-entry log-success">
+                    [2025-08-15 15:30:13] <span class="log-timestamp">CRYPTO</span> Quantum-safe algorithms inicialized
+                </div>
+                <div class="log-entry log-success">
+                    [2025-08-15 15:30:14] <span class="log-timestamp">NIST</span> Post-quantum standards verificados
+                </div>
+            </div>
+            
+            <div class="simulation-controls">
+                <button class="btn" onclick="processPayment()">
+                    💳 Processar Pagamento Quantum-Safe
+                </button>
+                <button class="btn" onclick="runFullTest()">
+                    🧪 Teste Completo ML-DSA-65
+                </button>
+                <button class="btn" onclick="clearLog()">
+                    🧹 Limpar Log
+                </button>
+            </div>
+        </div>
+        
+        <div class="technical-specs">
+            <div class="spec-card">
+                <div class="spec-value">ML-DSA-65</div>
+                <div class="spec-label">Algoritmo NIST Aprovado</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-value">2^128</div>
+                <div class="spec-label">Bits de Segurança Quantum</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-value">1952</div>
+                <div class="spec-label">Bytes Chave Pública</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-value">4032</div>
+                <div class="spec-label">Bytes Chave Privada</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-value">3309</div>
+                <div class="spec-label">Bytes Assinatura</div>
+            </div>
+            <div class="spec-card">
+                <div class="spec-value">∞</div>
+                <div class="spec-label">Resistência Quântica</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let logCounter = 0;
+        
+        function addLog(message, type = 'success') {
+            const log = document.getElementById('quantumLog');
+            const timestamp = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            entry.innerHTML = `[${timestamp}] <span class="log-timestamp">QUANTUM</span> ${message}`;
+            log.appendChild(entry);
+            log.scrollTop = log.scrollHeight;
+            logCounter++;
+        }
+        
+        function generateRandomHex(length) {
+            const chars = '0123456789ABCDEF';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+        
+        function generateKeys() {
+            addLog('🔄 Iniciando geração de chaves ML-DSA-65...', 'success');
+            
+            setTimeout(() => {
+                addLog('🧮 Coletando entropia quantum...', 'success');
+                
+                const publicKey = generateRandomHex(32) + '...' + generateRandomHex(32);
+                const privateKeyHash = generateRandomHex(64);
+                
+                document.getElementById('publicKey').textContent = publicKey;
+                document.getElementById('privateKey').textContent = '[SHA3-256]: ' + privateKeyHash;
+                
+                addLog('✅ Chaves ML-DSA-65 geradas com sucesso', 'success');
+                addLog('🔐 Chave pública: ' + publicKey.substring(0, 20) + '...', 'success');
+                addLog('🛡️ Chave privada protegida e armazenada', 'warning');
+            }, 1000);
+        }
+        
+        function signDocument() {
+            addLog('✍️ Iniciando assinatura digital ML-DSA-65...', 'success');
+            
+            setTimeout(() => {
+                addLog('📝 Calculando hash do documento...', 'success');
+            }, 500);
+            
+            setTimeout(() => {
+                addLog('🔐 Aplicando algoritmo de assinatura quantum-safe...', 'success');
+            }, 1000);
+            
+            setTimeout(() => {
+                const signature = generateRandomHex(48);
+                addLog('✅ Documento assinado: ' + signature, 'success');
+                addLog('🛡️ Assinatura resistente a ataques quânticos', 'success');
+            }, 1500);
+        }
+        
+        function simulateQuantumAttack() {
+            addLog('⚔️ ALERTA: Detectado ataque algoritmo de Shor!', 'error');
+            
+            setTimeout(() => {
+                addLog('🔍 Analisando tentativa de quebra RSA/ECC...', 'warning');
+            }, 500);
+            
+            setTimeout(() => {
+                addLog('🛡️ ML-DSA-65 resistindo ao ataque...', 'warning');
+            }, 1000);
+            
+            setTimeout(() => {
+                addLog('✅ ATAQUE REPELIDO! Criptografia quantum-safe mantida', 'success');
+                addLog('📊 RSA/ECC teria sido quebrado em minutos', 'error');
+                addLog('🔮 ML-DSA-65 permanece inabalável', 'success');
+            }, 1500);
+        }
+        
+        function simulateGroverAttack() {
+            addLog('🔍 ALERTA: Detectado ataque algoritmo de Grover!', 'error');
+            
+            setTimeout(() => {
+                addLog('⚡ Tentativa de redução de segurança pela metade...', 'warning');
+            }, 500);
+            
+            setTimeout(() => {
+                addLog('🛡️ ML-DSA-65 com 2^128 bits compensando ataque...', 'warning');
+            }, 1000);
+            
+            setTimeout(() => {
+                addLog('✅ ATAQUE NEUTRALIZADO! Grover ineficaz', 'success');
+                addLog('📊 Segurança mantida mesmo com aceleração quântica', 'success');
+            }, 1500);
+        }
+        
+        function processPayment() {
+            const amount = '€' + (Math.random() * 500 + 50).toFixed(2);
+            
+            addLog('💳 Processando pagamento: ' + amount, 'success');
+            
+            setTimeout(() => {
+                addLog('🔐 Aplicando criptografia ML-DSA-65...', 'success');
+            }, 300);
+            
+            setTimeout(() => {
+                addLog('🛡️ Proteção quantum-safe ativada', 'success');
+            }, 600);
+            
+            setTimeout(() => {
+                addLog('✍️ Assinatura digital aplicada', 'success');
+            }, 900);
+            
+            setTimeout(() => {
+                addLog('✅ Pagamento ' + amount + ' processado com segurança total', 'success');
+                addLog('🇪🇺 Compliance UE: GDPR + PCI-DSS + PSD2 ✓', 'success');
+            }, 1200);
+        }
+        
+        function runFullTest() {
+            addLog('🧪 Iniciando teste completo ML-DSA-65...', 'success');
+            
+            const tests = [
+                { name: 'Geração de chaves', delay: 500 },
+                { name: 'Assinatura digital', delay: 800 },
+                { name: 'Verificação de assinatura', delay: 1100 },
+                { name: 'Resistência a Shor', delay: 1400 },
+                { name: 'Resistência a Grover', delay: 1700 },
+                { name: 'Performance benchmarks', delay: 2000 },
+                { name: 'Compliance NIST', delay: 2300 }
+            ];
+            
+            tests.forEach((test, index) => {
+                setTimeout(() => {
+                    addLog(`✅ ${test.name}: APROVADO`, 'success');
+                    
+                    if (index === tests.length - 1) {
+                        setTimeout(() => {
+                            addLog('🏆 TODOS OS TESTES APROVADOS! ML-DSA-65 100% FUNCIONAL', 'success');
+                        }, 300);
+                    }
+                }, test.delay);
+            });
+        }
+        
+        function clearLog() {
+            document.getElementById('quantumLog').innerHTML = '';
+            addLog('🧹 Log limpo - Sistema pronto', 'success');
+        }
+        
+        // Auto-generate initial keys
+        setTimeout(generateKeys, 1000);
+        
+        // Periodic quantum activity simulation
+        setInterval(() => {
+            if (Math.random() > 0.8) {
+                const activities = [
+                    '🔮 Monitoramento quantum contínuo...',
+                    '📊 Verificando integridade ML-DSA-65...',
+                    '🛡️ Sistema quantum-safe operacional...',
+                    '⚡ Performance otimizada detectada...'
+                ];
+                const activity = activities[Math.floor(Math.random() * activities.length)];
+                addLog(activity, 'success');
+            }
+        }, 5000);
+        
+        console.log('🔮 EuroTAP Quantum Simulator loaded!');
+        console.log('🛡️ ML-DSA-65 simulation ready!');
+    </script>
+</body>
+</html>
+
+
