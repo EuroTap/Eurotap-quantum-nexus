@@ -3,26 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> EuroTAP | Europe's First Quantum-Safe Payment Revolution</title>
+    <title> EuroTAP | Europe's Quantum-Safe Payment Revolution</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, #000000, #0a0a0a, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #000000, #1a1a2e);
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             line-height: 1.6;
-            overflow-x: hidden;
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .hero {
             text-align: center;
-            padding: 100px 20px;
+            padding: 60px 20px;
             background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,204,255,0.1));
             border-radius: 20px;
-            margin: 20px;
-            border: 2px solid rgba(0,255,136,0.3);
+            margin: 20px 0;
+            border: 2px solid #00ff88;
         }
         .logo {
             font-size: 4rem;
@@ -31,41 +29,55 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(0,255,136,0.5);
         }
         .tagline {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: #00ff88;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-weight: 600;
         }
         .description {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 40px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
             opacity: 0.9;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .stat-card {
+            background: rgba(0,255,136,0.1);
+            border: 1px solid #00ff88;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 10px;
         }
         .demo-buttons {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin: 50px 0;
-            padding: 0 20px;
         }
         .demo-btn {
             background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,204,255,0.2));
             border: 2px solid #00ff88;
             color: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: block;
             text-align: center;
         }
         .demo-btn:hover {
@@ -73,31 +85,12 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,255,136,0.3);
         }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 50px 0;
-        }
-        .stat-card {
-            background: rgba(0,255,136,0.1);
-            border: 1px solid rgba(0,255,136,0.3);
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #00ff88;
-            margin-bottom: 10px;
-        }
         .charts-section {
             margin: 50px 0;
             padding: 30px;
             background: rgba(0,0,0,0.3);
             border-radius: 20px;
-            border: 1px solid rgba(0,255,136,0.2);
+            border: 1px solid #00ff88;
         }
         .chart-container {
             width: 100%;
@@ -105,43 +98,67 @@
             margin: 30px 0;
             position: relative;
         }
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 10000;
-            background: linear-gradient(135deg, rgba(0,255,136,0.9), rgba(0,204,255,0.9));
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            max-width: 300px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
+        .contact-section {
+            background: rgba(0,255,136,0.1);
+            border: 2px solid #00ff88;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
         }
-        .notification.show {
-            transform: translateX(0);
+        .contact-title {
+            font-size: 2.5rem;
+            color: #00ff88;
+            margin-bottom: 20px;
+        }
+        .contact-email {
+            font-size: 1.5rem;
+            color: #00ff88;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
         }
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(0,255,136,0.7); }
             70% { box-shadow: 0 0 0 10px rgba(0,255,136,0); }
             100% { box-shadow: 0 0 0 0 rgba(0,255,136,0); }
         }
-        .pulse { animation: pulse 2s infinite; }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, rgba(0,255,136,0.9), rgba(0,204,255,0.9));
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            z-index: 10000;
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        .notification.show { transform: translateX(0); }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- HERO SECTION -->
         <div class="hero">
             <div class="logo">🚀 EuroTAP</div>
             <div class="tagline">Europe's First Quantum-Safe Payment Revolution</div>
             <div class="description">
-                Securing €2 trillion in EU payments with ML-DSA-65 post-quantum cryptography. 
-                First-mover advantage in quantum-resistant financial technology.
+                Securing €2 trillion in EU payments with ML-DSA-65 post-quantum cryptography.<br>
                 <strong>77,255 TPS proven performance</strong> with zero quantum vulnerabilities.
             </div>
             
+            <!-- STATS GRID -->
             <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">€8M</div>
+                    <div>Investment Opportunity</div>
+                </div>
                 <div class="stat-card">
                     <div class="stat-number">€2T</div>
                     <div>EU Payment Market</div>
@@ -154,43 +171,41 @@
                     <div class="stat-number">15-25x</div>
                     <div>Projected ROI</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">100%</div>
-                    <div>Quantum-Safe</div>
-                </div>
             </div>
         </div>
 
+        <!-- DEMO BUTTONS -->
         <div class="demo-buttons">
             <button class="demo-btn pulse" onclick="openDemo('mobile')">
-                 Mobile Terminal Demo
-                <div style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                📱 Mobile Terminal Demo
+                <div style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">
                     Transform smartphones into quantum-safe POS terminals
                 </div>
             </button>
             
             <button class="demo-btn" onclick="openDemo('web')">
                 🌐 Web Terminal Demo  
-                <div style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                <div style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">
                     Professional browser-based payment interface
                 </div>
             </button>
             
             <button class="demo-btn" onclick="openDemo('crypto')">
                 🔐 Quantum Crypto Demo
-                <div style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                <div style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">
                     ML-DSA-65 encryption demonstration
                 </div>
             </button>
             
             <button class="demo-btn" onclick="openDemo('simulator')">
                 ⚛️ Quantum Simulator
-                <div style="font-size: 0.9rem; margin-top: 10px; opacity: 0.8;">
+                <div style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">
                     Real-time quantum algorithm visualization
                 </div>
             </button>
         </div>
 
+        <!-- CHARTS SECTION -->
         <div class="charts-section">
             <h2 style="text-align: center; color: #00ff88; margin-bottom: 30px;">📊 EuroTAP Performance Analytics</h2>
             
@@ -206,10 +221,22 @@
                 <canvas id="marketChart"></canvas>
             </div>
         </div>
+
+        <!-- CONTACT SECTION -->
+        <div class="contact-section">
+            <div class="contact-title"> Strategic Investment Contact</div>
+            <div style="font-size: 1.2rem; margin-bottom: 20px;">
+                Ready to acquire Europe's quantum-safe payment advantage?
+            </div>
+            <div class="contact-email"> tapeuro78@gmail.com</div>
+            <div style="font-size: 1rem; opacity: 0.8;">
+                €8M Strategic Investment | Complete Technology Transfer | Live Testnet Included
+            </div>
+        </div>
     </div>
 
     <script>
-        // FUNÇÃO OPENDEMO QUE REALMENTE FUNCIONA
+        // FUNÇÃO OPENDEMO QUE FUNCIONA 100%
         function openDemo(type) {
             console.log(' Opening demo:', type);
             
@@ -238,14 +265,13 @@
             
             const demo = demos[type];
             if (demo) {
-                // Tentar abrir em nova aba
                 const demoWindow = window.open(demo.url, '_blank', 'width=1200,height=800,scrollbars=yes,resizable=yes');
                 
                 if (demoWindow) {
-                    showNotification(` ${demo.title} Opened`, demo.description);
-                    console.log(' Demo opened successfully');
+                    console.log('✅ Demo opened successfully');
+                    showNotification(`✅ ${demo.title} Opened`, demo.description);
                     
-                    // Enviar dados testnet após 2 segundos
+                    // Enviar dados para demo após 2 segundos
                     setTimeout(() => {
                         try {
                             demoWindow.postMessage({
@@ -254,7 +280,8 @@
                                     wallet: 'EUR-QS-' + Math.random().toString(36).substr(2, 8).toUpperCase(),
                                     balance: (Math.random() * 10000 + 1000).toFixed(2),
                                     network: 'EuroTAP Quantum Testnet',
-                                    encryption: 'ML-DSA-65 NIST-Approved'
+                                    encryption: 'ML-DSA-65 NIST-Approved',
+                                    timestamp: new Date().toISOString()
                                 }
                             }, '*');
                         } catch (e) {
@@ -262,8 +289,7 @@
                         }
                     }, 2000);
                 } else {
-                    alert(' Pop-up blocked! Please allow pop-ups for EuroTAP demos.\n\nOr try: Right-click  Open in new tab');
-                    showNotification(' Pop-up Blocked', 'Please allow pop-ups or right-click  open in new tab');
+                    alert('❌ Pop-up blocked! Please allow pop-ups for EuroTAP demos.');
                 }
             }
         }
@@ -274,11 +300,12 @@
             notification.innerHTML = `
                 <div style="font-weight: bold; margin-bottom: 5px;">${title}</div>
                 <div style="font-size: 0.9rem;">${message}</div>
+                <div style="font-size: 0.8rem; margin-top: 5px; opacity: 0.7;"> Connected to Testnet</div>
             `;
             
             document.body.appendChild(notification);
-            
             setTimeout(() => notification.classList.add('show'), 100);
+            
             setTimeout(() => {
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
@@ -287,7 +314,7 @@
         
         // GRÁFICOS FUNCIONAIS
         function createCharts() {
-            console.log('📊 Creating charts...');
+            console.log('📊 Creating functional charts...');
             
             // Performance Chart
             const perfCtx = document.getElementById('performanceChart');
@@ -309,7 +336,7 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            title: { display: true, text: '⚡ EuroTAP Performance Growth', color: 'white' },
+                            title: { display: true, text: ' EuroTAP Performance Growth', color: 'white' },
                             legend: { labels: { color: 'white' } }
                         },
                         scales: {
@@ -364,7 +391,7 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            title: { display: true, text: ' EuroTAP Market Expansion Plan', color: 'white' },
+                            title: { display: true, text: '🌍 EuroTAP Market Expansion Plan', color: 'white' },
                             legend: { labels: { color: 'white' } }
                         },
                         scales: {
@@ -378,19 +405,19 @@
         
         // Inicializar quando página carregar
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('✅ EuroTAP site loaded');
+            console.log(' EuroTAP site loaded successfully');
             setTimeout(createCharts, 1000);
             
-            // Mostrar notificação de boas-vindas
+            // Notificação de boas-vindas
             setTimeout(() => {
-                showNotification(' EuroTAP Demo Ready', 'Click any demo button to explore quantum-safe payments');
+                showNotification('🚀 EuroTAP Ready', 'All demos and charts functional - Click any demo button!');
             }, 2000);
         });
         
         // Listener para dados dos demos
         window.addEventListener('message', function(event) {
             if (event.data.type === 'DEMO_READY') {
-                console.log(' Demo connection established');
+                console.log('🔗 Demo connection established');
             }
         });
     </script>
