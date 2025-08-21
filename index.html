@@ -106,31 +106,6 @@
             box-shadow: 0 10px 20px rgba(0, 255, 136, 0.3);
         }
         
-        .status-online { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
-        
-        /* HERO STATS */
-        .hero-stats {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px; margin: 50px auto; max-width: 1000px;
-        }
-        
-        .stat-item {
-            background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88;
-            border-radius: 15px; padding: 25px 20px; backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.3);
-        }
-        
-        .stat-value {
-            font-size: 2.2rem; font-weight: bold; color: #00ff88; margin-bottom: 10px;
-        }
-        
-        .stat-label { color: #e0e0e0; font-size: 1rem; }
-        
         /* INVESTMENT SECTION */
         .investment-section {
             padding: 80px 20px; background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.05));
@@ -173,12 +148,6 @@
         
         .analytics-title {
             text-align: center; font-size: 2.8rem; color: #00ff88; margin-bottom: 50px;
-        }
-        
-        .testnet-warning {
-            background: rgba(255, 193, 7, 0.1); border: 2px solid #ffc107;
-            border-radius: 15px; padding: 20px; margin: 30px 0;
-            text-align: center; color: #ffc107; font-weight: bold;
         }
         
         .metrics-grid {
@@ -283,7 +252,7 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hero h1 { font-size: 2.2rem; }
-            .hero-stats, .investment-grid, .metrics-grid { grid-template-columns: 1fr; }
+            .investment-grid, .metrics-grid { grid-template-columns: 1fr; }
             .chart-header { flex-direction: column; text-align: center; }
             .connection-status { flex-direction: column; align-items: center; }
         }
@@ -316,48 +285,28 @@
             
             <!-- STATUS INDICATORS -->
             <div class="connection-status">
-                <div class="status-badge status-online">
+                <div class="status-badge">
                     <div style="font-size: 1.5rem; margin-bottom: 8px;">🟢</div>
                     <div style="color: #00ff88; font-weight: bold; font-size: 1rem;">Connected</div>
                     <div style="color: #ccc; font-size: 0.85rem;">Testnet Network</div>
                 </div>
                 
-                <div class="status-badge status-online">
+                <div class="status-badge">
                     <div style="font-size: 1.5rem; margin-bottom: 8px;">📡</div>
                     <div style="color: #00ff88; font-weight: bold; font-size: 1rem;">Live Data</div>
                     <div style="color: #ccc; font-size: 0.85rem;">API Stream</div>
                 </div>
                 
-                <div class="status-badge status-online">
+                <div class="status-badge">
                     <div style="font-size: 1.5rem; margin-bottom: 8px;">🔐</div>
                     <div style="color: #00ff88; font-weight: bold; font-size: 1rem;">ML-DSA-65</div>
                     <div style="color: #ccc; font-size: 0.85rem;">Quantum-Safe</div>
                 </div>
                 
-                <div class="status-badge status-online">
+                <div class="status-badge">
                     <div style="font-size: 1.5rem; margin-bottom: 8px;">⚡</div>
                     <div style="color: #00ff88; font-weight: bold; font-size: 1rem;" id="currentTpsHero">1,247</div>
                     <div style="color: #ccc; font-size: 0.85rem;">Live TPS</div>
-                </div>
-            </div>
-            
-            <!-- HERO STATS -->
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="heroTotalTx">2,847,392</div>
-                    <div class="stat-label">Total Transactions</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="heroTotalVolume">€24.7M</div>
-                    <div class="stat-label">Total Volume</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="heroBlockHeight">1,023,847</div>
-                    <div class="stat-label">Current Block Height</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">99.98%</div>
-                    <div class="stat-label">Network Uptime</div>
                 </div>
             </div>
         </div>
@@ -413,10 +362,6 @@
     <section id="analytics" class="analytics-section">
         <div class="analytics-container">
             <h2 class="analytics-title">📊 Live Testnet Analytics</h2>
-            
-            <div class="testnet-warning">
-                🌐 <strong>LIVE TESTNET:</strong> Real quantum-safe transactions processing 24/7 • Connect your wallet to participate
-            </div>
             
             <!-- METRICS GRID -->
             <div class="metrics-grid">
@@ -632,11 +577,8 @@
             blockHeight += Math.random() > 0.7 ? 1 : 0;
             
             document.getElementById('totalTransactions').textContent = transactionCount.toLocaleString();
-            document.getElementById('heroTotalTx').textContent = transactionCount.toLocaleString();
             document.getElementById('totalVolume').textContent = '€' + (totalVolume / 1000000).toFixed(1) + 'M';
-            document.getElementById('heroTotalVolume').textContent = '€' + (totalVolume / 1000000).toFixed(1) + 'M';
             document.getElementById('blockHeight').textContent = blockHeight.toLocaleString();
-            document.getElementById('heroBlockHeight').textContent = blockHeight.toLocaleString();
             
             document.getElementById('activeNodes').textContent = Math.floor(Math.random() * 8) + 32;
             document.getElementById('avgBlockTime').textContent = (3.8 + Math.random() * 1.2).toFixed(1) + 's';
