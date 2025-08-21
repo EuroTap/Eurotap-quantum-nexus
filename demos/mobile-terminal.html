@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,6 +6,7 @@
     <title> Mobile Terminal Demo | EuroTAP</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             background: linear-gradient(135deg, #000000, #0a0a0a, #1a1a2e, #16213e);
             color: white;
@@ -13,17 +14,20 @@
             min-height: 100vh;
             overflow-x: hidden;
         }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
+
         .header {
             text-align: center;
             padding: 30px 0;
             border-bottom: 2px solid rgba(0, 255, 136, 0.3);
             margin-bottom: 30px;
         }
+
         .logo {
             font-size: 2rem;
             font-weight: bold;
@@ -33,11 +37,13 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
         .demo-title {
             font-size: 1.8rem;
             color: #00ff88;
             margin-bottom: 10px;
         }
+
         .back-btn {
             position: absolute;
             top: 20px;
@@ -50,15 +56,18 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
+
         .back-btn:hover {
             background: rgba(0, 255, 136, 0.4);
             transform: translateY(-2px);
         }
+
         .phone-container {
             display: flex;
             justify-content: center;
             margin: 40px 0;
         }
+
         .phone-simulator {
             background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
             border-radius: 30px;
@@ -68,6 +77,7 @@
             border: 3px solid #333;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
+
         .phone-screen {
             background: #000;
             border-radius: 20px;
@@ -77,17 +87,20 @@
             border: 2px solid #00ff88;
             overflow: hidden;
         }
+
         .phone-header {
             text-align: center;
             padding: 10px 0;
             border-bottom: 1px solid rgba(0, 255, 136, 0.3);
             margin-bottom: 20px;
         }
+
         .app-title {
             color: #00ff88;
             font-size: 1.2rem;
             font-weight: bold;
         }
+
         .demo-section {
             margin: 20px 0;
             padding: 15px;
@@ -96,10 +109,12 @@
             border: 1px solid rgba(0, 255, 136, 0.3);
             transition: all 0.3s ease;
         }
+
         .demo-section:hover {
             background: rgba(0, 255, 136, 0.2);
             transform: translateY(-2px);
         }
+
         .section-title {
             color: #00ff88;
             font-size: 1rem;
@@ -109,6 +124,7 @@
             align-items: center;
             gap: 8px;
         }
+
         .demo-btn {
             width: 100%;
             padding: 12px;
@@ -121,13 +137,16 @@
             transition: all 0.3s ease;
             margin: 10px 0;
         }
+
         .demo-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
         }
+
         .demo-btn:active {
             transform: translateY(0);
         }
+
         .demo-result {
             margin-top: 10px;
             padding: 10px;
@@ -138,14 +157,17 @@
             font-size: 0.9rem;
             display: none;
         }
+
         .demo-result.show {
             display: block;
             animation: slideDown 0.3s ease;
         }
+
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .status-indicator {
             display: inline-block;
             width: 8px;
@@ -153,19 +175,15 @@
             border-radius: 50%;
             margin-right: 8px;
         }
+
         .status-active { background: #00ff88; animation: pulse 2s infinite; }
         .status-inactive { background: #666; }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
-        .transaction-display {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-        }
+
         .amount-input {
             width: 100%;
             padding: 10px;
@@ -177,56 +195,31 @@
             text-align: center;
             margin: 10px 0;
         }
+
         .amount-input:focus {
             outline: none;
             border-color: #00ff88;
             background: rgba(255, 255, 255, 0.15);
         }
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 40px 0;
-        }
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            text-align: center;
-        }
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            display: block;
-        }
+
         @media (max-width: 768px) {
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
             .phone-simulator {
                 width: 100%;
                 max-width: 320px;
             }
         }
-        .quantum-security {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 204, 255, 0.2));
-            border: 2px solid #00ff88;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 30px 0;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
-    <a href="index.html" class="back-btn"> Back to Main</a>
+    <a href="../" class="back-btn">← Back to Main</a>
+    
     <div class="container">
         <header class="header">
-            <div class="logo">EuroTAP</div>
-            <h1 class="demo-title">Mobile Terminal Demo</h1>
+            <div class="logo">🔮 EuroTAP</div>
+            <h1 class="demo-title">📱 Mobile Terminal Demo</h1>
             <p>Transform any smartphone into a quantum-safe payment terminal</p>
         </header>
+
         <div class="phone-container">
             <div class="phone-simulator">
                 <div class="phone-screen">
@@ -234,155 +227,127 @@
                         <div class="app-title">EuroTAP Mobile</div>
                         <div style="font-size: 0.8rem; color: #ccc;">Quantum-Safe Payment Terminal</div>
                     </div>
+
+                    <!-- NFC Demo -->
                     <div class="demo-section">
                         <div class="section-title">
-                            <span class="status-indicator status-active"></span> NFC Payment
+                             <span class="status-indicator status-active"></span> NFC Payment
                         </div>
-                        <input type="number" class="amount-input" id="nfcAmount" placeholder="Enter amount (�)" value="25.50">
+                        <input type="number" class="amount-input" id="nfcAmount" placeholder="Enter amount (€)" value="25.50">
                         <button class="demo-btn" onclick="simulateNFC()">Tap to Pay with NFC</button>
                         <div class="demo-result" id="nfcResult"></div>
                     </div>
+
+                    <!-- QR Code Demo -->
                     <div class="demo-section">
                         <div class="section-title">
-                            <span class="status-indicator status-active"></span> QR Code Payment
+                            📱 <span class="status-indicator status-active"></span> QR Code Payment
                         </div>
-                        <input type="number" class="amount-input" id="qrAmount" placeholder="Enter amount (�)" value="15.75">
+                        <input type="number" class="amount-input" id="qrAmount" placeholder="Enter amount (€)" value="15.75">
                         <button class="demo-btn" onclick="simulateQR()">Generate QR Payment</button>
                         <div class="demo-result" id="qrResult"></div>
                     </div>
+
+                    <!-- Biometric Demo -->
                     <div class="demo-section">
                         <div class="section-title">
-                            <span class="status-indicator status-active"></span> Biometric Security
+                            🔐 <span class="status-indicator status-active"></span> Biometric Security
                         </div>
                         <button class="demo-btn" onclick="simulateBiometric()">Authenticate with Fingerprint</button>
                         <div class="demo-result" id="biometricResult"></div>
                     </div>
-                    <div class="transaction-display" id="transactionDisplay" style="display: none;">
-                        <div style="color: #00ff88; font-weight: bold; margin-bottom: 10px;">Transaction Successful</div>
-                        <div id="transactionDetails"></div>
-                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <span class="feature-icon"></span>
-                <h3>Quantum-Safe Security</h3>
-                <p>ML-DSA-65 post-quantum cryptography protects against future quantum attacks</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon"></span>
-                <h3>Instant Payments</h3>
-                <p>Process payments in under 3 seconds with quantum-validated transactions</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon"></span>
-                <h3>Europe-Wide Coverage</h3>
-                <p>Works across all EU countries with unified quantum payment infrastructure</p>
-            </div>
-            <div class="feature-card">
-                <span class="feature-icon"></span>
-                <h3>Low Fees</h3>
-                <p>Only 1% transaction fee - 50-70% cheaper than traditional payment systems</p>
-            </div>
-        </div>
-        <div class="quantum-security">
-            <h2>Quantum Security in Action</h2>
-            <p>Every transaction is protected by ML-DSA-65 quantum-resistant signatures, ensuring your payments remain secure even against quantum computer attacks.</p>
-            <div style="margin: 20px 0; font-family: monospace; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px;">
-                <div>Quantum Signature: ML-DSA-65</div>
-                <div>Network: EuroTAP Quantum Testnet</div>
-                <div>Speed: 1,247 TPS average</div>
-                <div>Security Level: Post-Quantum Safe</div>
             </div>
         </div>
     </div>
+
     <script>
         let transactionCounter = 1;
+
         function simulateNFC() {
             const amount = document.getElementById('nfcAmount').value || '25.50';
             const result = document.getElementById('nfcResult');
+            
+            // Simulate processing
             result.innerHTML = ' Processing NFC payment...';
             result.classList.add('show');
+            
             setTimeout(() => {
                 const txHash = generateTxHash();
-                result.innerHTML = 
+                result.innerHTML = `
                      NFC Payment Successful!<br>
-                    Amount: �<br>
-                    TX Hash: <br>
-                    Time: <br>
-                    Quantum-Safe: ML-DSA-65
-                ;
-                showTransactionSuccess(amount, 'NFC', txHash);
+                     Amount: €${amount}<br>
+                     TX Hash: ${txHash}<br>
+                     Time: ${new Date().toLocaleTimeString()}<br>
+                     Quantum-Safe: ML-DSA-65
+                `;
             }, 2000);
         }
+
         function simulateQR() {
             const amount = document.getElementById('qrAmount').value || '15.75';
             const result = document.getElementById('qrResult');
+            
             result.innerHTML = ' Generating QR code...';
             result.classList.add('show');
+            
             setTimeout(() => {
                 const qrCode = generateQRCode();
                 const txHash = generateTxHash();
-                result.innerHTML = 
+                result.innerHTML = `
                      QR Payment Processed!<br>
-                    QR Code: <br>
-                    Amount: �<br>
-                    TX Hash: <br>
-                    Time: <br>
-                    Quantum Encrypted
-                ;
-                showTransactionSuccess(amount, 'QR Code', txHash);
+                     QR Code: ${qrCode}<br>
+                     Amount: €${amount}<br>
+                     TX Hash: ${txHash}<br>
+                     Time: ${new Date().toLocaleTimeString()}<br>
+                    🛡️ Quantum Encrypted
+                `;
             }, 1500);
         }
+
         function simulateBiometric() {
             const result = document.getElementById('biometricResult');
-            result.innerHTML = ' Place finger on sensor...';
+            
+            result.innerHTML = '👆 Place finger on sensor...';
             result.classList.add('show');
+            
             setTimeout(() => {
-                result.innerHTML = ' Scanning fingerprint...';
+                result.innerHTML = '🔍 Scanning fingerprint...';
+                
                 setTimeout(() => {
                     const biometricId = generateBiometricId();
-                    result.innerHTML = 
-                         Biometric Authentication Success!<br>
-                        User ID: <br>
-                        Security Level: Quantum-Safe<br>
-                        Authenticated: <br>
-                        ML-DSA-65 Verified
-                    ;
+                    result.innerHTML = `
+                        ✅ Biometric Authentication Success!<br>
+                        👤 User ID: ${biometricId}<br>
+                        🔐 Security Level: Quantum-Safe<br>
+                        ⏰ Authenticated: ${new Date().toLocaleTimeString()}<br>
+                        🛡️ ML-DSA-65 Verified
+                    `;
                 }, 1000);
             }, 800);
         }
-        function showTransactionSuccess(amount, method, txHash) {
-            const display = document.getElementById('transactionDisplay');
-            const details = document.getElementById('transactionDetails');
-            details.innerHTML = 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem;">
-                    <div><strong>Amount:</strong> �</div>
-                    <div><strong>Method:</strong> </div>
-                    <div><strong>TX #:</strong> </div>
-                    <div><strong>Network:</strong> Testnet</div>
-                    <div colspan="2"><strong>Hash:</strong> </div>
-                </div>
-            ;
-            display.style.display = 'block';
-            display.scrollIntoView({ behavior: 'smooth' });
-        }
+
         function generateTxHash() {
             return '0x' + Math.random().toString(16).substring(2, 18) + Math.random().toString(16).substring(2, 18);
         }
+
         function generateQRCode() {
             return 'QR' + Math.random().toString(36).substring(2, 10).toUpperCase();
         }
+
         function generateBiometricId() {
             return 'BIO' + Math.random().toString(36).substring(2, 10).toUpperCase();
         }
+
+        // Add some dynamic effects
         setInterval(() => {
             const indicators = document.querySelectorAll('.status-active');
             indicators.forEach(indicator => {
                 indicator.style.opacity = Math.random() > 0.5 ? '1' : '0.7';
             });
         }, 1500);
+
+        // Auto-focus on amount inputs
         document.addEventListener('DOMContentLoaded', () => {
             const inputs = document.querySelectorAll('.amount-input');
             inputs.forEach(input => {
