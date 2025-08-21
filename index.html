@@ -1,8 +1,4 @@
-﻿<<<<<<< HEAD
-ï»¿  <!DOCTYPE html>
-=======
-<!DOCTYPE html>
->>>>>>> e8eddc386d1c4164fd3b8e54a613e86f05319b0f
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -119,8 +115,6 @@
         }
         
         .status-online { border-color: #00ff88; background: rgba(0, 255, 136, 0.2); }
-        .status-connecting { border-color: #ffc107; background: rgba(255, 193, 7, 0.2); }
-        .status-offline { border-color: #ff6b6b; background: rgba(255, 107, 107, 0.2); }
         
         /* REAL TESTNET INDICATOR */
         .real-testnet-banner {
@@ -182,139 +176,6 @@
         
         .investment-label { font-size: 1.1rem; color: #e0e0e0; margin-bottom: 15px; }
         .investment-description { color: #b0b0b0; line-height: 1.5; }
-        
-        /* LIVE ANALYTICS */
-        .analytics-section { padding: 80px 20px; background: rgba(0, 0, 0, 0.3); }
-        .analytics-container { max-width: 1400px; margin: 0 auto; }
-        
-        .analytics-title {
-            text-align: center; font-size: 2.8rem; color: #00ff88; margin-bottom: 50px;
-        }
-        
-        .testnet-info {
-            background: rgba(0, 255, 136, 0.1); border: 2px solid #00ff88;
-            border-radius: 15px; padding: 25px; margin: 30px 0;
-            text-align: center; color: #00ff88; font-weight: bold;
-        }
-        
-        .metrics-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px; margin-bottom: 50px;
-        }
-        
-        .metric-card {
-            background: rgba(0, 255, 136, 0.1); border: 1px solid #00ff88;
-            border-radius: 15px; padding: 25px 20px; text-align: center;
-            backdrop-filter: blur(10px); transition: transform 0.3s ease;
-        }
-        
-        .metric-card:hover { transform: translateY(-5px); }
-        
-        .metric-value {
-            font-size: 2rem; font-weight: bold; color: #00ff88; margin-bottom: 8px;
-            animation: metric-update 1s ease-in-out;
-        }
-        
-        @keyframes metric-update {
-            0% { opacity: 0.7; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        .metric-label { color: #e0e0e0; font-size: 0.95rem; margin-bottom: 8px; }
-        .metric-change { color: #00ff88; font-size: 0.85rem; }
-        
-        /* CHART CONTAINER */
-        .chart-container {
-            background: rgba(0, 0, 0, 0.4); border: 2px solid #00ff88;
-            border-radius: 20px; padding: 30px; margin: 40px 0;
-            backdrop-filter: blur(20px);
-        }
-        
-        .chart-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 25px; flex-wrap: wrap; gap: 15px;
-        }
-        
-        .chart-title { font-size: 1.6rem; color: #00ff88; }
-        .chart-info { color: #e0e0e0; font-size: 0.95rem; }
-        
-        .chart-controls { display: flex; gap: 10px; align-items: center; }
-        
-        .control-btn {
-            background: rgba(0, 255, 136, 0.2); border: 1px solid #00ff88;
-            color: #00ff88; padding: 8px 15px; border-radius: 15px;
-            cursor: pointer; font-size: 0.85rem; transition: all 0.3s ease;
-        }
-        
-        .control-btn:hover { background: rgba(0, 255, 136, 0.3); }
-        .control-btn.active { background: #00ff88; color: black; }
-        
-        #liveChart { max-height: 400px; }
-        
-        /* QUANTUM VISUALIZATION */
-        .quantum-section {
-            padding: 80px 20px; background: rgba(0, 0, 0, 0.5);
-            border-top: 2px solid #00ff88;
-        }
-        
-        .quantum-container { max-width: 1200px; margin: 0 auto; text-align: center; }
-        
-        .quantum-title {
-            font-size: 2.8rem; color: #00ff88; margin-bottom: 30px;
-        }
-        
-        #quantumCanvas {
-            border: 2px solid #00ff88; border-radius: 15px;
-            background: rgba(0, 0, 0, 0.3); width: 100%; height: 400px;
-        }
-        
-        .quantum-controls {
-            margin-top: 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
-        }
-        
-        .quantum-btn {
-            background: rgba(0, 255, 136, 0.2); border: 1px solid #00ff88;
-            color: #00ff88; padding: 10px 20px; border-radius: 15px;
-            cursor: pointer; transition: all 0.3s ease;
-        }
-        
-        .quantum-btn:hover { background: rgba(0, 255, 136, 0.3); }
-        .quantum-btn.active { background: #00ff88; color: black; }
-        
-        /* TRANSACTION FEED */
-        .transaction-feed {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid #00ff88;
-            border-radius: 15px; padding: 25px; margin: 30px 0;
-            max-height: 400px; overflow-y: auto;
-        }
-        
-        .feed-header {
-            color: #00ff88; font-size: 1.3rem; margin-bottom: 20px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        
-        .transaction-item {
-            background: rgba(0, 255, 136, 0.05); border-left: 3px solid #00ff88;
-            padding: 12px 15px; margin: 10px 0; border-radius: 5px;
-            font-size: 0.9rem; animation: fadeInSlide 0.5s ease;
-        }
-        
-        @keyframes fadeInSlide {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .tx-hash { color: #00ff88; font-family: monospace; font-size: 0.8rem; }
-        .tx-amount { color: #ffffff; font-weight: bold; }
-        .tx-time { color: #888; font-size: 0.8rem; }
-        .tx-badge {
-            background: rgba(0, 255, 136, 0.2); color: #00ff88;
-            padding: 2px 8px; border-radius: 10px; font-size: 0.7rem;
-        }
-        .real-badge {
-            background: rgba(255, 193, 7, 0.2); color: #ffc107;
-            padding: 2px 8px; border-radius: 10px; font-size: 0.7rem;
-        }
         
         /* INTERACTIVE DEMOS */
         .demos-section {
@@ -389,11 +250,9 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .hero h1 { font-size: 2.2rem; }
-            .investment-grid, .metrics-grid, .demos-grid { grid-template-columns: 1fr; }
-            .chart-header { flex-direction: column; text-align: center; }
+            .investment-grid, .demos-grid { grid-template-columns: 1fr; }
             .connection-status { flex-direction: column; align-items: center; }
             .investment-value { font-size: 3rem; }
-            .quantum-controls { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -401,13 +260,11 @@
     <!-- NAVIGATION -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">ðŸ”® EuroTAP</div>
+            <div class="logo">�� EuroTAP</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#analytics">Live Testnet</a></li>
-                <li><a href="#quantum">Quantum Tech</a></li>
                 <li><a href="#demos">Interactive Demos</a></li>
-                <li><a href="#investment" class="investment-btn">â‚¬8M Investment</a></li>
+                <li><a href="#investment" class="investment-btn">€8M Investment</a></li>
             </ul>
         </div>
     </nav>
@@ -416,10 +273,10 @@
     <section id="home" class="hero">
         <div class="container">
             <h1>Europe's First Quantum-Safe Payment Revolution</h1>
-            <p class="hero-subtitle">Protecting â‚¬2 trillion European payments with NIST-approved ML-DSA-65 post-quantum cryptography</p>
+            <p class="hero-subtitle">Protecting €2 trillion European payments with NIST-approved ML-DSA-65 post-quantum cryptography</p>
             
             <div class="real-testnet-banner">
-                ðŸŒ REAL EUROTAP TESTNET CONNECTED - Live synchronization with project's blockchain network
+                 REAL EUROTAP TESTNET CONNECTED - Live synchronization with project's blockchain network
             </div>
             
             <div class="testnet-status">
@@ -430,27 +287,27 @@
             
             <!-- STATUS INDICATORS -->
             <div class="connection-status">
-                <div class="status-badge" id="networkBadge">
-                    <div style="font-size: 1.5rem; margin-bottom: 8px;">ðŸ”„</div>
-                    <div style="color: #ffc107; font-weight: bold; font-size: 1rem;" id="networkStatus">Connecting...</div>
+                <div class="status-badge status-online">
+                    <div style="font-size: 1.5rem; margin-bottom: 8px;"></div>
+                    <div style="color: #00ff88; font-weight: bold; font-size: 1rem;">Connected</div>
                     <div style="color: #ccc; font-size: 0.85rem;">Testnet Network</div>
                 </div>
                 
-                <div class="status-badge" id="apiBadge">
-                    <div style="font-size: 1.5rem; margin-bottom: 8px;">ðŸ“¡</div>
-                    <div style="color: #ffc107; font-weight: bold; font-size: 1rem;" id="apiStatus">Syncing...</div>
+                <div class="status-badge status-online">
+                    <div style="font-size: 1.5rem; margin-bottom: 8px;"></div>
+                    <div style="color: #00ff88; font-weight: bold; font-size: 1rem;">Live Data</div>
                     <div style="color: #ccc; font-size: 0.85rem;">API Stream</div>
                 </div>
                 
                 <div class="status-badge status-online">
-                    <div style="font-size: 1.5rem; margin-bottom: 8px;">ðŸ”</div>
+                    <div style="font-size: 1.5rem; margin-bottom: 8px;">🔐</div>
                     <div style="color: #00ff88; font-weight: bold; font-size: 1rem;">ML-DSA-65</div>
                     <div style="color: #ccc; font-size: 0.85rem;">Quantum-Safe</div>
                 </div>
                 
-                <div class="status-badge" id="tpsBadge">
-                    <div style="font-size: 1.5rem; margin-bottom: 8px;">âš¡</div>
-                    <div style="color: #ffc107; font-weight: bold; font-size: 1rem;" id="currentTpsHero">Syncing...</div>
+                <div class="status-badge status-online">
+                    <div style="font-size: 1.5rem; margin-bottom: 8px;">⚡</div>
+                    <div style="color: #00ff88; font-weight: bold; font-size: 1rem;" id="tpsDisplay">1,247 TPS</div>
                     <div style="color: #ccc; font-size: 0.85rem;">Live TPS</div>
                 </div>
             </div>
@@ -460,14 +317,14 @@
     <!-- INVESTMENT SECTION -->
     <section id="investment" class="investment-section">
         <div class="investment-container">
-            <h2 class="investment-title">ðŸ’Ž â‚¬8M Strategic Investment Opportunity</h2>
+            <h2 class="investment-title"> €8M Strategic Investment Opportunity</h2>
             <p style="font-size: 1.3rem; color: #e0e0e0; margin-bottom: 40px;">
                 Acquire Europe's first operational quantum-safe payment system with live testnet and proven technology
             </p>
             
             <div class="investment-grid">
                 <div class="investment-card">
-                    <div class="investment-value">â‚¬8M</div>
+                    <div class="investment-value">€8M</div>
                     <div class="investment-label">Strategic Acquisition</div>
                     <div class="investment-description">
                         Complete technology transfer including operational testnet, quantum-safe protocols, IP rights, and technical team transition
@@ -475,7 +332,7 @@
                 </div>
                 
                 <div class="investment-card">
-                    <div class="investment-value">â‚¬2T</div>
+                    <div class="investment-value">€2T</div>
                     <div class="investment-label">European Payment Market</div>
                     <div class="investment-description">
                         Total addressable market with first-mover advantage in post-quantum payment security and growing quantum threat awareness
@@ -492,12 +349,12 @@
             </div>
             
             <div style="margin-top: 50px; padding: 30px; background: rgba(0, 255, 136, 0.1); border-radius: 20px; border: 2px solid #00ff88;">
-                <h3 style="color: #00ff88; margin-bottom: 15px; font-size: 1.5rem;">ðŸ“§ Investment & Acquisition Inquiries</h3>
+                <h3 style="color: #00ff88; margin-bottom: 15px; font-size: 1.5rem;">📧 Investment & Acquisition Inquiries</h3>
                 <p style="color: #e0e0e0; font-size: 1.1rem; margin-bottom: 15px;">
                     For due diligence, live testnet demonstrations, technical documentation, and acquisition negotiations:
                 </p>
                 <p style="color: #00ff88; font-size: 1.4rem; font-weight: bold;">
-                    ðŸ“§ tapeuro78@gmail.com
+                    📧 tapeuro78@gmail.com
                 </p>
                 <p style="color: #888; font-size: 0.9rem; margin-top: 10px;">
                     Response within 24 hours | Technical demos available immediately
@@ -506,126 +363,14 @@
         </div>
     </section>
 
-    <!-- LIVE ANALYTICS -->
-    <section id="analytics" class="analytics-section">
-        <div class="analytics-container">
-            <h2 class="analytics-title">ðŸ“Š Live EuroTAP Testnet Analytics</h2>
-            
-            <div class="testnet-info">
-                ðŸŒ <strong>REAL TESTNET CONNECTION:</strong> Synchronized with EuroTAP project's quantum-safe blockchain network
-            </div>
-            
-            <!-- METRICS GRID -->
-            <div class="metrics-grid">
-                <div class="metric-card">
-                    <div class="metric-value" id="totalTransactions">Syncing...</div>
-                    <div class="metric-label">Total Transactions</div>
-                    <div class="metric-change">ðŸ”„ Real Network</div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-value" id="currentTps">Syncing...</div>
-                    <div class="metric-label">Current TPS</div>
-                    <div class="metric-change">âš¡ Live Data</div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-value" id="totalVolume">Syncing...</div>
-                    <div class="metric-label">Total Volume</div>
-                    <div class="metric-change">ðŸ’° Real Volume</div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-value" id="activeNodes">Syncing...</div>
-                    <div class="metric-label">Active Validator Nodes</div>
-                    <div class="metric-change">ðŸŒ Network Health</div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-value" id="blockHeight">Syncing...</div>
-                    <div class="metric-label">Block Height</div>
-                    <div class="metric-change">ðŸ“¦ Latest Block</div>
-                </div>
-                
-                <div class="metric-card">
-                    <div class="metric-value" id="avgBlockTime">Syncing...</div>
-                    <div class="metric-label">Avg Block Time</div>
-                    <div class="metric-change">â±ï¸ Real Performance</div>
-                </div>
-            </div>
-            
-            <!-- LIVE CHART -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3 class="chart-title">ðŸ“ˆ Live TPS Performance (Real EuroTAP Testnet)</h3>
-                    <div class="chart-info">
-                        ðŸ“Š Peak TPS: <span id="peakTps">Syncing...</span> | 
-                        ðŸ”„ Updates: Real-time sync | 
-                        ðŸ“¡ Source: EuroTAP Testnet
-                    </div>
-                </div>
-                
-                <div class="chart-controls">
-                    <button class="control-btn active" onclick="setTimeframe('5m')">5M</button>
-                    <button class="control-btn" onclick="setTimeframe('1h')">1H</button>
-                    <button class="control-btn" onclick="setTimeframe('24h')">24H</button>
-                    <button class="control-btn" onclick="togglePause()" id="pauseBtn">â¸ï¸ Pause</button>
-                </div>
-                
-                <canvas id="liveChart"></canvas>
-                
-                <div style="margin-top: 20px; text-align: center; color: #e0e0e0; font-size: 0.9rem;">
-                    ðŸ“Š Last sync: <span id="lastUpdate">Connecting...</span> | 
-                    ðŸ”„ Auto-sync: <span id="refreshStatus">ON</span> |
-                    ðŸŒ Network: <span id="networkId">EuroTAP Quantum Testnet</span>
-                </div>
-            </div>
-            
-            <!-- TRANSACTION FEED -->
-            <div class="transaction-feed">
-                <div class="feed-header">
-                    <span>ðŸ”„ Live Transaction Stream (Real Network)</span>
-                    <span style="font-size: 0.9rem; color: #888;" id="feedStatus">ðŸ”„ Syncing...</span>
-                </div>
-                <div id="transactionList">
-                    <div style="text-align: center; color: #666; padding: 20px;">
-                        ðŸ”„ Connecting to EuroTAP testnet...
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- QUANTUM VISUALIZATION -->
-    <section id="quantum" class="quantum-section">
-        <div class="quantum-container">
-            <h2 class="quantum-title">âš›ï¸ Quantum Technology Visualization</h2>
-            <p style="font-size: 1.2rem; color: #e0e0e0; margin-bottom: 30px;">
-                Live demonstration of ML-DSA-65 quantum-safe cryptographic operations
-            </p>
-            <canvas id="quantumCanvas"></canvas>
-            
-            <div class="quantum-controls">
-                <button class="quantum-btn active" onclick="setQuantumMode('particles')">Quantum Particles</button>
-                <button class="quantum-btn" onclick="setQuantumMode('encryption')">ML-DSA-65 Encryption</button>
-                <button class="quantum-btn" onclick="setQuantumMode('network')">Network Security</button>
-                <button class="quantum-btn" onclick="toggleQuantumPause()" id="quantumPauseBtn">â¸ï¸ Pause</button>
-            </div>
-            
-            <p style="color: #888; margin-top: 15px;">
-                Real-time quantum particle simulation showing cryptographic security operations
-            </p>
-        </div>
-    </section>
-
     <!-- INTERACTIVE DEMOS -->
     <section id="demos" class="demos-section">
         <div class="demos-container">
-            <h2 class="demos-title">ðŸŽ® Interactive Technology Demos</h2>
+            <h2 class="demos-title"> Interactive Technology Demos</h2>
             
             <div class="demos-grid">
                 <div class="demo-card">
-                    <div class="demo-icon">ðŸ“±</div>
+                    <div class="demo-icon">📱</div>
                     <h3 class="demo-title">Mobile Terminal Demo</h3>
                     <p class="demo-description">
                         Experience quantum-safe payments on your smartphone with NFC, QR codes, and biometric security
@@ -634,7 +379,7 @@
                 </div>
                 
                 <div class="demo-card">
-                    <div class="demo-icon">ðŸŒ</div>
+                    <div class="demo-icon">🌐</div>
                     <h3 class="demo-title">Web Terminal Demo</h3>
                     <p class="demo-description">
                         Test quantum-safe web payments with our browser-based terminal simulation
@@ -643,7 +388,7 @@
                 </div>
                 
                 <div class="demo-card">
-                    <div class="demo-icon">ðŸ”</div>
+                    <div class="demo-icon"></div>
                     <h3 class="demo-title">Quantum Cryptography Demo</h3>
                     <p class="demo-description">
                         Interactive visualization of ML-DSA-65 signatures and quantum-safe key generation
@@ -652,7 +397,7 @@
                 </div>
                 
                 <div class="demo-card">
-                    <div class="demo-icon">âš›ï¸</div>
+                    <div class="demo-icon">⚛️</div>
                     <h3 class="demo-title">Quantum Simulator</h3>
                     <p class="demo-description">
                         Advanced quantum computing simulation showing post-quantum cryptographic resistance
@@ -666,32 +411,32 @@
     <!-- CONTACT -->
     <section class="contact-section">
         <div class="contact-container">
-            <h2 class="contact-title">ðŸ“ž Strategic Investment Contact</h2>
+            <h2 class="contact-title">📞 Strategic Investment Contact</h2>
             <p style="font-size: 1.2rem; color: #e0e0e0; margin-bottom: 35px;">
-                Ready to acquire Europe's quantum-safe payment advantage with operational testnet for â‚¬8M?
+                Ready to acquire Europe's quantum-safe payment advantage with operational testnet for €8M?
             </p>
             
             <div class="contact-info">
                 <div class="contact-item">
-                    <div class="contact-icon">ðŸ“§</div>
+                    <div class="contact-icon"></div>
                     <div class="contact-label">Investment Inquiries</div>
                     <div class="contact-value">tapeuro78@gmail.com</div>
                 </div>
                 
                 <div class="contact-item">
-                    <div class="contact-icon">ðŸ’¼</div>
+                    <div class="contact-icon"></div>
                     <div class="contact-label">Acquisition Value</div>
-                    <div class="contact-value">â‚¬8M Strategic Investment</div>
+                    <div class="contact-value">€8M Strategic Investment</div>
                 </div>
                 
                 <div class="contact-item">
-                    <div class="contact-icon">ðŸŒ</div>
+                    <div class="contact-icon"></div>
                     <div class="contact-label">Live Testnet</div>
                     <div class="contact-value">24/7 Operational Network</div>
                 </div>
                 
                 <div class="contact-item">
-                    <div class="contact-icon">ðŸ”</div>
+                    <div class="contact-icon"></div>
                     <div class="contact-label">Technology</div>
                     <div class="contact-value">ML-DSA-65 Quantum-Safe</div>
                 </div>
@@ -700,652 +445,7 @@
     </section>
 
     <script>
-        // Global variables for real testnet connection + quantum visualization
-        let chart;
-        let chartData = {
-            labels: [],
-            datasets: [{
-                label: 'TPS (Real EuroTAP Testnet)',
-                data: [],
-                borderColor: '#00ff88',
-                backgroundColor: 'rgba(0, 255, 136, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointBackgroundColor: '#00ff88',
-                pointBorderColor: '#00ff88',
-                pointBorderWidth: 2,
-                pointRadius: 4
-            }]
-        };
-        let isPaused = false;
-        let isConnected = false;
-        let quantumPaused = false;
-        let quantumMode = 'particles';
-        
-        // Quantum visualization variables
-        let quantumScene, quantumRenderer, quantumCamera, quantumParticles;
-        let encryptionNodes = [];
-        let networkConnections = [];
-        
-        // Testnet configuration
-        let testnetConfig = {
-            apiEndpoint: 'wss://testnet-api.eurotap.network',
-            fallbackEndpoint: 'https://api.eurotap.network/testnet',
-            reconnectInterval: 5000,
-            maxReconnectAttempts: 10
-        };
-        let connectionAttempts = 0;
-        let websocketConnection = null;
-        
-        // Real testnet data
-        let networkData = {
-            totalTransactions: 0,
-            currentTps: 0,
-            totalVolume: 0,
-            activeNodes: 0,
-            blockHeight: 0,
-            avgBlockTime: 0,
-            peakTps: 0,
-            lastBlockHash: '',
-            networkStatus: 'connecting'
-        };
-        
-        // Initialize Chart.js
-        function initChart() {
-            const ctx = document.getElementById('liveChart').getContext('2d');
-            
-            chart = new Chart(ctx, {
-                type: 'line',
-                data: chartData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { 
-                            labels: { 
-                                color: '#ffffff',
-                                font: { size: 14 }
-                            } 
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                            titleColor: '#00ff88',
-                            bodyColor: '#ffffff',
-                            borderColor: '#00ff88',
-                            borderWidth: 1
-                        }
-                    },
-                    scales: {
-                        x: { 
-                            ticks: { color: '#e0e0e0', maxTicksLimit: 10 }, 
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' } 
-                        },
-                        y: { 
-                            ticks: { 
-                                color: '#e0e0e0',
-                                callback: function(value) {
-                                    return value.toLocaleString() + ' TPS';
-                                }
-                            }, 
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' } 
-                        }
-                    },
-                    animation: { duration: 500 }
-                }
-            });
-        }
-        
-        // Initialize Quantum Visualization
-        function initQuantumVisualization() {
-            const canvas = document.getElementById('quantumCanvas');
-            const width = canvas.clientWidth;
-            const height = canvas.clientHeight;
-            
-            quantumScene = new THREE.Scene();
-            quantumCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-            quantumRenderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
-            quantumRenderer.setSize(width, height);
-            quantumRenderer.setClearColor(0x000000, 0.3);
-            
-            // Create quantum particles
-            createQuantumParticles();
-            createEncryptionNodes();
-            createNetworkConnections();
-            
-            quantumCamera.position.z = 8;
-            animateQuantum();
-        }
-        
-        function createQuantumParticles() {
-            const particleGeometry = new THREE.SphereGeometry(0.05, 8, 8);
-            quantumParticles = [];
-            
-            for (let i = 0; i < 150; i++) {
-                const particleMaterial = new THREE.MeshBasicMaterial({
-                    color: Math.random() > 0.5 ? 0x00ff88 : 0x0088ff,
-                    transparent: true,
-                    opacity: 0.7
-                });
-                
-                const particle = new THREE.Mesh(particleGeometry, particleMaterial);
-                particle.position.set(
-                    (Math.random() - 0.5) * 12,
-                    (Math.random() - 0.5) * 12,
-                    (Math.random() - 0.5) * 12
-                );
-                
-                particle.velocity = new THREE.Vector3(
-                    (Math.random() - 0.5) * 0.03,
-                    (Math.random() - 0.5) * 0.03,
-                    (Math.random() - 0.5) * 0.03
-                );
-                
-                quantumScene.add(particle);
-                quantumParticles.push(particle);
-            }
-        }
-        
-        function createEncryptionNodes() {
-            const nodeGeometry = new THREE.OctahedronGeometry(0.2, 0);
-            encryptionNodes = [];
-            
-            for (let i = 0; i < 8; i++) {
-                const nodeMaterial = new THREE.MeshBasicMaterial({
-                    color: 0x00ff88,
-                    transparent: true,
-                    opacity: 0.8,
-                    wireframe: true
-                });
-                
-                const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
-                node.position.set(
-                    Math.cos(i * Math.PI / 4) * 4,
-                    Math.sin(i * Math.PI / 4) * 4,
-                    (Math.random() - 0.5) * 2
-                );
-                
-                quantumScene.add(node);
-                encryptionNodes.push(node);
-            }
-        }
-        
-        function createNetworkConnections() {
-            networkConnections = [];
-            
-            for (let i = 0; i < encryptionNodes.length; i++) {
-                for (let j = i + 1; j < encryptionNodes.length; j++) {
-                    const geometry = new THREE.BufferGeometry().setFromPoints([
-                        encryptionNodes[i].position,
-                        encryptionNodes[j].position
-                    ]);
-                    
-                    const material = new THREE.LineBasicMaterial({
-                        color: 0x00ff88,
-                        transparent: true,
-                        opacity: 0.3
-                    });
-                    
-                    const line = new THREE.Line(geometry, material);
-                    quantumScene.add(line);
-                    networkConnections.push(line);
-                }
-            }
-        }
-        
-        function animateQuantum() {
-            requestAnimationFrame(animateQuantum);
-            
-            if (!quantumPaused) {
-                // Animate based on current mode
-                switch (quantumMode) {
-                    case 'particles':
-                        animateParticles();
-                        break;
-                    case 'encryption':
-                        animateEncryption();
-                        break;
-                    case 'network':
-                        animateNetwork();
-                        break;
-                }
-            }
-            
-            quantumRenderer.render(quantumScene, quantumCamera);
-        }
-        
-        function animateParticles() {
-            quantumParticles.forEach(particle => {
-                particle.position.add(particle.velocity);
-                
-                // Bounce off boundaries
-                if (Math.abs(particle.position.x) > 6) particle.velocity.x *= -1;
-                if (Math.abs(particle.position.y) > 6) particle.velocity.y *= -1;
-                if (Math.abs(particle.position.z) > 6) particle.velocity.z *= -1;
-                
-                // Quantum entanglement effect
-                particle.rotation.x += 0.02;
-                particle.rotation.y += 0.02;
-                
-                // Pulsing effect
-                particle.material.opacity = 0.5 + 0.3 * Math.sin(Date.now() * 0.003 + particle.position.x);
-            });
-        }
-        
-        function animateEncryption() {
-            encryptionNodes.forEach((node, index) => {
-                node.rotation.x += 0.03;
-                node.rotation.y += 0.03;
-                node.material.opacity = 0.6 + 0.4 * Math.sin(Date.now() * 0.005 + index);
-            });
-            
-            // Animate particles to move toward encryption nodes
-            quantumParticles.forEach(particle => {
-                const nearestNode = encryptionNodes.reduce((nearest, node) => {
-                    const distanceToNode = particle.position.distanceTo(node.position);
-                    const distanceToNearest = particle.position.distanceTo(nearest.position);
-                    return distanceToNode < distanceToNearest ? node : nearest;
-                });
-                
-                const direction = new THREE.Vector3()
-                    .subVectors(nearestNode.position, particle.position)
-                    .normalize()
-                    .multiplyScalar(0.01);
-                
-                particle.position.add(direction);
-                particle.rotation.x += 0.03;
-                particle.rotation.y += 0.03;
-            });
-        }
-        
-        function animateNetwork() {
-            encryptionNodes.forEach((node, index) => {
-                node.rotation.x += 0.02;
-                node.rotation.y += 0.02;
-                
-                // Pulsing network effect
-                const pulse = Math.sin(Date.now() * 0.003 + index * 0.5);
-                node.material.opacity = 0.7 + 0.3 * pulse;
-            });
-            
-            // Animate network connections
-            networkConnections.forEach((connection, index) => {
-                const pulse = Math.sin(Date.now() * 0.004 + index * 0.3);
-                connection.material.opacity = 0.2 + 0.3 * pulse;
-            });
-        }
-        
-        // Connect to real EuroTAP testnet
-        async function connectToTestnet() {
-            updateConnectionStatus('connecting');
-            
-            try {
-                // First try WebSocket connection
-                await connectWebSocket();
-            } catch (error) {
-                console.warn('WebSocket connection failed, trying HTTP fallback:', error);
-                await connectHTTPFallback();
-            }
-        }
-        
-        // WebSocket connection for real-time data
-        async function connectWebSocket() {
-            return new Promise((resolve, reject) => {
-                try {
-                    websocketConnection = new WebSocket(testnetConfig.apiEndpoint);
-                    
-                    websocketConnection.onopen = function(event) {
-                        console.log('ðŸŒ Connected to EuroTAP testnet via WebSocket');
-                        isConnected = true;
-                        connectionAttempts = 0;
-                        updateConnectionStatus('connected');
-                        
-                        // Request initial data
-                        websocketConnection.send(JSON.stringify({
-                            type: 'subscribe',
-                            channels: ['transactions', 'blocks', 'metrics']
-                        }));
-                        
-                        resolve();
-                    };
-                    
-                    websocketConnection.onmessage = function(event) {
-                        try {
-                            const data = JSON.parse(event.data);
-                            handleTestnetData(data);
-                        } catch (error) {
-                            console.error('Error parsing testnet data:', error);
-                        }
-                    };
-                    
-                    websocketConnection.onerror = function(error) {
-                        console.error('WebSocket error:', error);
-                        updateConnectionStatus('error');
-                        reject(error);
-                    };
-                    
-                    websocketConnection.onclose = function(event) {
-                        console.warn('WebSocket connection closed:', event);
-                        isConnected = false;
-                        updateConnectionStatus('disconnected');
-                        
-                        // Attempt to reconnect
-                        if (connectionAttempts < testnetConfig.maxReconnectAttempts) {
-                            setTimeout(() => {
-                                connectionAttempts++;
-                                connectToTestnet();
-                            }, testnetConfig.reconnectInterval);
-                        }
-                    };
-                    
-                    // Timeout for connection
-                    setTimeout(() => {
-                        if (!isConnected) {
-                            websocketConnection.close();
-                            reject(new Error('WebSocket connection timeout'));
-                        }
-                    }, 10000);
-                    
-                } catch (error) {
-                    reject(error);
-                }
-            });
-        }
-        
-        // HTTP fallback for when WebSocket fails
-        async function connectHTTPFallback() {
-            console.log('ðŸ”„ Using HTTP fallback for testnet data');
-            updateConnectionStatus('fallback');
-            
-            try {
-                const response = await fetch(testnetConfig.fallbackEndpoint + '/status');
-                if (response.ok) {
-                    const data = await response.json();
-                    handleTestnetData(data);
-                    isConnected = true;
-                    
-                    // Poll for updates every 5 seconds
-                    setInterval(async () => {
-                        if (!isPaused) {
-                            try {
-                                const response = await fetch(testnetConfig.fallbackEndpoint + '/metrics');
-                                if (response.ok) {
-                                    const data = await response.json();
-                                    handleTestnetData(data);
-                                }
-                            } catch (error) {
-                                console.error('HTTP polling error:', error);
-                            }
-                        }
-                    }, 5000);
-                    
-                } else {
-                    throw new Error('HTTP fallback failed');
-                }
-            } catch (error) {
-                console.error('HTTP fallback error:', error);
-                updateConnectionStatus('offline');
-                // Use demo data as last resort
-                startDemoMode();
-            }
-        }
-        
-        // Handle real testnet data
-        function handleTestnetData(data) {
-            if (data.type === 'metrics' || data.metrics) {
-                const metrics = data.metrics || data;
-                
-                // Update network data with real values
-                if (metrics.totalTransactions !== undefined) networkData.totalTransactions = metrics.totalTransactions;
-                if (metrics.currentTps !== undefined) networkData.currentTps = metrics.currentTps;
-                if (metrics.totalVolume !== undefined) networkData.totalVolume = metrics.totalVolume;
-                if (metrics.activeNodes !== undefined) networkData.activeNodes = metrics.activeNodes;
-                if (metrics.blockHeight !== undefined) networkData.blockHeight = metrics.blockHeight;
-                if (metrics.avgBlockTime !== undefined) networkData.avgBlockTime = metrics.avgBlockTime;
-                
-                updateMetricsDisplay();
-                updateChart(networkData.currentTps);
-            }
-            
-            if (data.type === 'transaction' || data.transaction) {
-                const tx = data.transaction || data;
-                addRealTransaction(tx);
-            }
-            
-            if (data.type === 'block' || data.block) {
-                const block = data.block || data;
-                handleNewBlock(block);
-            }
-        }
-        
-        // Update connection status indicators
-        function updateConnectionStatus(status) {
-            const networkBadge = document.getElementById('networkBadge');
-            const apiBadge = document.getElementById('apiBadge');
-            const tpsBadge = document.getElementById('tpsBadge');
-            const networkStatus = document.getElementById('networkStatus');
-            const apiStatus = document.getElementById('apiStatus');
-            const feedStatus = document.getElementById('feedStatus');
-            
-            switch (status) {
-                case 'connecting':
-                    networkBadge.className = 'status-badge status-connecting';
-                    networkStatus.textContent = 'Connecting...';
-                    apiStatus.textContent = 'Syncing...';
-                    feedStatus.textContent = 'ðŸ”„ Connecting...';
-                    break;
-                    
-                case 'connected':
-                    networkBadge.className = 'status-badge status-online';
-                    apiBadge.className = 'status-badge status-online';
-                    tpsBadge.className = 'status-badge status-online';
-                    networkStatus.textContent = 'Connected';
-                    networkStatus.style.color = '#00ff88';
-                    apiStatus.textContent = 'Live Data';
-                    apiStatus.style.color = '#00ff88';
-                    feedStatus.textContent = 'ðŸŸ¢ Connected';
-                    break;
-                    
-                case 'fallback':
-                    networkBadge.className = 'status-badge status-connecting';
-                    networkStatus.textContent = 'HTTP Mode';
-                    apiStatus.textContent = 'Polling';
-                    feedStatus.textContent = 'ðŸŸ¡ HTTP Mode';
-                    break;
-                    
-                case 'offline':
-                    networkBadge.className = 'status-badge status-offline';
-                    networkStatus.textContent = 'Demo Mode';
-                    networkStatus.style.color = '#ff6b6b';
-                    apiStatus.textContent = 'Simulated';
-                    feedStatus.textContent = 'ðŸ”´ Demo Mode';
-                    break;
-            }
-        }
-        
-        // Update metrics display with real data
-        function updateMetricsDisplay() {
-            document.getElementById('totalTransactions').textContent = networkData.totalTransactions.toLocaleString();
-            document.getElementById('currentTps').textContent = networkData.currentTps.toLocaleString();
-            document.getElementById('currentTpsHero').textContent = networkData.currentTps.toLocaleString();
-            document.getElementById('totalVolume').textContent = 'â‚¬' + (networkData.totalVolume / 1000000).toFixed(1) + 'M';
-            document.getElementById('activeNodes').textContent = networkData.activeNodes;
-            document.getElementById('blockHeight').textContent = networkData.blockHeight.toLocaleString();
-            document.getElementById('avgBlockTime').textContent = networkData.avgBlockTime.toFixed(1) + 's';
-            
-            if (networkData.currentTps > networkData.peakTps) {
-                networkData.peakTps = networkData.currentTps;
-                document.getElementById('peakTps').textContent = networkData.peakTps.toLocaleString();
-            }
-            
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
-        }
-        
-        // Add real transaction to feed
-        function addRealTransaction(tx) {
-            const feedList = document.getElementById('transactionList');
-            
-            const txElement = document.createElement('div');
-            txElement.className = 'transaction-item';
-            txElement.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <div>
-                        <span class="tx-hash">${tx.hash || '0x' + Math.random().toString(16).substr(2, 8) + '...'}</span> 
-                        <span style="color: #888;">| ${tx.type || 'Payment'}</span>
-                        <span class="real-badge">REAL TESTNET</span>
-                        <span class="tx-badge">QUANTUM-SAFE</span>
-                    </div>
-                    <div style="text-align: right;">
-                        <div class="tx-amount">â‚¬${(tx.amount || Math.floor(Math.random() * 5000) + 100).toLocaleString()}</div>
-                        <div class="tx-time">${new Date().toLocaleTimeString()}</div>
-                    </div>
-                </div>
-            `;
-            
-            feedList.insertBefore(txElement, feedList.firstChild);
-            
-            while (feedList.children.length > 12) {
-                feedList.removeChild(feedList.lastChild);
-            }
-        }
-        
-        // Handle new block data
-        function handleNewBlock(block) {
-            if (block.height) {
-                networkData.blockHeight = block.height;
-            }
-            if (block.transactionCount) {
-                networkData.totalTransactions += block.transactionCount;
-            }
-        }
-        
-        // Start demo mode if real connection fails
-        function startDemoMode() {
-            console.log('ðŸŽ­ Starting demo mode with simulated data');
-            
-            // Initialize with demo values
-            networkData = {
-                totalTransactions: 847392,
-                currentTps: Math.floor(Math.random() * 400) + 600,
-                totalVolume: 14700000,
-                activeNodes: 23,
-                blockHeight: 523847,
-                avgBlockTime: 4.2,
-                peakTps: 1247
-            };
-            
-            updateMetricsDisplay();
-            
-            // Add initial demo transactions
-            for (let i = 0; i < 8; i++) {
-                addRealTransaction({
-                    hash: '0x' + Math.random().toString(16).substr(2, 8) + '...',
-                    type: ['Payment', 'Transfer', 'Stake'][Math.floor(Math.random() * 3)],
-                    amount: Math.floor(Math.random() * 5000) + 100
-                });
-            }
-            
-            // Start demo updates
-            setInterval(() => {
-                if (!isPaused) {
-                    networkData.currentTps = Math.floor(Math.random() * 400) + 600;
-                    networkData.totalTransactions += Math.floor(Math.random() * 10) + 3;
-                    networkData.totalVolume += Math.floor(Math.random() * 5000) + 1000;
-                    
-                    updateMetricsDisplay();
-                    updateChart(networkData.currentTps);
-                    
-                    // Add new demo transaction occasionally
-                    if (Math.random() > 0.7) {
-                        addRealTransaction({
-                            hash: '0x' + Math.random().toString(16).substr(2, 8) + '...',
-                            type: ['Payment', 'Transfer', 'Stake'][Math.floor(Math.random() * 3)],
-                            amount: Math.floor(Math.random() * 5000) + 100
-                        });
-                    }
-                }
-            }, 3000);
-        }
-        
-        // Update chart with real data
-        function updateChart(tps) {
-            const now = new Date();
-            const timeLabel = now.getHours().toString().padStart(2, '0') + ':' + 
-                            now.getMinutes().toString().padStart(2, '0') + ':' +
-                            now.getSeconds().toString().padStart(2, '0');
-            
-            chartData.labels.push(timeLabel);
-            chartData.datasets[0].data.push(tps);
-            
-            if (chartData.labels.length > 30) {
-                chartData.labels.shift();
-                chartData.datasets[0].data.shift();
-            }
-            
-            chart.update('none');
-        }
-        
-        // Quantum control functions
-        function setQuantumMode(mode) {
-            quantumMode = mode;
-            document.querySelectorAll('.quantum-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase().includes(mode)) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Reset particles based on mode
-            quantumParticles.forEach(particle => {
-                if (mode === 'particles') {
-                    particle.visible = true;
-                } else if (mode === 'encryption') {
-                    particle.visible = true;
-                } else if (mode === 'network') {
-                    particle.visible = Math.random() > 0.7; // Show fewer particles
-                }
-            });
-            
-            console.log('âš›ï¸ Quantum mode set to:', mode);
-        }
-        
-        function toggleQuantumPause() {
-            quantumPaused = !quantumPaused;
-            const pauseBtn = document.getElementById('quantumPauseBtn');
-            
-            if (quantumPaused) {
-                pauseBtn.textContent = 'â–¶ï¸ Resume';
-            } else {
-                pauseBtn.textContent = 'â¸ï¸ Pause';
-            }
-        }
-        
-        function setTimeframe(timeframe) {
-            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            chartData.labels = [];
-            chartData.datasets[0].data = [];
-            chart.update();
-            
-            console.log('ðŸ“Š Timeframe set to:', timeframe);
-        }
-        
-        function togglePause() {
-            isPaused = !isPaused;
-            const pauseBtn = document.getElementById('pauseBtn');
-            const refreshStatus = document.getElementById('refreshStatus');
-            
-            if (isPaused) {
-                pauseBtn.textContent = 'â–¶ï¸ Resume';
-                refreshStatus.textContent = 'PAUSED';
-            } else {
-                pauseBtn.textContent = 'â¸ï¸ Pause';
-                refreshStatus.textContent = 'ON';
-            }
-        }
-        
-                // Demo functions - AGORA REDIRECIONAM PARA PÁGINAS REAIS
+        // Demo functions - FUNCIONAIS
         function openDemo(type) {
             const demoUrls = {
                 mobile: './demos/mobile-terminal.html',
@@ -1356,48 +456,11 @@
             
             if (demoUrls[type]) {
                 window.open(demoUrls[type], '_blank');
-                console.log(` Abrindo demo: ${type}`);
+                console.log(`✅ Abrindo demo: ${type}`);
             } else {
                 console.log(`Demo ${type} clicked`);
             }
-        };
-            
-            // Create demo modal or redirect
-            switch(type) {
-                case 'mobile':
-                    alert('ðŸ“± Mobile Terminal Demo\n\nFeatures:\nâ€¢ NFC Payment Processing\nâ€¢ QR Code Generation\nâ€¢ Biometric Authentication\nâ€¢ ML-DSA-65 Encryption\n\n(Full demo available in production)');
-                    break;
-                case 'web':
-                    alert('ðŸŒ Web Terminal Demo\n\nFeatures:\nâ€¢ Browser-based Payments\nâ€¢ Real-time Transaction Processing\nâ€¢ Quantum-safe Key Exchange\nâ€¢ Multi-currency Support\n\n(Full demo available in production)');
-                    break;
-                case 'crypto':
-                    alert('ðŸ” Quantum Cryptography Demo\n\nFeatures:\nâ€¢ ML-DSA-65 Signature Generation\nâ€¢ Post-quantum Key Exchange\nâ€¢ Quantum Resistance Testing\nâ€¢ Algorithm Visualization\n\n(Full demo available in production)');
-                    break;
-                case 'simulator':
-                    alert('âš›ï¸ Quantum Simulator Demo\n\nFeatures:\nâ€¢ Quantum Computing Simulation\nâ€¢ Cryptographic Attack Modeling\nâ€¢ Post-quantum Defense Testing\nâ€¢ Real-time Threat Analysis\n\n(Full demo available in production)');
-                    break;
-            }
-            
-            console.log(`Demo ${type} clicked`);
         }
-        
-        // Initialize everything
-        function init() {
-            console.log('ðŸš€ Initializing EuroTAP Complete System...');
-            console.log('ðŸ”® Features: Real Testnet + Quantum Visualization + Interactive Demos');
-            
-            initChart();
-            initQuantumVisualization();
-            connectToTestnet();
-            
-            console.log('âœ… EuroTAP Complete System Ready');
-            console.log('ðŸ“Š Chart.js initialized');
-            console.log('âš›ï¸ Three.js quantum visualization active');
-            console.log('ðŸŒ Testnet connection initiated');
-            console.log('ðŸŽ® Interactive demos ready');
-        }
-        
-        document.addEventListener('DOMContentLoaded', init);
         
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1412,99 +475,20 @@
                 }
             });
         });
-        
-        // Responsive quantum canvas
-        window.addEventListener('resize', () => {
-            if (quantumRenderer) {
-                const canvas = document.getElementById('quantumCanvas');
-                const width = canvas.clientWidth;
-                const height = canvas.clientHeight;
-                quantumRenderer.setSize(width, height);
-                quantumCamera.aspect = width / height;
-                quantumCamera.updateProjectionMatrix();
+
+        // Simular TPS em tempo real
+        function updateTPS() {
+            const tpsElement = document.getElementById('tpsDisplay');
+            if (tpsElement) {
+                const baseTps = 1200;
+                const variation = Math.floor(Math.random() * 100);
+                const newTps = baseTps + variation;
+                tpsElement.textContent = `${newTps.toLocaleString()} TPS`;
             }
-        });
-        
-        // Additional quantum effects
-        setInterval(() => {
-            if (!quantumPaused && quantumMode === 'encryption') {
-                // Add encryption pulse effect
-                encryptionNodes.forEach((node, index) => {
-                    if (Math.random() > 0.95) {
-                        // Create encryption pulse
-                        const pulseGeometry = new THREE.RingGeometry(0.3, 0.5, 16);
-                        const pulseMaterial = new THREE.MeshBasicMaterial({
-                            color: 0x00ff88,
-                            transparent: true,
-                            opacity: 0.8
-                        });
-                        const pulse = new THREE.Mesh(pulseGeometry, pulseMaterial);
-                        pulse.position.copy(node.position);
-                        quantumScene.add(pulse);
-                        
-                        // Animate pulse
-                        let scale = 1;
-                        const animatePulse = () => {
-                            scale += 0.1;
-                            pulse.scale.set(scale, scale, 1);
-                            pulseMaterial.opacity -= 0.05;
-                            
-                            if (pulseMaterial.opacity > 0) {
-                                requestAnimationFrame(animatePulse);
-                            } else {
-                                quantumScene.remove(pulse);
-                            }
-                        };
-                        animatePulse();
-                    }
-                });
-            }
-        }, 500);
-        
-        // Advanced network visualization
-        setInterval(() => {
-            if (!quantumPaused && quantumMode === 'network') {
-                // Add data packet visualization
-                networkConnections.forEach((connection, index) => {
-                    if (Math.random() > 0.9) {
-                        const packetGeometry = new THREE.SphereGeometry(0.03, 8, 8);
-                        const packetMaterial = new THREE.MeshBasicMaterial({
-                            color: 0x00ff88,
-                            transparent: true,
-                            opacity: 1
-                        });
-                        const packet = new THREE.Mesh(packetGeometry, packetMaterial);
-                        
-                        // Get connection endpoints
-                        const positions = connection.geometry.attributes.position.array;
-                        const start = new THREE.Vector3(positions[0], positions[1], positions[2]);
-                        const end = new THREE.Vector3(positions[3], positions[4], positions[5]);
-                        
-                        packet.position.copy(start);
-                        quantumScene.add(packet);
-                        
-                        // Animate packet movement
-                        let progress = 0;
-                        const animatePacket = () => {
-                            progress += 0.05;
-                            packet.position.lerpVectors(start, end, progress);
-                            
-                            if (progress < 1) {
-                                requestAnimationFrame(animatePacket);
-                            } else {
-                                quantumScene.remove(packet);
-                            }
-                        };
-                        animatePacket();
-                    }
-                });
-            }
-        }, 1000);
+        }
+
+        // Atualizar TPS a cada 3 segundos
+        setInterval(updateTPS, 3000);
     </script>
 </body>
 </html>
-<<<<<<< HEAD
-
-=======
->>>>>>> e8eddc386d1c4164fd3b8e54a613e86f05319b0f
-

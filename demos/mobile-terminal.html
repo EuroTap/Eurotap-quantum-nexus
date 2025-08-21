@@ -6,220 +6,36 @@
     <title> Mobile Terminal Demo | EuroTAP</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             background: linear-gradient(135deg, #000000, #0a0a0a, #1a1a2e, #16213e);
-            color: white;
-            font-family: 'Arial', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
+            color: white; font-family: Arial, sans-serif; min-height: 100vh;
         }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 30px 0;
-            border-bottom: 2px solid rgba(0, 255, 136, 0.3);
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .demo-title {
-            font-size: 1.8rem;
-            color: #00ff88;
-            margin-bottom: 10px;
-        }
-
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 255, 136, 0.2);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            padding: 10px 20px;
-            border-radius: 20px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            background: rgba(0, 255, 136, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .phone-container {
-            display: flex;
-            justify-content: center;
-            margin: 40px 0;
-        }
-
-        .phone-simulator {
-            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
-            border-radius: 30px;
-            padding: 15px;
-            position: relative;
-            width: 320px;
-            border: 3px solid #333;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .phone-screen {
-            background: #000;
-            border-radius: 20px;
-            padding: 20px;
-            min-height: 600px;
-            position: relative;
-            border: 2px solid #00ff88;
-            overflow: hidden;
-        }
-
-        .phone-header {
-            text-align: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(0, 255, 136, 0.3);
-            margin-bottom: 20px;
-        }
-
-        .app-title {
-            color: #00ff88;
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .demo-section {
-            margin: 20px 0;
-            padding: 15px;
-            background: rgba(0, 255, 136, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .demo-section:hover {
-            background: rgba(0, 255, 136, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .section-title {
-            color: #00ff88;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .demo-btn {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(45deg, #00ff88, #00ccff);
-            border: none;
-            border-radius: 8px;
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 10px 0;
-        }
-
-        .demo-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
-        }
-
-        .demo-btn:active {
-            transform: translateY(0);
-        }
-
-        .demo-result {
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            border-left: 3px solid #00ff88;
-            font-family: monospace;
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        .demo-result.show {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .status-indicator {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .status-active { background: #00ff88; animation: pulse 2s infinite; }
-        .status-inactive { background: #666; }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .amount-input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 5px;
-            color: white;
-            font-size: 1.1rem;
-            text-align: center;
-            margin: 10px 0;
-        }
-
-        .amount-input:focus {
-            outline: none;
-            border-color: #00ff88;
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        @media (max-width: 768px) {
-            .phone-simulator {
-                width: 100%;
-                max-width: 320px;
-            }
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; padding: 30px 0; border-bottom: 2px solid rgba(0, 255, 136, 0.3); margin-bottom: 30px; }
+        .logo { font-size: 2rem; font-weight: bold; margin-bottom: 10px; background: linear-gradient(45deg, #00ff88, #00ccff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-title { font-size: 1.8rem; color: #00ff88; margin-bottom: 10px; }
+        .back-btn { position: absolute; top: 20px; left: 20px; background: rgba(0, 255, 136, 0.2); border: 1px solid #00ff88; color: #00ff88; padding: 10px 20px; border-radius: 20px; text-decoration: none; }
+        .phone-container { display: flex; justify-content: center; margin: 40px 0; }
+        .phone-simulator { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border-radius: 30px; padding: 15px; width: 320px; border: 3px solid #333; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+        .phone-screen { background: #000; border-radius: 20px; padding: 20px; min-height: 600px; border: 2px solid #00ff88; }
+        .phone-header { text-align: center; padding: 10px 0; border-bottom: 1px solid rgba(0, 255, 136, 0.3); margin-bottom: 20px; }
+        .app-title { color: #00ff88; font-size: 1.2rem; font-weight: bold; }
+        .demo-section { margin: 20px 0; padding: 15px; background: rgba(0, 255, 136, 0.1); border-radius: 10px; border: 1px solid rgba(0, 255, 136, 0.3); }
+        .section-title { color: #00ff88; font-size: 1rem; margin-bottom: 10px; font-weight: bold; }
+        .demo-btn { width: 100%; padding: 12px; background: linear-gradient(45deg, #00ff88, #00ccff); border: none; border-radius: 8px; color: #000; font-weight: bold; cursor: pointer; margin: 10px 0; }
+        .amount-input { width: 100%; padding: 10px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(0, 255, 136, 0.3); border-radius: 5px; color: white; text-align: center; margin: 10px 0; }
+        .demo-result { margin-top: 10px; padding: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 5px; border-left: 3px solid #00ff88; font-family: monospace; font-size: 0.9rem; display: none; }
+        .demo-result.show { display: block; }
     </style>
 </head>
 <body>
     <a href="../" class="back-btn">← Back to Main</a>
-    
     <div class="container">
         <header class="header">
-            <div class="logo">🔮 EuroTAP</div>
-            <h1 class="demo-title">📱 Mobile Terminal Demo</h1>
+            <div class="logo"> EuroTAP</div>
+            <h1 class="demo-title"> Mobile Terminal Demo</h1>
             <p>Transform any smartphone into a quantum-safe payment terminal</p>
         </header>
-
         <div class="phone-container">
             <div class="phone-simulator">
                 <div class="phone-screen">
@@ -227,32 +43,20 @@
                         <div class="app-title">EuroTAP Mobile</div>
                         <div style="font-size: 0.8rem; color: #ccc;">Quantum-Safe Payment Terminal</div>
                     </div>
-
-                    <!-- NFC Demo -->
                     <div class="demo-section">
-                        <div class="section-title">
-                             <span class="status-indicator status-active"></span> NFC Payment
-                        </div>
+                        <div class="section-title"> NFC Payment</div>
                         <input type="number" class="amount-input" id="nfcAmount" placeholder="Enter amount (€)" value="25.50">
                         <button class="demo-btn" onclick="simulateNFC()">Tap to Pay with NFC</button>
                         <div class="demo-result" id="nfcResult"></div>
                     </div>
-
-                    <!-- QR Code Demo -->
                     <div class="demo-section">
-                        <div class="section-title">
-                            📱 <span class="status-indicator status-active"></span> QR Code Payment
-                        </div>
+                        <div class="section-title"> QR Code Payment</div>
                         <input type="number" class="amount-input" id="qrAmount" placeholder="Enter amount (€)" value="15.75">
                         <button class="demo-btn" onclick="simulateQR()">Generate QR Payment</button>
                         <div class="demo-result" id="qrResult"></div>
                     </div>
-
-                    <!-- Biometric Demo -->
                     <div class="demo-section">
-                        <div class="section-title">
-                            🔐 <span class="status-indicator status-active"></span> Biometric Security
-                        </div>
+                        <div class="section-title"> Biometric Security</div>
                         <button class="demo-btn" onclick="simulateBiometric()">Authenticate with Fingerprint</button>
                         <div class="demo-result" id="biometricResult"></div>
                     </div>
@@ -260,102 +64,40 @@
             </div>
         </div>
     </div>
-
     <script>
-        let transactionCounter = 1;
-
         function simulateNFC() {
             const amount = document.getElementById('nfcAmount').value || '25.50';
             const result = document.getElementById('nfcResult');
-            
-            // Simulate processing
             result.innerHTML = ' Processing NFC payment...';
             result.classList.add('show');
-            
             setTimeout(() => {
-                const txHash = generateTxHash();
-                result.innerHTML = `
-                     NFC Payment Successful!<br>
-                     Amount: €${amount}<br>
-                     TX Hash: ${txHash}<br>
-                     Time: ${new Date().toLocaleTimeString()}<br>
-                     Quantum-Safe: ML-DSA-65
-                `;
+                const txHash = '0x' + Math.random().toString(16).substring(2, 18);
+                result.innerHTML = ` NFC Payment Successful!<br> Amount: €${amount}<br> TX Hash: ${txHash}<br> Time: ${new Date().toLocaleTimeString()}<br> Quantum-Safe: ML-DSA-65`;
             }, 2000);
         }
-
         function simulateQR() {
             const amount = document.getElementById('qrAmount').value || '15.75';
             const result = document.getElementById('qrResult');
-            
             result.innerHTML = ' Generating QR code...';
             result.classList.add('show');
-            
             setTimeout(() => {
-                const qrCode = generateQRCode();
-                const txHash = generateTxHash();
-                result.innerHTML = `
-                     QR Payment Processed!<br>
-                     QR Code: ${qrCode}<br>
-                     Amount: €${amount}<br>
-                     TX Hash: ${txHash}<br>
-                     Time: ${new Date().toLocaleTimeString()}<br>
-                    🛡️ Quantum Encrypted
-                `;
+                const qrCode = 'QR' + Math.random().toString(36).substring(2, 10).toUpperCase();
+                const txHash = '0x' + Math.random().toString(16).substring(2, 18);
+                result.innerHTML = ` QR Payment Processed!<br> QR Code: ${qrCode}<br> Amount: €${amount}<br> TX Hash: ${txHash}<br> Time: ${new Date().toLocaleTimeString()}<br> Quantum Encrypted`;
             }, 1500);
         }
-
         function simulateBiometric() {
             const result = document.getElementById('biometricResult');
-            
-            result.innerHTML = '👆 Place finger on sensor...';
+            result.innerHTML = ' Place finger on sensor...';
             result.classList.add('show');
-            
             setTimeout(() => {
-                result.innerHTML = '🔍 Scanning fingerprint...';
-                
+                result.innerHTML = ' Scanning fingerprint...';
                 setTimeout(() => {
-                    const biometricId = generateBiometricId();
-                    result.innerHTML = `
-                        ✅ Biometric Authentication Success!<br>
-                        👤 User ID: ${biometricId}<br>
-                        🔐 Security Level: Quantum-Safe<br>
-                        ⏰ Authenticated: ${new Date().toLocaleTimeString()}<br>
-                        🛡️ ML-DSA-65 Verified
-                    `;
+                    const biometricId = 'BIO' + Math.random().toString(36).substring(2, 10).toUpperCase();
+                    result.innerHTML = ` Biometric Authentication Success!<br> User ID: ${biometricId}<br> Security Level: Quantum-Safe<br> Authenticated: ${new Date().toLocaleTimeString()}<br> ML-DSA-65 Verified`;
                 }, 1000);
             }, 800);
         }
-
-        function generateTxHash() {
-            return '0x' + Math.random().toString(16).substring(2, 18) + Math.random().toString(16).substring(2, 18);
-        }
-
-        function generateQRCode() {
-            return 'QR' + Math.random().toString(36).substring(2, 10).toUpperCase();
-        }
-
-        function generateBiometricId() {
-            return 'BIO' + Math.random().toString(36).substring(2, 10).toUpperCase();
-        }
-
-        // Add some dynamic effects
-        setInterval(() => {
-            const indicators = document.querySelectorAll('.status-active');
-            indicators.forEach(indicator => {
-                indicator.style.opacity = Math.random() > 0.5 ? '1' : '0.7';
-            });
-        }, 1500);
-
-        // Auto-focus on amount inputs
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputs = document.querySelectorAll('.amount-input');
-            inputs.forEach(input => {
-                input.addEventListener('focus', () => {
-                    input.select();
-                });
-            });
-        });
     </script>
 </body>
 </html>
