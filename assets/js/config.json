@@ -1,0 +1,20 @@
+﻿{
+    "project": "EuroTAP Quantum Nexus",
+    "version": "0.1.0-beta",
+    "status": "testing",
+    "features": {
+        "quantumSafe": true,
+        "demos": true,
+        "feedback": true,
+        "analytics": true
+    },
+    "settings": {
+        "feePercentage": 1.0,
+        "updateInterval": 3000,
+        "maxFeedbackLength": 500
+    },
+    "api": {
+        "baseUrl": "https://api.eurotap.eu/v1",
+        "testMode": true
+    }
+}
