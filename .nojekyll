@@ -1,0 +1,223 @@
+<!-- COLE ESTE CÓDIGO NO SEU INDEX.HTML ANTES DA TAG </body> -->
+
+<!-- INTEGRAÇÃO COMPLETA DAS FUNCIONALIDADES BETA -->
+<script>
+// VERIFICAR SE ARQUIVO BETA JÁ EXISTE E CARREGAR
+(function() {
+    console.log('🚀 Iniciando integração EuroTAP Beta...');
+    
+    // Tentar carregar arquivo beta existente
+    const script = document.createElement('script');
+    script.src = './eurotap-beta-systems.js';
+    script.onload = function() {
+        console.log('✅ EuroTAP Beta carregado com sucesso!');
+        initializeBetaFeatures();
+    };
+    script.onerror = function() {
+        console.log('ℹ️ Arquivo beta não encontrado, carregando funcionalidades direto...');
+        loadDirectBetaFeatures();
+    };
+    document.head.appendChild(script);
+})();
+
+// CARREGAR FUNCIONALIDADES DIRETO SE ARQUIVO NÃO EXISTIR
+function loadDirectBetaFeatures() {
+    // CSS dinâmico
+    const style = document.createElement('style');
+    style.textContent = `
+        .beta-monitor {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0,0,0,0.9);
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,255,0,0.3);
+            border: 1px solid #00ff00;
+        }
+        .threat-counter {
+            color: #ff4444;
+            font-weight: bold;
+        }
+        .security-badge {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .roi-calculator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            max-width: 300px;
+        }
+        .roi-calculator input, .roi-calculator button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .roi-calculator button {
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .disclaimer-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ff9800;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            z-index: 10000;
+            font-size: 14px;
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Criar elementos
+    createDisclaimer();
+    createThreatMonitor();
+    createSecurityBadge();
+    createROICalculator();
+    
+    // Ajustar body para disclaimer
+    document.body.style.paddingTop = '50px';
+    
+    console.log('✅ Funcionalidades beta carregadas diretamente!');
+}
+
+// DISCLAIMER DE PESQUISA
+function createDisclaimer() {
+    const disclaimer = document.createElement('div');
+    disclaimer.className = 'disclaimer-banner';
+    disclaimer.innerHTML = '⚠️ PROJETO DE PESQUISA EM DESENVOLVIMENTO • NÃO É PRODUTO COMERCIAL • FINS EDUCACIONAIS';
+    document.body.insertBefore(disclaimer, document.body.firstChild);
+}
+
+// MONITOR DE AMEAÇAS QUANTUM
+function createThreatMonitor() {
+    let threatCount = Math.floor(Math.random() * 10000) + 45000;
+    
+    const monitor = document.createElement('div');
+    monitor.className = 'beta-monitor';
+    monitor.innerHTML = `
+        <h4>🛡️ MONITOR QUANTUM</h4>
+        <div>Status: <span style="color: #ff4444;">PESQUISA ATIVA</span></div>
+        <div>Simulações: <span class="threat-counter">${threatCount.toLocaleString()}</span></div>
+        <div>Algoritmo: ML-DSA-65</div>
+        <div>Tipo: CONCEITUAL</div>
+    `;
+    document.body.appendChild(monitor);
+    
+    // Atualizar contador
+    setInterval(() => {
+        threatCount += Math.floor(Math.random() * 5) + 1;
+        monitor.querySelector('.threat-counter').textContent = threatCount.toLocaleString();
+    }, 3000);
+}
+
+// BADGE DE SEGURANÇA
+function createSecurityBadge() {
+    const badge = document.createElement('div');
+    badge.className = 'security-badge';
+    badge.innerHTML = '🔬 NIST ML-DSA-65 Research';
+    badge.onclick = () => {
+        alert('EuroTAP Research Project\n\n• Algoritmo: NIST ML-DSA-65\n• Status: Conceitual\n• Objetivo: Pesquisa em pagamentos quantum-safe\n• União Europeia compliance focused');
+    };
+    document.body.appendChild(badge);
+}
+
+// CALCULADORA ROI CONCEITUAL
+function createROICalculator() {
+    const calc = document.createElement('div');
+    calc.className = 'roi-calculator';
+    calc.innerHTML = `
+        <h4>💰 Simulador Econômico (Conceitual)</h4>
+        <input type="number" id="monthly-volume" placeholder="Volume mensal (€)">
+        <input type="number" id="current-fee" placeholder="Taxa atual (%)" step="0.1">
+        <button onclick="calculateConceptualROI()">Simular Economia</button>
+        <div id="roi-result"></div>
+        <small>⚠️ Simulação conceitual apenas</small>
+    `;
+    document.body.appendChild(calc);
+}
+
+// FUNÇÃO PARA CÁLCULO ROI
+window.calculateConceptualROI = function() {
+    const volume = document.getElementById('monthly-volume').value;
+    const currentFee = document.getElementById('current-fee').value;
+    
+    if (volume && currentFee) {
+        const currentCost = (volume * currentFee) / 100;
+        const conceptualCost = (volume * 1) / 100; // EuroTAP concept: 1%
+        const savings = currentCost - conceptualCost;
+        
+        document.getElementById('roi-result').innerHTML = `
+            <div style="margin-top: 10px; padding: 10px; background: #f0f8ff; border-radius: 5px;">
+                <strong>Simulação Conceitual:</strong><br>
+                Economia mensal: €${savings.toFixed(2)}<br>
+                Economia anual: €${(savings * 12).toFixed(2)}<br>
+                <small>+ Proteção quantum conceitual</small>
+            </div>
+        `;
+    }
+};
+
+// INICIALIZAR SE ARQUIVO BETA EXISTIR
+function initializeBetaFeatures() {
+    // Se o arquivo beta existir, executar suas funções
+    if (typeof window.initThreatMonitor !== 'undefined') {
+        window.initThreatMonitor();
+    }
+    if (typeof window.initValidationSystem !== 'undefined') {
+        window.initValidationSystem();
+    }
+    // Adicionar outras inicializações conforme necessário
+}
+
+console.log('🎉 EuroTAP Beta Integration loaded successfully!');
+</script>
+
+<!-- ANALYTICS SIMPLES -->
+<script>
+// Analytics básico para monitorar uso
+window.EuroTAPAnalytics = {
+    events: [],
+    track: function(event, data) {
+        this.events.push({
+            event: event,
+            data: data,
+            timestamp: new Date()
+        });
+        console.log('📊 Event:', event, data);
+    }
+};
+
+// Rastrear carregamento da página
+EuroTAPAnalytics.track('page_loaded', {
+    url: window.location.href,
+    userAgent: navigator.userAgent,
+    timestamp: new Date().toISOString()
+});
+</script>
