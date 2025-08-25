@@ -19,7 +19,7 @@ Visit our demonstration: [https://eurotap.github.io/Eurotap-quantum-nexus/](http
 ## Team
 
 **L F Z** - Lead Researcher & Developer
-**J R * - System Architect & Co-Researcher
+**J R ** - System Architect & Co-Researcher
 
 ## Contact
 
