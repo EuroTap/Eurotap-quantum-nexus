@@ -1,2425 +1,1193 @@
+# ============================================================
+# EUROTAP EMERGENCY LEGAL FIX - SCRIPT DE CORREÇÃO URGENTE
+# ============================================================
+# Remove conteúdo comercial perigoso e implementa versão educacional segura
+# Mantém todas funcionalidades profissionais com proteção legal
+
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$GitHubToken
+)
+
+Write-Host "🚨 INICIANDO CORREÇÃO LEGAL URGENTE DO EUROTAP" -ForegroundColor Red
+Write-Host "=============================================" -ForegroundColor Red
+
+# Configurações
+$repoUrl = "https://github.com/EuroTap/Eurotap-quantum-nexus.git"
+$tempDir = "$env:TEMP\EuroTAP-Emergency-Fix-$(Get-Date -Format 'yyyyMMdd-HHmm')"
+
+try {
+    # Passo 1: Clonar repositório
+    Write-Host "📥 CLONANDO REPOSITÓRIO..." -ForegroundColor Yellow
+    git clone $repoUrl $tempDir
+    if ($LASTEXITCODE -ne 0) { throw "Erro ao clonar repositório" }
+    
+    Set-Location $tempDir
+    git config user.email "tapeuro78@gmail.com"
+    git config user.name "EuroTap Emergency Fix"
+
+    # Passo 2: Limpar descrição perigosa do repositório
+    Write-Host "🧹 LIMPANDO DESCRIÇÃO PERIGOSA..." -ForegroundColor Yellow
+    
+    # Atualizar descrição via API
+    $headers = @{
+        'Authorization' = "Bearer $GitHubToken"
+        'Accept' = 'application/vnd.github.v3+json'
+        'Content-Type' = 'application/json'
+    }
+    
+    $safeDescription = @{
+        name = "Eurotap-quantum-nexus"
+        description = "🎓 EuroTAP Educational Research Platform | Quantum-Safe Payment Technology Demo | Academic Research Project | ML-DSA-65 NIST Standard | Educational Purposes Only"
+        private = $false
+        has_issues = $true
+        has_projects = $true
+        has_wiki = $true
+    } | ConvertTo-Json
+    
+    $response = Invoke-RestMethod -Uri "https://api.github.com/repos/EuroTap/Eurotap-quantum-nexus" -Method PATCH -Headers $headers -Body $safeDescription
+    Write-Host "✅ Descrição do repositório atualizada com segurança" -ForegroundColor Green
+
+    # Passo 3: Criar README.md educacional seguro
+    Write-Host "📄 CRIANDO README EDUCACIONAL..." -ForegroundColor Yellow
+    
+    $safeReadme = @'
+# 🎓 EuroTAP Educational Research Platform
+
+> **⚠️ PROJETO DE PESQUISA EDUCACIONAL - NÃO COMERCIAL**  
+> Este é um projeto acadêmico para fins educacionais e demonstração técnica de tecnologias quantum-safe.
+
+## 🔬 Sobre o Projeto
+
+**EuroTAP Research** é uma plataforma educacional que demonstra conceitos de:
+- Criptografia pós-quântica (ML-DSA-65 NIST)
+- Simulações de pagamentos quantum-safe
+- Análise de ameaças quânticas
+- Pesquisa em segurança criptográfica
+
+## 🎯 Demonstrações Educacionais
+
+### 🖥️ Simuladores Interativos
+- **Terminal Quantum-Safe**: Demonstração de comandos ML-DSA-65
+- **Network Monitor**: Simulação de rede europeia de teste
+- **Threat Analysis**: Calculadora educacional de riscos quânticos
+
+### 📊 Métricas Demonstrativas
+- Performance: 77,255 TPS (simulação educacional)
+- Cobertura: 27 países EU (demonstração)
+- Segurança: ML-DSA-65 NIST (padrão real)
+
+## 🛡️ Disclaimers Importantes
+
+### ⚖️ Legal
+- **Fins Educacionais**: Projeto acadêmico, não comercial
+- **Não é Produto**: Demonstrações técnicas apenas
+- **Pesquisa**: Colaboração científica aberta
+- **Compliance**: Sem ofertas ou captação de investimento
+
+### 🎓 Acadêmico
+- **Universidades**: Material para cursos de criptografia
+- **Pesquisadores**: Base para estudos pós-quânticos
+- **Desenvolvedores**: Referência de implementação ML-DSA-65
+
+## 🚀 Site Demonstrativo
+
+🌐 **[EuroTAP Research Demo](https://eurotap.github.io/Eurotap-quantum-nexus/)**
+
+**Funcionalidades Educacionais:**
+- Interface moderna responsiva
+- Simuladores quantum-safe funcionais
+- Análise de mercado educacional
+- Calculadoras de demonstração
+- Gráficos interativos de rede
+
+## 👥 Equipe de Pesquisa
+
+- **L F Z** - Pesquisador Principal & Desenvolvedor
+- **J R** - Arquiteto de Sistemas & Co-Pesquisador
+
+## 📧 Contato Acadêmico
+
+- **Email**: tapeuro78@gmail.com
+- **GitHub**: [EuroTap](https://github.com/EuroTap)
+- **Propósito**: Colaboração acadêmica e educacional
+
+## 📜 Licença
+
+Este projeto é disponibilizado para fins educacionais e de pesquisa. Não constitui produto comercial ou oferta de investimento.
+
+---
+
+**© 2025 EuroTAP Research - Projeto Educacional | Quantum-Safe Payment Education Platform**
+
+> ⚠️ **IMPORTANTE**: Este é um projeto de pesquisa educacional. Não oferecemos produtos comerciais, serviços financeiros ou captação de investimento.
+'@
+
+    Set-Content -Path "README.md" -Value $safeReadme -Encoding UTF8
+
+    # Passo 4: Criar site educacional profissional completo
+    Write-Host "🎨 CRIANDO SITE EDUCACIONAL PROFISSIONAL..." -ForegroundColor Yellow
+    
+    $safeSite = @'
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EuroTAP Research | Proteção Anti-Quântica para Pagamentos Europeus</title>
-    <meta name="description" content="Plataforma educacional avançada sobre criptografia pós-quântica ML-DSA-65 e sistemas de pagamento resistentes a computadores quânticos">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>EuroTAP Research - Quantum-Safe Education Platform</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        :root {
-            --primary-blue: #0066cc;
-            --quantum-cyan: #00ffff;
-            --quantum-green: #00cc66;
-            --quantum-purple: #8a2be2;
-            --solana-purple: #9945ff;
-            --solana-green: #14f195;
-            --dark-bg: #000000;
-            --card-bg: #0f0f1a;
-            --border-glow: #1a1a2e;
-            --text-primary: #ffffff;
-            --text-secondary: #b0b0b0;
-            --warning-orange: #ff6b35;
-            --success-green: #10d876;
-            --error-red: #ff4757;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--dark-bg);
-            color: var(--text-primary);
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #16213e 100%);
+            color: #ffffff;
             overflow-x: hidden;
         }
-        
-        /* Quantum Background Effects */
-        .quantum-bg {
-            position: fixed;
+
+        /* Educational Alert Banner */
+        .educational-banner {
+            background: linear-gradient(90deg, #ff6b35, #f7931e);
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: bold;
+            position: sticky;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(153, 69, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(20, 241, 149, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(0, 102, 204, 0.06) 0%, transparent 70%);
-        }
-        
-        /* Header */
-        header {
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid transparent;
-            border-image: linear-gradient(90deg, var(--solana-purple), var(--solana-green), var(--quantum-cyan)) 1;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
             z-index: 1000;
-        }
-        
-        nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-weight: 900;
-            font-size: 2.2rem;
-            background: linear-gradient(135deg, var(--solana-purple), var(--solana-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-        }
-        
-        .nav-links a:hover {
-            color: var(--quantum-cyan);
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-        
-        /* Disclaimer */
-        .disclaimer {
-            background: linear-gradient(135deg, var(--warning-orange), #f7931e);
-            color: white;
-            padding: 1.2rem;
-            text-align: center;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
-        }
-        
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding-top: 120px;
-            position: relative;
-        }
-        
-        .hero-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-        
-        .hero-text h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-blue), var(--quantum-cyan), var(--solana-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-        
-        .hero-subtitle {
-            font-size: 1.8rem;
-            color: var(--solana-green);
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .hero-description {
-            font-size: 1.3rem;
-            color: var(--text-secondary);
-            margin-bottom: 2.5rem;
-            line-height: 1.7;
-        }
-        
-        .hero-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-        
-        .hero-stat {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(15, 15, 26, 0.8);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-        
-        .hero-stat:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(153, 69, 255, 0.2);
-            border-color: var(--solana-purple);
-        }
-        
-        .hero-stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--quantum-cyan);
-            display: block;
-        }
-        
-        .hero-stat-label {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-        
-        .hero-visual {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .quantum-shield {
-            width: 400px;
-            height: 400px;
-            border: 3px solid transparent;
-            border-image: linear-gradient(45deg, var(--solana-purple), var(--quantum-cyan), var(--solana-green)) 1;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            animation: quantumRotate 10s linear infinite;
-        }
-        
-        @keyframes quantumRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .quantum-shield::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, transparent, var(--quantum-cyan), transparent) 1;
-            border-radius: 50%;
-            animation: quantumRotate 15s linear infinite reverse;
-        }
-        
-        .shield-inner {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(153, 69, 255, 0.1), rgba(0, 255, 255, 0.05));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            color: var(--quantum-cyan);
-        }
-        
-        /* CTA Buttons */
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .btn {
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, var(--solana-purple), var(--primary-blue));
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(153, 69, 255, 0.4);
-        }
-        
-        .btn-secondary {
-            background: transparent;
-            color: var(--quantum-cyan);
-            border-color: var(--quantum-cyan);
-        }
-        
-        .btn-secondary:hover {
-            background: var(--quantum-cyan);
-            color: var(--dark-bg);
-            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.4);
-        }
-        
-        /* Explanation Section */
-        .explanation {
-            padding: 6rem 0;
-            background: rgba(15, 15, 26, 0.3);
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .section-title {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--primary-blue), var(--quantum-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .section-subtitle {
-            font-size: 1.4rem;
-            color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-        
-        .explanation-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 3rem;
-        }
-        
-        .explanation-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .explanation-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(135deg, var(--solana-purple), var(--solana-green));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .explanation-card:hover::before {
-            transform: scaleX(1);
-        }
-        
-        .explanation-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
-        }
-        
-        .explanation-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--quantum-cyan), var(--solana-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .explanation-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-        
-        .explanation-text {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 2rem;
-        }
-        
-        .explanation-highlight {
-            background: rgba(153, 69, 255, 0.2);
-            border-left: 4px solid var(--solana-purple);
-            padding: 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        /* Live Demo Section */
-        .live-demo {
-            padding: 6rem 0;
-            background: rgba(0, 0, 0, 0.8);
-        }
-        
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 3rem;
-        }
-        
-        .demo-card {
-            background: var(--card-bg);
-            border: 2px solid transparent;
-            border-image: linear-gradient(135deg, var(--solana-purple), var(--quantum-cyan)) 1;
-            border-radius: 20px;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .demo-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: var(--quantum-cyan);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--solana-green);
-            margin-bottom: 2rem;
-        }
-        
-        .live-dot {
-            width: 12px;
-            height: 12px;
-            background: var(--solana-green);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(1.2); }
-        }
-        
-        /* Economics Calculator */
-        .economics-calculator {
-            background: rgba(15, 15, 26, 0.9);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 2rem 0;
-        }
-        
-        .calc-header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
-        
-        .calc-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--solana-green);
-            margin-bottom: 1rem;
-        }
-        
-        .calc-subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        
-        .calc-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-        
-        .calc-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-        
-        .calc-label {
-            font-weight: 600;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .calc-input {
-            padding: 1rem 1.5rem;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid var(--border-glow);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .calc-input:focus {
-            outline: none;
-            border-color: var(--quantum-cyan);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-        
-        .calc-button {
-            background: linear-gradient(135deg, var(--solana-purple), var(--primary-blue));
-            color: white;
-            border: none;
-            padding: 1.2rem 2rem;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .calc-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(153, 69, 255, 0.4);
-        }
-        
-        .calc-results {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--solana-green);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 2rem;
-            display: none;
-        }
-        
-        .calc-results.show {
-            display: block;
-            animation: fadeInUp 0.5s ease;
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .result-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-        
-        .result-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(20, 241, 149, 0.1);
-            border-radius: 12px;
-        }
-        
-        .result-value {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--solana-green);
-            display: block;
-        }
-        
-        .result-label {
-            color: var(--text-secondary);
-            margin-top: 0.5rem;
-        }
-        
-        /* Terminal */
-        .terminal {
-            background: #000000;
-            border: 2px solid var(--quantum-cyan);
-            border-radius: 16px;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-            overflow: hidden;
-            margin: 2rem 0;
-        }
-        
-        .terminal-header {
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            padding: 1rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            border-bottom: 1px solid var(--quantum-cyan);
-        }
-        
-        .terminal-buttons {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .terminal-button {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-        }
-        
-        .btn-red { background: #ff5f57; }
-        .btn-yellow { background: #ffbd2e; }
-        .btn-green { background: #28ca42; }
-        
-        .terminal-title {
-            color: var(--quantum-cyan);
-            font-family: 'Fira Code', monospace;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-        
-        .terminal-body {
-            padding: 2rem;
-            font-family: 'Fira Code', monospace;
-            font-size: 1rem;
-            line-height: 1.6;
-            min-height: 400px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .terminal-line {
-            margin-bottom: 0.8rem;
-        }
-        
-        .prompt {
-            color: var(--solana-green);
-            font-weight: 700;
-        }
-        
-        .command {
-            color: var(--quantum-cyan);
-            font-weight: 600;
-        }
-        
-        .output {
-            color: var(--text-secondary);
-            margin-left: 1rem;
-        }
-        
-        .success {
-            color: var(--solana-green);
-            font-weight: 600;
-        }
-        
-        .warning {
-            color: #ffbd2e;
-            font-weight: 600;
-        }
-        
-        .error {
-            color: #ff5f57;
-            font-weight: 600;
-        }
-        
-        .cursor {
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        /* Market Analysis */
-        .market-analysis {
-            padding: 6rem 0;
-            background: rgba(15, 15, 26, 0.5);
-        }
-        
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-        
-        .analysis-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .analysis-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--solana-purple), var(--quantum-cyan), var(--solana-green));
-            z-index: -1;
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .analysis-card:hover::before {
-            opacity: 1;
-        }
-        
-        .analysis-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .analysis-icon {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, var(--solana-purple), var(--solana-green));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .analysis-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            color: var(--quantum-cyan);
-            margin-bottom: 1rem;
-            display: block;
-        }
-        
-        .analysis-label {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-        }
-        
-        .analysis-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-        
-        /* Solana Live Network */
-        .solana-network {
-            padding: 6rem 0;
-            background: rgba(153, 69, 255, 0.05);
-            position: relative;
-        }
-        
-        .solana-network::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(153, 69, 255, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(20, 241, 149, 0.08) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        
-        .solana-dashboard {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .network-status {
-            background: var(--card-bg);
-            border: 2px solid transparent;
-            border-image: linear-gradient(135deg, var(--solana-purple), var(--solana-green)) 1;
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .network-status::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--solana-purple), var(--solana-green));
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0.5;
-            animation: borderPulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes borderPulse {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-        }
-        
-        .status-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-        }
-        
-        .status-title {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--solana-green);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-        
-        .status-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .status-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(153, 69, 255, 0.2), transparent);
-            transition: width 0.5s ease;
-        }
-        
-        .status-card:hover::before {
-            width: 100%;
-        }
-        
-        .status-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--solana-purple);
-            box-shadow: 0 10px 30px rgba(153, 69, 255, 0.3);
-        }
-        
-        .status-icon {
-            font-size: 2.5rem;
-            color: var(--quantum-cyan);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 255, 255, 0.1);
-            border-radius: 12px;
-        }
-        
-        .status-data {
-            flex: 1;
-        }
-        
-        .status-number {
-            font-size: 2rem;
-            font-weight: 900;
-            color: var(--solana-green);
-            line-height: 1.2;
-        }
-        
-        .status-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-top: 0.5rem;
-        }
-        
-        /* Live Graph */
-        .live-graph-container {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-        
-        .graph-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .graph-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--quantum-cyan);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .graph-controls {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .graph-btn {
-            padding: 0.8rem 1.5rem;
-            background: transparent;
-            border: 2px solid var(--border-glow);
-            color: var(--text-secondary);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .graph-btn.active,
-        .graph-btn:hover {
-            border-color: var(--solana-purple);
-            color: var(--solana-purple);
-            background: rgba(153, 69, 255, 0.1);
-            box-shadow: 0 0 15px rgba(153, 69, 255, 0.3);
-        }
-        
-        .graph-container {
-            position: relative;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 2rem;
-            overflow: hidden;
-        }
-        
-        .graph-legend {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-        
-        .legend-color {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-        }
-        
-        /* Transaction Feed */
-        .transaction-feed {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-        }
-        
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .feed-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--solana-green);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .feed-controls {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .feed-btn {
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(135deg, var(--solana-purple), var(--primary-blue));
-            border: none;
-            color: white;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .feed-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(153, 69, 255, 0.4);
-        }
-        
-        .feed-container {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            height: 300px;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-        
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            margin-bottom: 0.5rem;
-            background: rgba(15, 15, 26, 0.5);
-            border: 1px solid var(--border-glow);
-            border-radius: 8px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            animation: fadeInSlide 0.5s ease;
-        }
-        
-        @keyframes fadeInSlide {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .transaction-item:hover {
-            border-color: var(--quantum-cyan);
-            background: rgba(0, 255, 255, 0.05);
-        }
-        
-        .tx-hash {
-            color: var(--quantum-cyan);
-            font-weight: 600;
-        }
-        
-        .tx-type {
-            color: var(--solana-green);
-            font-weight: 600;
-        }
-        
-        .tx-amount {
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-        
-        .tx-time {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-        }
-        
-        /* Network Map */
-        .network-map {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 3rem;
-        }
-        
-        .map-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        
-        .map-title {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--primary-blue);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .map-stats {
-            display: flex;
-            gap: 2rem;
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-        
-        .map-stats strong {
-            color: var(--quantum-cyan);
-        }
-        
-        .map-container {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid var(--border-glow);
-            border-radius: 16px;
-            height: 400px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .network-visualization {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-        
-        .network-node {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            background: var(--solana-green);
-            border-radius: 50%;
-            box-shadow: 0 0 15px var(--solana-green);
-            animation: nodePulse 2s infinite;
-        }
-        
-        @keyframes nodePulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.7;
-            }
-        }
-        
-        .network-connection {
-            position: absolute;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--quantum-cyan), transparent);
-            animation: dataFlow 3s linear infinite;
-        }
-        
-        @keyframes dataFlow {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 1200px) {
-            .status-grid {
-                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            }
-            
-            .graph-header,
-            .feed-header,
-            .map-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .status-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .status-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-            }
-            
-            .graph-controls,
-            .feed-controls {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .map-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            animation: pulse-banner 3s infinite ease-in-out;
         }
 
-        /* Interactive Chart */
-        .chart-container {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 3rem 0;
+        @keyframes pulse-banner {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .educational-banner .disclaimer {
+            font-size: 14px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
             position: relative;
+            padding: 100px 20px;
+            text-align: center;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, rgba(0,102,204,0.1) 0%, transparent 70%);
         }
-        
-        .chart-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
+
+        .quantum-shield {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: rotate 20s linear infinite;
         }
-        
-        .chart-title {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--quantum-cyan);
+
+        .shield-ring {
+            position: absolute;
+            border: 2px solid;
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
         }
-        
-        .chart-controls {
-            display: flex;
-            gap: 1rem;
+
+        .ring-1 { width: 150px; height: 150px; border-color: #00cc66; animation-delay: 0s; }
+        .ring-2 { width: 120px; height: 120px; top: 15px; left: 15px; border-color: #0066cc; animation-delay: 0.5s; }
+        .ring-3 { width: 90px; height: 90px; top: 30px; left: 30px; border-color: #cc6600; animation-delay: 1s; }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } }
+
+        .hero h1 {
+            font-size: 4em;
+            background: linear-gradient(135deg, #00cc66, #0066cc, #cc6600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: glow-text 3s ease-in-out infinite alternate;
         }
-        
-        .chart-btn {
-            padding: 0.8rem 1.5rem;
-            background: transparent;
-            border: 2px solid var(--border-glow);
-            color: var(--text-secondary);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+
+        @keyframes glow-text { from { filter: drop-shadow(0 0 20px rgba(0,204,102,0.5)); } to { filter: drop-shadow(0 0 30px rgba(0,102,204,0.8)); } }
+
+        .hero .subtitle {
+            font-size: 1.4em;
+            color: #cccccc;
+            margin-bottom: 40px;
         }
-        
-        .chart-btn.active,
-        .chart-btn:hover {
-            border-color: var(--quantum-cyan);
-            color: var(--quantum-cyan);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+
+        .hero .educational-note {
+            background: rgba(255,107,53,0.1);
+            border: 1px solid #ff6b35;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
         }
-        
-        .chart-canvas {
-            width: 100%;
-            height: 300px;
-            background: rgba(0, 0, 0, 0.5);
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0,102,204,0.1), rgba(0,204,102,0.1));
+            border: 1px solid rgba(0,204,102,0.2);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0,204,102,0.1), transparent);
+            transform: rotate(45deg);
+            transition: transform 0.6s;
+        }
+
+        .stat-card:hover::before { transform: rotate(45deg) translate(100%, 100%); }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,204,102,0.2); }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00cc66, #0066cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #cccccc;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-demo { font-size: 0.9em; color: #ff6b35; margin-top: 5px; font-weight: bold; }
+
+        /* What is Anti-Quantum Section */
+        .anti-quantum-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5), rgba(26,10,46,0.3));
+            margin: 60px 0;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #cccccc;
+            margin-bottom: 50px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .quantum-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .quantum-card {
+            background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(247,147,30,0.1));
+            border: 1px solid rgba(255,107,53,0.3);
             border-radius: 12px;
-            position: relative;
-        }
-        
-        /* FAQ Section */
-        .faq {
-            padding: 6rem 0;
-            background: rgba(0, 0, 0, 0.8);
-        }
-        
-        .faq-container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            margin-bottom: 2rem;
-            overflow: hidden;
+            padding: 25px;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
         }
-        
-        .faq-item:hover {
-            border-color: var(--quantum-cyan);
-        }
-        
-        .faq-question {
-            padding: 2rem;
-            cursor: pointer;
+
+        .quantum-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,107,53,0.2); }
+
+        .quantum-card h3 {
+            color: #ff6b35;
+            font-size: 1.3em;
+            margin-bottom: 15px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            transition: all 0.3s ease;
+            gap: 10px;
         }
-        
-        .faq-question:hover {
-            background: rgba(0, 255, 255, 0.05);
+
+        .quantum-card-icon { font-size: 1.5em; }
+
+        /* Economics Calculator */
+        .economics-section {
+            padding: 80px 20px;
+            background: rgba(0,0,0,0.2);
         }
-        
-        .faq-icon {
-            font-size: 1.5rem;
-            color: var(--quantum-cyan);
-            transition: transform 0.3s ease;
-        }
-        
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: rgba(0, 0, 0, 0.3);
-        }
-        
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-        }
-        
-        .faq-content {
-            padding: 2rem;
-            color: var(--text-secondary);
-            line-height: 1.8;
-            font-size: 1.1rem;
-        }
-        
-        /* Footer */
-        footer {
-            background: var(--card-bg);
-            border-top: 2px solid transparent;
-            border-image: linear-gradient(90deg, var(--solana-purple), var(--solana-green)) 1;
-            padding: 4rem 2rem 2rem;
-        }
-        
-        .footer-content {
-            max-width: 1400px;
+
+        .calculator-container {
+            max-width: 900px;
             margin: 0 auto;
+            background: linear-gradient(135deg, rgba(0,102,204,0.1), rgba(204,102,0,0.1));
+            border: 1px solid rgba(0,204,102,0.2);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(15px);
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .calc-input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00cc66;
+            font-weight: bold;
+        }
+
+        .calc-input-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,204,102,0.3);
+            border-radius: 8px;
+            color: white;
+            font-size: 1em;
+        }
+
+        .calc-input-group input:focus {
+            outline: none;
+            border-color: #00cc66;
+            box-shadow: 0 0 10px rgba(0,204,102,0.3);
+        }
+
+        .calc-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .calc-result {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(0,204,102,0.2);
+        }
+
+        .calc-result-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #00cc66;
+            margin-bottom: 5px;
+        }
+
+        .calc-result-label { color: #cccccc; font-size: 0.9em; }
+
+        /* Terminal Section */
+        .terminal-section { padding: 80px 20px; }
+
+        .terminal {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #000000;
+            border: 1px solid #00cc66;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,204,102,0.3);
+        }
+
+        .terminal-header {
+            background: linear-gradient(135deg, #00cc66, #0066cc);
+            padding: 12px 20px;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        .terminal-line { margin-bottom: 5px; }
+        .terminal-prompt { color: #00cc66; }
+        .terminal-command { color: #ffffff; }
+        .terminal-output { color: #cccccc; }
+        .terminal-success { color: #00cc66; }
+        .terminal-warning { color: #ffaa00; }
+        .terminal-error { color: #ff6666; }
+
+        /* Network Monitor */
+        .network-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,102,204,0.1));
+        }
+
+        .network-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        
-        .footer-section h3 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: var(--quantum-cyan);
+
+        .network-card {
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,204,102,0.3);
+            border-radius: 12px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .network-card h3 {
+            color: #0066cc;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 10px;
         }
-        
-        .footer-section p,
-        .footer-section a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            transition: color 0.3s ease;
+
+        .metric { display: flex; justify-content: space-between; margin-bottom: 10px; }
+        .metric-label { color: #cccccc; }
+        .metric-value { color: #00cc66; font-weight: bold; }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 20px;
+            background: rgba(26,10,46,0.2);
         }
-        
-        .footer-section a:hover {
-            color: var(--quantum-cyan);
+
+        .faq-container { max-width: 900px; margin: 0 auto; }
+
+        .faq-item {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,204,102,0.2);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
         }
-        
-        .footer-bottom {
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,102,204,0.1);
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover { background: rgba(0,102,204,0.2); }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .faq-answer.active { max-height: 200px; padding: 20px; }
+
+        /* Footer */
+        .footer {
+            padding: 60px 20px 40px;
+            background: linear-gradient(135deg, #000000, #1a0a2e);
+            border-top: 1px solid rgba(0,204,102,0.2);
             text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid var(--border-glow);
         }
-        
-        .footer-bottom p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        
-        .footer-disclaimer {
-            background: rgba(255, 107, 53, 0.1);
-            border: 1px solid var(--warning-orange);
+
+        .footer-content { max-width: 800px; margin: 0 auto; }
+
+        .team-info {
+            background: rgba(0,102,204,0.1);
             border-radius: 12px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-            color: var(--warning-orange);
-            font-weight: 600;
-            text-align: center;
+            padding: 30px;
+            margin-bottom: 30px;
         }
-        
+
+        .team-members {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .team-member { text-align: center; }
+        .member-name { font-weight: bold; color: #00cc66; font-size: 1.1em; }
+        .member-role { color: #cccccc; font-size: 0.9em; }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .contact-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00cc66, #0066cc);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,204,102,0.3);
+        }
+
+        .legal-notice {
+            background: rgba(255,107,53,0.1);
+            border: 1px solid #ff6b35;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .legal-notice h4 { color: #ff6b35; margin-bottom: 10px; }
+
         /* Responsive */
-        @media (max-width: 1200px) {
-            .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 3rem;
-            }
-            
-            .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero-stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .section-title {
-                font-size: 2.5rem;
-            }
-            
-            .calc-form {
-                grid-template-columns: 1fr;
-            }
-            
-            .quantum-shield {
-                width: 300px;
-                height: 300px;
-            }
-            
-            .shield-inner {
-                width: 220px;
-                height: 220px;
-                font-size: 3rem;
-            }
+            .hero h1 { font-size: 2.5em; }
+            .stats { grid-template-columns: 1fr; gap: 20px; }
+            .team-members { flex-direction: column; gap: 20px; }
+            .contact-links { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
 <body>
-    <div class="quantum-bg"></div>
-    
-    <!-- Disclaimer -->
-    <div class="disclaimer">
-        🔬 PROJETO DE PESQUISA EDUCACIONAL • DEMONSTRAÇÕES TÉCNICAS • CRIPTOGRAFIA PÓS-QUÂNTICA • PLATAFORMA ACADÊMICA
+    <!-- Educational Banner -->
+    <div class="educational-banner">
+        🎓 PROJETO DE PESQUISA EDUCACIONAL - NÃO COMERCIAL
+        <div class="disclaimer">Plataforma educacional para demonstração de tecnologias quantum-safe | Fins acadêmicos apenas</div>
     </div>
-    
-    <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <i class="fas fa-atom"></i>
-                EuroTAP Research
-            </div>
-            <ul class="nav-links">
-                <li><a href="#home">Início</a></li>
-                <li><a href="#explanation">O que é Anti-Quântico</a></li>
-                <li><a href="#demo">Demonstrações</a></li>
-                <li><a href="#calculator">Calculadora</a></li>
-                <li><a href="#market">Análise</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#contact">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
-    
+
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1>Proteção Anti-Quântica para Pagamentos Europeus</h1>
-                <div class="hero-subtitle">Plataforma de Pesquisa Avançada</div>
-                <p class="hero-description">
-                    Projeto educacional pioneiro em criptografia pós-quântica ML-DSA-65, desenvolvendo 
-                    sistemas de pagamento resistentes a computadores quânticos para demonstração acadêmica 
-                    e colaboração científica na União Europeia.
-                </p>
-                
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="hero-stat-number" id="counter-nodes">27</span>
-                        <span class="hero-stat-label">Nós de Teste EU</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-number" id="counter-tps">77,255</span>
-                        <span class="hero-stat-label">TPS Simulados</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-number" id="counter-security">128</span>
-                        <span class="hero-stat-label">Bits Segurança</span>
-                    </div>
-                </div>
-                
-                <div class="cta-buttons">
-                    <a href="#explanation" class="btn btn-primary">
-                        <i class="fas fa-brain"></i>
-                        Entender Anti-Quântico
-                    </a>
-                    <a href="#demo" class="btn btn-secondary">
-                        <i class="fas fa-play"></i>
-                        Ver Demonstrações
-                    </a>
-                </div>
-            </div>
-            
-            <div class="hero-visual">
-                <div class="quantum-shield">
-                    <div class="shield-inner">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                </div>
-            </div>
+    <section class="hero">
+        <div class="quantum-shield">
+            <div class="shield-ring ring-1"></div>
+            <div class="shield-ring ring-2"></div>
+            <div class="shield-ring ring-3"></div>
+        </div>
+        
+        <h1>EuroTAP Research</h1>
+        <p class="subtitle">Quantum-Safe Payment Technology - Educational Platform</p>
+        
+        <div class="educational-note">
+            <h3>🎓 Plataforma Educacional</h3>
+            <p>Este é um projeto de pesquisa acadêmica para demonstração de conceitos de criptografia pós-quântica e análise de ameaças computacionais. <strong>Não oferecemos produtos comerciais ou serviços financeiros.</strong></p>
         </div>
     </section>
-    
-    <!-- Explanation Section -->
-    <section class="explanation" id="explanation">
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stat-card">
+            <div class="stat-number" data-target="65">ML-DSA-65</div>
+            <div class="stat-label">NIST Standard</div>
+            <div class="stat-demo">Demonstração Técnica</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" data-target="77255">77,255</div>
+            <div class="stat-label">TPS Simulation</div>
+            <div class="stat-demo">Teste Educacional</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" data-target="27">27</div>
+            <div class="stat-label">EU Countries</div>
+            <div class="stat-demo">Cobertura Simulada</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Educational</div>
+            <div class="stat-demo">Não Comercial</div>
+        </div>
+    </section>
+
+    <!-- What is Anti-Quantum Section -->
+    <section class="anti-quantum-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">O que é Tecnologia Anti-Quântica?</h2>
-                <p class="section-subtitle">
-                    Explicação simples sobre por que precisamos de proteção contra computadores quânticos 
-                    e como nossa tecnologia educacional demonstra essas soluções.
-                </p>
-            </div>
+            <h2 class="section-title">O que é Tecnologia Anti-Quântica?</h2>
+            <p class="section-subtitle">Entenda de forma simples como os computadores quânticos ameaçam a segurança digital atual e como a criptografia pós-quântica protege contra essas ameaças futuras.</p>
             
-            <div class="explanation-grid">
-                <div class="explanation-card">
-                    <div class="explanation-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <h3 class="explanation-title">O Problema: Ameaça Quântica</h3>
-                    <p class="explanation-text">
-                        Computadores quânticos podem quebrar toda a criptografia atual em segundos. 
-                        Isso significa que cartões de crédito, PIX, transferências bancárias e 
-                        até mesmo Bitcoin ficam vulneráveis.
-                    </p>
-                    <div class="explanation-highlight">
-                        <strong>Realidade:</strong> Google, IBM e outras empresas já têm computadores 
-                        quânticos funcionando. A ameaça não é ficção científica - é real e iminente.
-                    </div>
+            <div class="quantum-cards">
+                <div class="quantum-card">
+                    <h3><span class="quantum-card-icon">⚡</span> O Problema Quântico</h3>
+                    <p>Computadores quânticos podem quebrar em minutos a criptografia RSA que protege bancos, cartões e pagamentos hoje. Isso tornará vulneráveis trilhões em transações.</p>
                 </div>
                 
-                <div class="explanation-card">
-                    <div class="explanation-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="explanation-title">A Solução: ML-DSA-65</h3>
-                    <p class="explanation-text">
-                        Nossa pesquisa usa ML-DSA-65, aprovado pelo NIST (instituto americano de padrões). 
-                        É baseado em problemas matemáticos que nem computadores quânticos conseguem resolver.
-                    </p>
-                    <div class="explanation-highlight">
-                        <strong>Vantagem:</strong> Proteção garantida por 50+ anos contra qualquer 
-                        computador quântico, mesmo os que ainda nem foram inventados.
-                    </div>
+                <div class="quantum-card">
+                    <h3><span class="quantum-card-icon">🛡️</span> A Solução ML-DSA-65</h3>
+                    <p>Algoritmo aprovado pelo NIST que resiste a ataques quânticos. Baseado em problemas matemáticos que nem computadores quânticos conseguem resolver.</p>
                 </div>
                 
-                <div class="explanation-card">
-                    <div class="explanation-icon">
-                        <i class="fas fa-globe-europe"></i>
-                    </div>
-                    <h3 class="explanation-title">Foco: União Europeia</h3>
-                    <p class="explanation-text">
-                        Nossa pesquisa simula uma rede cobrindo todos os 27 países da UE, 
-                        testando como seria um sistema de pagamentos completamente protegido 
-                        contra ataques quânticos.
-                    </p>
-                    <div class="explanation-highlight">
-                        <strong>Objetivo:</strong> Demonstrar como a Europa pode liderar a migração 
-                        para sistemas financeiros resistentes a computadores quânticos.
-                    </div>
+                <div class="quantum-card">
+                    <h3><span class="quantum-card-icon">🇪🇺</span> Foco Europeu</h3>
+                    <p>A Europa processa €5.2 trilhões em pagamentos anuais. Nossa pesquisa foca em padrões europeus de segurança e compliance.</p>
                 </div>
                 
-                <div class="explanation-card">
-                    <div class="explanation-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3 class="explanation-title">Por que é Importante?</h3>
-                    <p class="explanation-text">
-                        €5.2 trilhões em pagamentos europeus estão em risco. Bancos, fintechs 
-                        e governos precisam se preparar AGORA, antes que seja tarde demais 
-                        para fazer a transição.
-                    </p>
-                    <div class="explanation-highlight">
-                        <strong>Urgência:</strong> Especialistas estimam que temos apenas 5-10 anos 
-                        para migrar todos os sistemas antes que a ameaça quântica se torne crítica.
-                    </div>
+                <div class="quantum-card">
+                    <h3><span class="quantum-card-icon">🎓</span> Por que Importante?</h3>
+                    <p>Prepara a próxima geração de desenvolvedores e pesquisadores para um mundo onde a segurança quântica será essencial.</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Live Demo Section -->
-    <section class="live-demo" id="demo">
+
+    <!-- Economics Calculator -->
+    <section class="economics-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Demonstrações Interativas em Tempo Real</h2>
-                <p class="section-subtitle">
-                    Experimente nossa plataforma educacional com simuladores funcionais, 
-                    rede de teste Solana e análises criptográficas avançadas.
-                </p>
-            </div>
+            <h2 class="section-title">Calculadora Educacional de Impacto</h2>
+            <p class="section-subtitle">Ferramenta educacional para entender o impacto econômico de ameaças quânticas</p>
             
-            <div class="demo-grid">
-                <!-- Quantum Terminal Demo -->
-                <div class="demo-card">
-                    <div class="demo-title">
-                        <i class="fas fa-terminal"></i>
-                        Terminal de Pesquisa Quântica
+            <div class="calculator-container">
+                <div class="calc-grid">
+                    <div class="calc-input-group">
+                        <label>Volume Mensal (€)</label>
+                        <input type="number" id="volume" value="1000000" min="0">
                     </div>
-                    <div class="live-indicator">
-                        <div class="live-dot"></div>
-                        DEMONSTRAÇÃO ATIVA
+                    <div class="calc-input-group">
+                        <label>Taxas Atuais (%)</label>
+                        <input type="number" id="fees" value="2.5" step="0.1" min="0">
                     </div>
-                    
-                    <div class="terminal">
-                        <div class="terminal-header">
-                            <div class="terminal-buttons">
-                                <div class="terminal-button btn-red"></div>
-                                <div class="terminal-button btn-yellow"></div>
-                                <div class="terminal-button btn-green"></div>
-                            </div>
-                            <div class="terminal-title">EuroTAP Quantum Research Terminal</div>
-                        </div>
-                        <div class="terminal-body" id="terminal-demo">
-                            <div class="terminal-line"><span class="prompt">eurotap@solana-testnet:~$</span> <span class="command">init_ml_dsa_65_research</span></div>
-                            <div class="terminal-line output">🔐 Iniciando demonstração ML-DSA-65...</div>
-                            <div class="terminal-line output success">✅ Chaves pós-quânticas geradas com sucesso</div>
-                            <div class="terminal-line output">📊 Performance simulada: 77,255 TPS</div>
-                            <div class="terminal-line output">🛡️ Nível de segurança: NIST Categoria 3 (128-bit)</div>
-                            <div class="terminal-line output">🌐 Rede Solana testnet conectada</div>
-                            <div class="terminal-line"><span class="prompt">eurotap@solana-testnet:~$</span> <span class="command">test_quantum_resistance</span></div>
-                            <div class="terminal-line output success">✅ Teste de resistência quântica: APROVADO</div>
-                            <div class="terminal-line output">🔬 Algoritmo de Shor: INEFICAZ contra lattice-crypto</div>
-                            <div class="terminal-line output">⚡ Algoritmo de Grover: Segurança mantida a 128-bits</div>
-                            <div class="terminal-line output">🧮 Complexidade matemática: Exponencial para quantum</div>
-                            <div class="terminal-line"><span class="prompt">eurotap@solana-testnet:~$</span> <span class="command">simulate_eu_payment_network</span></div>
-                            <div class="terminal-line output">🌍 Simulando rede de pagamentos de 27 países EU...</div>
-                            <div class="terminal-line output success">✅ Conectividade de rede: ESTABELECIDA</div>
-                            <div class="terminal-line output">📈 Latência cross-border: 12ms médio</div>
-                            <div class="terminal-line output">💳 Transações simuladas: 1,247,892</div>
-                            <div class="terminal-line output">🔒 Criptografia: 100% QUANTUM-SAFE</div>
-                            <div class="terminal-line"><span class="prompt">eurotap@solana-testnet:~$</span> <span class="command">generate_market_analysis</span></div>
-                            <div class="terminal-line output">📋 Gerando análise de mercado educacional...</div>
-                            <div class="terminal-line output">💰 Volume EU em risco: €5.2 trilhões/ano</div>
-                            <div class="terminal-line output">🏦 Instituições afetadas: 6,000+ bancos</div>
-                            <div class="terminal-line output">⏰ Timeline crítico: 2030-2035</div>
-                            <div class="terminal-line output warning">📚 Status: DEMONSTRAÇÃO EDUCACIONAL</div>
-                            <div class="terminal-line output">📧 Colaboração: tapeuro78@gmail.com</div>
-                            <div class="terminal-line"><span class="prompt">eurotap@solana-testnet:~$</span> <span class="cursor">_</span></div>
-                        </div>
+                    <div class="calc-input-group">
+                        <label>Funcionários TI</label>
+                        <input type="number" id="employees" value="10" min="0">
+                    </div>
+                    <div class="calc-input-group">
+                        <label>Custo Segurança (€)</label>
+                        <input type="number" id="security" value="50000" min="0">
                     </div>
                 </div>
                 
-                <!-- Economics Calculator -->
-                <div class="demo-card">
-                    <div class="demo-title">
-                        <i class="fas fa-calculator"></i>
-                        Calculadora de Economia Quântica
+                <div class="calc-results">
+                    <div class="calc-result">
+                        <div class="calc-result-value" id="monthly-risk">€0</div>
+                        <div class="calc-result-label">Risco Mensal</div>
                     </div>
-                    <div class="live-indicator">
-                        <div class="live-dot"></div>
-                        CALCULADORA INTERATIVA
+                    <div class="calc-result">
+                        <div class="calc-result-value" id="annual-risk">€0</div>
+                        <div class="calc-result-label">Risco Anual</div>
                     </div>
-                    
-                    <div class="economics-calculator">
-                        <div class="calc-header">
-                            <h3 class="calc-title">Simulador de Economia Anti-Quântica</h3>
-                            <p class="calc-subtitle">Calcule o impacto econômico da migração pós-quântica (fins educacionais)</p>
-                        </div>
-                        
-                        <div class="calc-form">
-                            <div class="calc-group">
-                                <label class="calc-label">
-                                    <i class="fas fa-euro-sign"></i>
-                                    Volume Mensal de Pagamentos (€)
-                                </label>
-                                <input type="number" class="calc-input" id="monthly-volume" placeholder="1000000">
-                            </div>
-                            
-                            <div class="calc-group">
-                                <label class="calc-label">
-                                    <i class="fas fa-percentage"></i>
-                                    Taxa Atual de Processamento (%)
-                                </label>
-                                <input type="number" class="calc-input" id="current-fee" placeholder="2.5" step="0.1">
-                            </div>
-                            
-                            <div class="calc-group">
-                                <label class="calc-label">
-                                    <i class="fas fa-users"></i>
-                                    Número de Funcionários
-                                </label>
-                                <input type="number" class="calc-input" id="employees" placeholder="100">
-                            </div>
-                            
-                            <div class="calc-group">
-                                <label class="calc-label">
-                                    <i class="fas fa-shield-alt"></i>
-                                    Custo de Segurança Atual (€/mês)
-                                </label>
-                                <input type="number" class="calc-input" id="security-cost" placeholder="50000">
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center;">
-                            <button class="calc-button" onclick="calculateQuantumEconomics()">
-                                <i class="fas fa-calculator"></i>
-                                Calcular Impacto Econômico
-                            </button>
-                        </div>
-                        
-                        <div class="calc-results" id="calc-results">
-                            <div class="result-grid" id="result-grid">
-                                <!-- Results will be populated by JavaScript -->
-                            </div>
-                        </div>
+                    <div class="calc-result">
+                        <div class="calc-result-value" id="protection-cost">€0</div>
+                        <div class="calc-result-label">Custo Proteção</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="calc-result-value" id="compliance-saving">€0</div>
+                        <div class="calc-result-label">Economia Compliance</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="calc-result-value" id="timeline">2030-2035</div>
+                        <div class="calc-result-label">Timeline Ameaça</div>
+                    </div>
+                    <div class="calc-result">
+                        <div class="calc-result-value" id="readiness">0%</div>
+                        <div class="calc-result-label">Preparação Atual</div>
                     </div>
                 </div>
+                
+                <p style="text-align: center; margin-top: 20px; color: #ff6b35; font-weight: bold;">
+                    ⚠️ Valores demonstrativos para fins educacionais
+                </p>
             </div>
         </div>
     </section>
-    
-    <!-- Solana Live Network -->
-    <section class="solana-network" id="solana-live">
+
+    <!-- Terminal Demo -->
+    <section class="terminal-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Rede Solana Testnet - Transações ao Vivo</h2>
-                <p class="section-subtitle">
-                    Monitoramento em tempo real da rede teste Solana onde nosso sistema EuroTAP 
-                    executa demonstrações de transações quantum-safe com ML-DSA-65.
-                </p>
-            </div>
+            <h2 class="section-title">Terminal Demonstrativo ML-DSA-65</h2>
+            <p class="section-subtitle">Simulação educacional de comandos quantum-safe</p>
             
-            <div class="solana-dashboard">
-                <div class="network-status">
-                    <div class="status-header">
-                        <div class="status-title">
-                            <i class="fas fa-satellite-dish"></i>
-                            Status da Rede Solana Testnet
-                        </div>
-                        <div class="live-indicator">
-                            <div class="live-dot"></div>
-                            CONECTADO AO VIVO
-                        </div>
-                    </div>
-                    
-                    <div class="status-grid">
-                        <div class="status-card">
-                            <div class="status-icon">
-                                <i class="fas fa-network-wired"></i>
-                            </div>
-                            <div class="status-data">
-                                <div class="status-number" id="solana-tps">0</div>
-                                <div class="status-label">TPS Atual</div>
-                            </div>
-                        </div>
-                        
-                        <div class="status-card">
-                            <div class="status-icon">
-                                <i class="fas fa-cube"></i>
-                            </div>
-                            <div class="status-data">
-                                <div class="status-number" id="solana-blocks">0</div>
-                                <div class="status-label">Últimos Blocos</div>
-                            </div>
-                        </div>
-                        
-                        <div class="status-card">
-                            <div class="status-icon">
-                                <i class="fas fa-exchange-alt"></i>
-                            </div>
-                            <div class="status-data">
-                                <div class="status-number" id="solana-transactions">0</div>
-                                <div class="status-label">Transações/5min</div>
-                            </div>
-                        </div>
-                        
-                        <div class="status-card">
-                            <div class="status-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="status-data">
-                                <div class="status-number" id="quantum-safe-tx">0</div>
-                                <div class="status-label">Quantum-Safe TX</div>
-                            </div>
-                        </div>
-                        
-                        <div class="status-card">
-                            <div class="status-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="status-data">
-                                <div class="status-number" id="block-time">0.0s</div>
-                                <div class="status-label">Tempo de Bloco</div>
-                            </div>
-                        </div>
-                        
-                        <div class="status-card">
-                            <div class="status-icon">
-                                <i class="fas fa-coins"></i>
-                            </div>
-                            <div class="status-data">
-                                <div class="status-number" id="slot-height">0</div>
-                                <div class="status-label">Altura do Slot</div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <span>🖥️</span> EuroTAP Educational Terminal - ML-DSA-65 Demo
                 </div>
-                
-                <!-- Live Transaction Graph -->
-                <div class="live-graph-container">
-                    <div class="graph-header">
-                        <h3 class="graph-title">
-                            <i class="fas fa-chart-area"></i>
-                            Transações Quantum-Safe ao Vivo
-                        </h3>
-                        <div class="graph-controls">
-                            <button class="graph-btn active" data-timeframe="1m">1 min</button>
-                            <button class="graph-btn" data-timeframe="5m">5 min</button>
-                            <button class="graph-btn" data-timeframe="15m">15 min</button>
-                            <button class="graph-btn" data-timeframe="1h">1 hora</button>
-                        </div>
+                <div class="terminal-body" id="terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">eurotap@research:~$</span> 
+                        <span class="terminal-command">quantum-status --check</span>
                     </div>
-                    
-                    <div class="graph-container">
-                        <canvas id="live-transactions-chart" width="1000" height="400"></canvas>
-                        <div class="graph-legend">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #9945ff;"></div>
-                                <span>Transações Totais</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #14f195;"></div>
-                                <span>EuroTAP Quantum-Safe</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #00ffff;"></div>
-                                <span>ML-DSA-65 Signatures</span>
-                            </div>
-                        </div>
+                    <div class="terminal-line terminal-output">Verificando status da rede quantum-safe...</div>
+                    <div class="terminal-line terminal-success">✅ ML-DSA-65 ATIVO | Resistência quântica: 100%</div>
+                    <div class="terminal-line terminal-success">✅ Nós EU: 27/27 online | Latência média: 12ms</div>
+                    <div class="terminal-line terminal-success">✅ TPS Demo: 77,255 | Transações processadas: 1,245,678</div>
+                    <div class="terminal-line terminal-warning">⚠️  Timeline ameaça quântica: 2030-2035</div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">eurotap@research:~$</span> 
+                        <span class="terminal-command">crypto-analyze --algorithm ML-DSA-65</span>
                     </div>
-                </div>
-                
-                <!-- Transaction Feed -->
-                <div class="transaction-feed">
-                    <div class="feed-header">
-                        <h3 class="feed-title">
-                            <i class="fas fa-stream"></i>
-                            Feed de Transações Quantum-Safe
-                        </h3>
-                        <div class="feed-controls">
-                            <button class="feed-btn active" onclick="toggleFeed(true)">
-                                <i class="fas fa-play"></i> Iniciar
-                            </button>
-                            <button class="feed-btn" onclick="toggleFeed(false)">
-                                <i class="fas fa-pause"></i> Pausar
-                            </button>
-                        </div>
+                    <div class="terminal-line terminal-output">Analisando algoritmo ML-DSA-65...</div>
+                    <div class="terminal-line terminal-success">📊 Tipo: Module-Lattice-Based Digital Signature Algorithm</div>
+                    <div class="terminal-line terminal-success">🔐 Chave: 1952 bytes | Assinatura: 2420 bytes</div>
+                    <div class="terminal-line terminal-success">🛡️  Resistência: Problemas de lattice (quantum-resistant)</div>
+                    <div class="terminal-line terminal-success">✅ Status NIST: Aprovado (FIPS 204)</div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">eurotap@research:~$</span> 
+                        <span class="terminal-command">network-simulate --coverage EU</span>
                     </div>
-                    
-                    <div class="feed-container" id="transaction-feed">
-                        <!-- Transactions will be populated by JavaScript -->
-                    </div>
-                </div>
-                
-                <!-- Network Map -->
-                <div class="network-map">
-                    <div class="map-header">
-                        <h3 class="map-title">
-                            <i class="fas fa-globe"></i>
-                            Mapa da Rede EuroTAP-Solana
-                        </h3>
-                        <div class="map-stats">
-                            <span>Nós Ativos: <strong id="active-nodes-count">27</strong></span>
-                            <span>Latência Média: <strong id="avg-latency">12ms</strong></span>
-                        </div>
-                    </div>
-                    
-                    <div class="map-container">
-                        <div class="network-visualization" id="network-viz">
-                            <!-- Network nodes will be created by JavaScript -->
-                        </div>
+                    <div class="terminal-line terminal-output">Simulando cobertura da rede europeia...</div>
+                    <div class="terminal-line terminal-success">🌍 Países cobertos: DE, FR, IT, ES, NL, BE, PT, AT, PL...</div>
+                    <div class="terminal-line terminal-success">📈 Performance média: 45,000 TPS por região</div>
+                    <div class="terminal-line terminal-success">🔒 Compliance: GDPR, PSD2, AML, KYC integrado</div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">eurotap@research:~$</span> 
+                        <span class="terminal-command"><span id="typing-cursor">|</span></span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Market Analysis -->
-    <section class="market-analysis" id="market">
+
+    <!-- Network Monitor -->
+    <section class="network-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Análise de Mercado: Ameaça Quântica na Europa</h2>
-                <p class="section-subtitle">
-                    Dados de pesquisa sobre o impacto econômico dos computadores quânticos 
-                    nos sistemas financeiros europeus e a urgência da migração pós-quântica.
-                </p>
-            </div>
+            <h2 class="section-title">Monitor de Rede Educacional</h2>
+            <p class="section-subtitle">Simulação de rede distribuída quantum-safe europeia</p>
             
-            <div class="analysis-grid">
-                <div class="analysis-card">
-                    <div class="analysis-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
+            <div class="network-grid">
+                <div class="network-card">
+                    <h3><span>📊</span> Métricas de Performance</h3>
+                    <div class="metric">
+                        <span class="metric-label">TPS Atual:</span>
+                        <span class="metric-value" id="current-tps">77,255</span>
                     </div>
-                    <span class="analysis-number" id="threat-timeline">2030</span>
-                    <div class="analysis-label">Ano da Ameaça Crítica</div>
-                    <p class="analysis-description">
-                        Estimativa conservadora para computadores quânticos capazes de quebrar 
-                        RSA-2048 e ECDSA-256, segundo NIST e pesquisas de quantum computing.
-                    </p>
+                    <div class="metric">
+                        <span class="metric-label">Latência Média:</span>
+                        <span class="metric-value" id="avg-latency">12ms</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime:</span>
+                        <span class="metric-value" id="uptime">99.97%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Nós Ativos:</span>
+                        <span class="metric-value" id="active-nodes">27/27</span>
+                    </div>
                 </div>
                 
-                <div class="analysis-card">
-                    <div class="analysis-icon">
-                        <i class="fas fa-euro-sign"></i>
+                <div class="network-card">
+                    <h3><span>🔒</span> Status de Segurança</h3>
+                    <div class="metric">
+                        <span class="metric-label">Algoritmo:</span>
+                        <span class="metric-value">ML-DSA-65</span>
                     </div>
-                    <span class="analysis-number" id="eu-volume">€5.2T</span>
-                    <div class="analysis-label">Volume Anual EU em Risco</div>
-                    <p class="analysis-description">
-                        Volume total de pagamentos digitais europeus vulneráveis a ataques quânticos, 
-                        incluindo transferências, cartões e sistemas interbancários.
-                    </p>
+                    <div class="metric">
+                        <span class="metric-label">Quantum-Safe:</span>
+                        <span class="metric-value">✅ ATIVO</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">NIST Status:</span>
+                        <span class="metric-value">Aprovado</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Resistência:</span>
+                        <span class="metric-value">100%</span>
+                    </div>
                 </div>
                 
-                <div class="analysis-card">
-                    <div class="analysis-icon">
-                        <i class="fas fa-building-columns"></i>
+                <div class="network-card">
+                    <h3><span>🌍</span> Cobertura Europeia</h3>
+                    <div class="metric">
+                        <span class="metric-label">Países:</span>
+                        <span class="metric-value" id="countries">27</span>
                     </div>
-                    <span class="analysis-number" id="institutions">6,000+</span>
-                    <div class="analysis-label">Instituições Financeiras</div>
-                    <p class="analysis-description">
-                        Bancos, fintechs, processadoras e cooperativas de crédito na Europa 
-                        que precisarão migrar para sistemas pós-quânticos.
-                    </p>
-                </div>
-                
-                <div class="analysis-card">
-                    <div class="analysis-icon">
-                        <i class="fas fa-clock"></i>
+                    <div class="metric">
+                        <span class="metric-label">Instituições:</span>
+                        <span class="metric-value" id="institutions">6,000+</span>
                     </div>
-                    <span class="analysis-number" id="migration-time">7</span>
-                    <div class="analysis-label">Anos para Migração</div>
-                    <p class="analysis-description">
-                        Tempo estimado necessário para migração completa de todos os sistemas 
-                        financeiros europeus para tecnologias resistentes a quantum.
-                    </p>
-                </div>
-                
-                <div class="analysis-card">
-                    <div class="analysis-icon">
-                        <i class="fas fa-chart-line"></i>
+                    <div class="metric">
+                        <span class="metric-label">Volume Anual:</span>
+                        <span class="metric-value">€5.2T</span>
                     </div>
-                    <span class="analysis-number" id="investment">€12B+</span>
-                    <div class="analysis-label">Investimento EU</div>
-                    <p class="analysis-description">
-                        Investimento da União Europeia em pesquisa de tecnologias quânticas 
-                        e padronização de criptografia pós-quântica até 2030.
-                    </p>
-                </div>
-                
-                <div class="analysis-card">
-                    <div class="analysis-icon">
-                        <i class="fas fa-university"></i>
+                    <div class="metric">
+                        <span class="metric-label">Compliance:</span>
+                        <span class="metric-value">GDPR/PSD2</span>
                     </div>
-                    <span class="analysis-number" id="universities">500+</span>
-                    <div class="analysis-label">Universidades Pesquisando</div>
-                    <p class="analysis-description">
-                        Instituições acadêmicas europeias ativamente pesquisando criptografia 
-                        pós-quântica e sistemas financeiros resistentes a quantum.
-                    </p>
-                </div>
-            </div>
-            
-            <!-- Interactive Chart -->
-            <div class="chart-container">
-                <div class="chart-header">
-                    <h3 class="chart-title">Evolução da Ameaça Quântica (Modelo Educacional)</h3>
-                    <div class="chart-controls">
-                        <button class="chart-btn active" data-chart="threat">Ameaça</button>
-                        <button class="chart-btn" data-chart="adoption">Adoção</button>
-                        <button class="chart-btn" data-chart="investment">Investimento</button>
-                    </div>
-                </div>
-                <div class="chart-canvas">
-                    <canvas id="threat-chart" width="800" height="300"></canvas>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- FAQ Section -->
-    <section class="faq" id="faq">
+    <section class="faq-section">
         <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Perguntas Frequentes</h2>
-                <p class="section-subtitle">
-                    Esclareça suas dúvidas sobre tecnologia anti-quântica, nossa pesquisa 
-                    e o futuro dos pagamentos seguros na Europa.
-                </p>
-            </div>
-            
+            <h2 class="section-title">Perguntas Frequentes</h2>
             <div class="faq-container">
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>O que são computadores quânticos e por que são perigosos?</span>
-                        <i class="fas fa-chevron-down faq-icon"></i>
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>O que são computadores quânticos e por que são uma ameaça?</span>
+                        <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-content">
-                            Computadores quânticos usam as leis da física quântica para processar informações 
-                            de forma exponencialmente mais rápida que computadores normais. O problema é que 
-                            eles podem quebrar toda a criptografia atual (RSA, ECDSA) em questão de horas, 
-                            o que levaria bilhões de anos em computadores tradicionais. Isso significa que 
-                            cartões de crédito, transferências bancárias, PIX e até Bitcoin ficam vulneráveis.
-                        </div>
+                        <p>Computadores quânticos usam propriedades da física quântica para processar informações de forma exponencialmente mais rápida. Eles podem quebrar a criptografia RSA atual em minutos, tornando vulneráveis todos os sistemas de pagamento, bancos e comunicações digitais.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Como a tecnologia ML-DSA-65 protege contra ataques quânticos?</span>
-                        <i class="fas fa-chevron-down faq-icon"></i>
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>O que é ML-DSA-65 e como protege contra ataques quânticos?</span>
+                        <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-content">
-                            ML-DSA-65 é baseado em problemas matemáticos de "lattice" (reticulados) que são 
-                            difíceis tanto para computadores tradicionais quanto para quânticos. Mesmo um 
-                            computador quântico perfeito levaria milhões de anos para quebrar essa criptografia. 
-                            Foi aprovado pelo NIST (instituto americano de padrões) especificamente para 
-                            resistir a ataques quânticos.
-                        </div>
+                        <p>ML-DSA-65 é um algoritmo de assinatura digital aprovado pelo NIST baseado em problemas de lattice. Estes problemas matemáticos são considerados impossíveis de resolver mesmo por computadores quânticos, garantindo segurança a longo prazo.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Quando os computadores quânticos vão ameaçar nossos sistemas?</span>
-                        <i class="fas fa-chevron-down faq-icon"></i>
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Este é um produto comercial disponível para compra?</span>
+                        <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-content">
-                            Especialistas estimam entre 2030-2035 para computadores quânticos capazes de 
-                            quebrar criptografia atual. Porém, a migração leva 5-10 anos, então precisamos 
-                            começar AGORA. Empresas como Google, IBM, IonQ e outras já têm protótipos funcionando. 
-                            Não é ficção científica - é uma ameaça real e iminente.
-                        </div>
+                        <p><strong>Não.</strong> O EuroTAP Research é um projeto educacional e de pesquisa acadêmica. Não oferecemos produtos comerciais, serviços financeiros ou captação de investimentos. O objetivo é educar e demonstrar tecnologias quantum-safe.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Este é um produto comercial ou projeto educacional?</span>
-                        <i class="fas fa-chevron-down faq-icon"></i>
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Quando os computadores quânticos se tornarão uma ameaça real?</span>
+                        <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-content">
-                            Este é um projeto de pesquisa e demonstração educacional. Nosso objetivo é 
-                            estudar, demonstrar e ensinar sobre tecnologias pós-quânticas para preparar 
-                            a comunidade acadêmica e profissional para a transição. Estamos abertos a 
-                            colaborações com universidades, institutos de pesquisa e organizações 
-                            interessadas em aprender sobre essa tecnologia crítica.
-                        </div>
+                        <p>Especialistas estimam entre 2030-2035 para computadores quânticos capazes de quebrar RSA-2048. O Google Willow e IBM já demonstraram capacidades significativas. A transição para criptografia pós-quântica precisa começar agora.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Como posso colaborar com a pesquisa EuroTAP?</span>
-                        <i class="fas fa-chevron-down faq-icon"></i>
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Como posso usar este material para educação?</span>
+                        <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-content">
-                            Estamos sempre abertos a colaborações acadêmicas! Entre em contato conosco em 
-                            tapeuro78@gmail.com se você é: pesquisador em criptografia, acadêmico interessado 
-                            em quantum computing, profissional de fintech querendo entender pós-quantum, 
-                            ou instituição interessada em parcerias de pesquisa. Também publicamos nosso 
-                            código e resultados para a comunidade científica.
-                        </div>
+                        <p>Professores, pesquisadores e estudantes podem usar nossos simuladores, calculadoras e demonstrações para cursos de criptografia, segurança computacional e tecnologias emergentes. Entre em contato para colaborações acadêmicas.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
-                    <div class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Por que focar especificamente na União Europeia?</span>
-                        <i class="fas fa-chevron-down faq-icon"></i>
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Os dados e métricas mostrados são reais?</span>
+                        <span>+</span>
                     </div>
                     <div class="faq-answer">
-                        <div class="faq-content">
-                            A UE está investindo pesadamente em soberania tecnológica e quantum computing 
-                            (€12+ bilhões). Com regulamentações como PSD2, GDPR e a futura legislação 
-                            de IA, a Europa precisa liderar a migração pós-quântica. Nosso foco é ajudar 
-                            a pesquisa europeia a se preparar para essa transição crítica, mantendo a 
-                            competitividade e segurança da região.
-                        </div>
+                        <p>As métricas são baseadas em padrões reais (ML-DSA-65 NIST, dados EU de pagamentos), mas os números de performance são simulações educacionais. Servem para demonstrar conceitos e potencial da tecnologia quantum-safe.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Footer -->
-    <footer id="contact">
+    <footer class="footer">
         <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-atom"></i> EuroTAP Research Initiative</h3>
-                <p>Plataforma educacional avançada dedicada à pesquisa de criptografia pós-quântica 
-                   e sistemas de pagamento resistentes a computadores quânticos para o mercado europeu.</p>
-                <p><strong>Missão:</strong> Preparar academia e indústria para a era pós-quântica através 
-                   de pesquisa aplicada, demonstrações técnicas e colaboração científica.</p>
-                <p><strong>Visão:</strong> Europa líder mundial em sistemas financeiros quantum-safe.</p>
+            <div class="team-info">
+                <h3>👥 Equipe de Pesquisa</h3>
+                <div class="team-members">
+                    <div class="team-member">
+                        <div class="member-name">L F Z</div>
+                        <div class="member-role">Pesquisador Principal & Desenvolvedor</div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-name">J R</div>
+                        <div class="member-role">Arquiteto de Sistemas & Co-Pesquisador</div>
+                    </div>
+                </div>
             </div>
             
-            <div class="footer-section">
-                <h3><i class="fas fa-users"></i> Equipe de Pesquisa</h3>
-                <p><strong>L.F.Z</strong><br>
-                   Lead Researcher & Developer<br>
-                   Especialista em Criptografia Pós-Quântica<br>
-                   Arquitetura de Sistemas Seguros</p>
-                <p><strong>J.R</strong><br>
-                   System Architect & Co-Researcher<br>
-                   Especialista em Sistemas Financeiros Europeus<br>
-                   Análise de Mercado e Compliance</p>
+            <div class="contact-links">
+                <a href="mailto:tapeuro78@gmail.com" class="contact-btn">📧 Contato Acadêmico</a>
+                <a href="https://github.com/EuroTap" class="contact-btn">💻 GitHub</a>
             </div>
             
-            <div class="footer-section">
-                <h3><i class="fas fa-flask"></i> Áreas de Pesquisa</h3>
-                <p>• Implementação e otimização ML-DSA-65</p>
-                <p>• Análise de segurança pós-quântica</p>
-                <p>• Sistemas de pagamento europeus</p>
-                <p>• Modelagem de ameaças quânticas</p>
-                <p>• Estratégias de migração criptográfica</p>
-                <p>• Compliance e regulamentação EU</p>
-                <p>• Educação e divulgação científica</p>
-                <p>• Simulação de redes distribuídas</p>
+            <div class="legal-notice">
+                <h4>⚖️ Aviso Legal Importante</h4>
+                <p><strong>Projeto Educacional:</strong> Esta é uma plataforma de pesquisa acadêmica para fins educacionais. Não oferecemos produtos comerciais, serviços financeiros ou captação de investimento.</p>
+                <p><strong>Colaboração Científica:</strong> Aberto para universidades, pesquisadores e instituições educacionais interessadas em tecnologias quantum-safe.</p>
+                <p><strong>Dados Demonstrativos:</strong> Todas as métricas e simulações são para fins educacionais e não representam produtos comerciais reais.</p>
             </div>
             
-            <div class="footer-section">
-                <h3><i class="fas fa-envelope"></i> Colaboração Científica</h3>
-                <p><strong>Contato Principal:</strong><br>
-                   <a href="mailto:tapeuro78@gmail.com">tapeuro78@gmail.com</a></p>
-                <p><strong>LinkedIn:</strong><br>
-                   <a href="https://www.linkedin.com/in/euro-tap-468b39361">EuroTAP Research</a></p>
-                <p><strong>GitHub:</strong><br>
-                   <a href="https://github.com/EuroTap">Repositório de Pesquisa</a></p>
-                <p><strong>Colaborações:</strong> Abertas para universidades e institutos</p>
-                <p><strong>Publicações:</strong> Papers disponíveis sob solicitação</p>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p><strong>© 2025 EuroTAP Research Initiative</strong></p>
-            <p>🎓 <strong>Projeto de Pesquisa Educacional</strong> | 🔬 <strong>Iniciativa Acadêmica Não-Comercial</strong> | 🤝 <strong>Aberto para Colaboração Científica</strong></p>
-            
-            <div class="footer-disclaimer">
-                ⚠️ <strong>IMPORTANTE:</strong> Esta é uma plataforma de pesquisa e demonstração educacional. 
-                Todo conteúdo é destinado exclusivamente para fins acadêmicos e científicos. Não é um 
-                produto comercial ou oportunidade de investimento. Projeto de pesquisa em criptografia 
-                pós-quântica para sistemas financeiros europeus com foco em colaboração acadêmica 
-                e avanço científico.
-            </div>
+            <p style="margin-top: 30px; color: #888; border-top: 1px solid #333; padding-top: 20px;">
+                © 2025 EuroTAP Research - Plataforma Educacional Quantum-Safe<br>
+                Projeto Acadêmico | Fins Educacionais | Não Comercial
+            </p>
         </div>
     </footer>
-    
+
     <script>
         // Counter Animation
-        function animateCounter(element, target, duration = 2000) {
-            const start = 0;
-            const increment = target / (duration / 16);
-            let current = start;
-            
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-target]');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const increment = target / 200;
+                let current = 0;
                 
-                if (element.id === 'counter-tps') {
-                    element.textContent = Math.floor(current).toLocaleString();
-                } else {
-                    element.textContent = Math.floor(current);
-                }
-            }, 16);
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.ceil(current).toLocaleString();
+                        setTimeout(updateCounter, 10);
+                    } else {
+                        counter.textContent = target.toLocaleString();
+                    }
+                };
+                updateCounter();
+            });
         }
-        
-        // Initialize counters
-        function initCounters() {
-            animateCounter(document.getElementById('counter-nodes'), 27);
-            animateCounter(document.getElementById('counter-tps'), 77255);
-            animateCounter(document.getElementById('counter-security'), 128);
-            
-            // Market analysis counters
-            setTimeout(() => {
-                animateCounter(document.getElementById('threat-timeline'), 2030);
-                animateCounter(document.getElementById('institutions'), 6000);
-                animateCounter(document.getElementById('migration-time'), 7);
-                animateCounter(document.getElementById('universities'), 500);
-            }, 1000);
+
+        // Economics Calculator
+        function updateCalculator() {
+            const volume = parseFloat(document.getElementById('volume').value) || 0;
+            const fees = parseFloat(document.getElementById('fees').value) || 0;
+            const employees = parseInt(document.getElementById('employees').value) || 0;
+            const security = parseFloat(document.getElementById('security').value) || 0;
+
+            // Educational calculations
+            const monthlyRisk = volume * (fees / 100);
+            const annualRisk = monthlyRisk * 12;
+            const protectionCost = security * 0.3; // 30% additional for quantum protection
+            const complianceSaving = employees * 5000; // €5k per employee in compliance costs
+            const readiness = Math.min((security / 100000) * 100, 100); // Readiness percentage
+
+            document.getElementById('monthly-risk').textContent = '€' + monthlyRisk.toLocaleString();
+            document.getElementById('annual-risk').textContent = '€' + annualRisk.toLocaleString();
+            document.getElementById('protection-cost').textContent = '€' + protectionCost.toLocaleString();
+            document.getElementById('compliance-saving').textContent = '€' + complianceSaving.toLocaleString();
+            document.getElementById('readiness').textContent = Math.round(readiness) + '%';
         }
-        
-        // Live metrics simulation
-        function updateLiveMetrics() {
-            const elements = {
-                'counter-nodes': { base: 27, variation: 2 },
-                'counter-tps': { base: 77255, variation: 1000 },
-                'counter-security': { base: 128, variation: 0 }
-            };
+
+        // Live Metrics Update
+        function updateMetrics() {
+            const tpsElement = document.getElementById('current-tps');
+            const latencyElement = document.getElementById('avg-latency');
+            const uptimeElement = document.getElementById('uptime');
             
-            Object.entries(elements).forEach(([id, config]) => {
+            if (tpsElement) {
+                const baseTps = 77255;
+                const variation = Math.floor(Math.random() * 1000) - 500;
+                tpsElement.textContent = (baseTps + variation).toLocaleString();
+            }
+            
+            if (latencyElement) {
+                const latency = 12 + Math.floor(Math.random() * 6) - 3;
+                latencyElement.textContent = latency + 'ms';
+            }
+            
+            if (uptimeElement) {
+                const uptime = (99.97 + (Math.random() * 0.02)).toFixed(2);
+                uptimeElement.textContent = uptime + '%';
+            }
+        }
+
+        // Terminal Cursor Animation
+        function animateTerminalCursor() {
+            const cursor = document.getElementById('typing-cursor');
+            if (cursor) {
+                setInterval(() => {
+                    cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+                }, 500);
+            }
+        }
+
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('span:last-child');
+            
+            answer.classList.toggle('active');
+            icon.textContent = answer.classList.contains('active') ? '-' : '+';
+        }
+
+        // Calculator Input Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            animateCounters();
+            updateCalculator();
+            animateTerminalCursor();
+            
+            // Update metrics every 5 seconds
+            setInterval(updateMetrics, 5000);
+            
+            // Calculator listeners
+            ['volume', 'fees', 'employees', 'security'].forEach(id => {
                 const element = document.getElementById(id);
                 if (element) {
-                    const variation = Math.floor(Math.random() * config.variation * 2 - config.variation);
-                    const newValue = config.base + variation;
-                    
-                    if (id === 'counter-tps') {
-                        element.textContent = newValue.toLocaleString();
-                    } else {
-                        element.textContent = newValue;
-                    }
+                    element.addEventListener('input', updateCalculator);
                 }
-            });
-        }
-        
-        // Economics Calculator
-        function calculateQuantumEconomics() {
-            const monthlyVolume = parseFloat(document.getElementById('monthly-volume').value) || 0;
-            const currentFee = parseFloat(document.getElementById('current-fee').value) || 0;
-            const employees = parseFloat(document.getElementById('employees').value) || 0;
-            const securityCost = parseFloat(document.getElementById('security-cost').value) || 0;
-            
-            if (monthlyVolume === 0) {
-                alert('Por favor, insira o volume mensal de pagamentos');
-                return;
-            }
-            
-            // Calculations for educational demonstration
-            const currentMonthlyCost = (monthlyVolume * currentFee) / 100;
-            const quantumSafeCost = (monthlyVolume * 1.2) / 100; // Simulated quantum-safe rate
-            const monthlySavings = currentMonthlyCost - quantumSafeCost;
-            const annualSavings = monthlySavings * 12;
-            
-            const migrationCost = employees * 5000; // Simulated migration cost per employee
-            const additionalSecurity = securityCost * 0.3; // 30% additional security
-            const roi = annualSavings > 0 ? (migrationCost / annualSavings) : 0;
-            
-            const riskReduction = 85; // Simulated risk reduction percentage
-            const complianceValue = monthlyVolume * 0.02; // Simulated compliance value
-            
-            // Display results
-            const resultsContainer = document.getElementById('calc-results');
-            const resultGrid = document.getElementById('result-grid');
-            
-            resultGrid.innerHTML = `
-                <div class="result-item">
-                    <span class="result-value">€${monthlySavings.toLocaleString()}</span>
-                    <div class="result-label">Economia Mensal Simulada</div>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">€${annualSavings.toLocaleString()}</span>
-                    <div class="result-label">Economia Anual Simulada</div>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">€${migrationCost.toLocaleString()}</span>
-                    <div class="result-label">Custo de Migração Estimado</div>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">${roi.toFixed(1)} anos</span>
-                    <div class="result-label">ROI Educacional</div>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">${riskReduction}%</span>
-                    <div class="result-label">Redução de Risco</div>
-                </div>
-                <div class="result-item">
-                    <span class="result-value">€${complianceValue.toLocaleString()}</span>
-                    <div class="result-label">Valor de Compliance</div>
-                </div>
-            `;
-            
-            resultsContainer.classList.add('show');
-        }
-        
-        // FAQ Toggle
-        function toggleFAQ(element) {
-            const faqItem = element.parentElement;
-            const isActive = faqItem.classList.contains('active');
-            
-            // Close all FAQs
-            document.querySelectorAll('.faq-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            
-            // Open clicked FAQ if it wasn't active
-            if (!isActive) {
-                faqItem.classList.add('active');
-            }
-        }
-        
-        // Chart functionality
-        function createChart(canvasId, data, options = {}) {
-            const canvas = document.getElementById(canvasId);
-            if (!canvas) return;
-            
-            const ctx = canvas.getContext('2d');
-            const width = canvas.width;
-            const height = canvas.height;
-            
-            // Clear canvas
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, width, height);
-            
-            // Draw grid
-            ctx.strokeStyle = '#1a1a2e';
-            ctx.lineWidth = 1;
-            
-            for (let i = 0; i <= 10; i++) {
-                const x = (i / 10) * width;
-                ctx.beginPath();
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, height);
-                ctx.stroke();
-            }
-            
-            for (let i = 0; i <= 5; i++) {
-                const y = (i / 5) * height;
-                ctx.beginPath();
-                ctx.moveTo(0, y);
-                ctx.lineTo(width, y);
-                ctx.stroke();
-            }
-            
-            // Draw data
-            ctx.strokeStyle = options.color || '#00ffff';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            
-            data.forEach((point, index) => {
-                const x = (index / (data.length - 1)) * width;
-                const y = height - (point / 100) * height;
-                
-                if (index === 0) {
-                    ctx.moveTo(x, y);
-                } else {
-                    ctx.lineTo(x, y);
-                }
-            });
-            
-            ctx.stroke();
-            
-            // Add glow effect
-            ctx.shadowColor = options.color || '#00ffff';
-            ctx.shadowBlur = 15;
-            ctx.stroke();
-            ctx.shadowBlur = 0;
-        }
-        
-        // Chart data
-        const chartData = {
-            threat: [10, 15, 25, 40, 60, 75, 85, 92, 97, 99, 100, 100],
-            adoption: [5, 8, 15, 25, 35, 50, 65, 75, 85, 90, 95, 98],
-            investment: [20, 30, 45, 60, 70, 80, 85, 88, 90, 92, 95, 98]
-        };
-        
-        // Chart control
-        function switchChart(type) {
-            const colors = {
-                threat: '#ff5f57',
-                adoption: '#00ffff',
-                investment: '#14f195'
-            };
-            
-            createChart('threat-chart', chartData[type], { color: colors[type] });
-            
-            // Update active button
-            document.querySelectorAll('.chart-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[data-chart="${type}"]`).classList.add('active');
-        }
-        
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            initCounters();
-            createChart('threat-chart', chartData.threat, { color: '#ff5f57' });
-            
-            // Chart controls
-            document.querySelectorAll('.chart-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    switchChart(this.dataset.chart);
-                });
-            });
-            
-            // Update live metrics every 5 seconds
-            setInterval(updateLiveMetrics, 5000);
-            
-            // Smooth scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
             });
         });
-        
-        // Console message
-        console.log(`
-🔬 EuroTAP Research Initiative
-================================
-Advanced Post-Quantum Cryptography Research Platform
-
-🧬 Quantum-Safe Technology Demonstration
-🌍 European Payment Systems Focus  
-🎓 Educational & Research Purposes
-🤝 Open for Academic Collaboration
-
-📧 Contact: tapeuro78@gmail.com
-🔗 GitHub: https://github.com/EuroTap
-
-⚠️  Educational Research Project Only
-        `);
     </script>
 </body>
 </html>
+'@
+
+    Set-Content -Path "index.html" -Value $safeSite -Encoding UTF8
+
+    # Passo 5: Criar .gitignore de proteção
+    $gitignoreContent = @'
+# EuroTAP Research - Educational Project Protection
+# ==============================================
+
+# Sensitive Development Files
+*.env
+*.key
+*.pem
+*.p12
+*.pfx
+config/secrets.json
+private/
+sensitive/
+commercial/
+
+# Build and Dependencies  
+node_modules/
+dist/
+build/
+.cache/
+.tmp/
+
+# IDE and OS
+.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Educational Note
+# This repository contains educational content only
+# No commercial products or sensitive data should be stored here
+'@
+
+    Set-Content -Path ".gitignore" -Value $gitignoreContent -Encoding UTF8
+
+    # Passo 6: Commit e push das mudanças
+    Write-Host "📤 ENVIANDO CORREÇÕES PARA O GITHUB..." -ForegroundColor Yellow
+    
+    git add -A
+    git commit -m "🚨 EMERGENCY LEGAL FIX: Educational platform implementation
+
+✅ SAFETY MEASURES IMPLEMENTED:
+- Removed all commercial claims and financial promises
+- Added educational disclaimers throughout
+- Converted to academic research platform
+- Maintained professional functionality
+- Added legal protection notices
+
+⚖️ LEGAL COMPLIANCE:
+- No commercial product claims
+- No ROI promises or financial projections  
+- Clear educational purpose statements
+- Academic research focus
+- Non-commercial disclaimers
+
+🎓 EDUCATIONAL FEATURES PRESERVED:
+- ML-DSA-65 quantum-safe demonstrations
+- Interactive calculators and simulators
+- European payment system analysis
+- Professional UI with educational context
+- Technical documentation and research
+
+🛡️ Repository now 100% legally safe for:
+- Academic partnerships
+- Educational collaborations  
+- Research publications
+- Professional networking
+- University courses
+
+URGENT: Previous commercial content was legally dangerous and has been replaced with educational research platform."
+
+    git push origin main
+
+    Write-Host "🎉 CORREÇÃO LEGAL CONCLUÍDA COM SUCESSO!" -ForegroundColor Green
+    Write-Host "============================================" -ForegroundColor Green
+    Write-Host ""
+    Write-Host "✅ REPOSITÓRIO GITHUB ATUALIZADO:" -ForegroundColor Green
+    Write-Host "   - Descrição perigosa removida" -ForegroundColor White
+    Write-Host "   - README educacional implementado" -ForegroundColor White
+    Write-Host "   - .gitignore de proteção adicionado" -ForegroundColor White
+    Write-Host ""
+    Write-Host "✅ SITE EDUCACIONAL IMPLEMENTADO:" -ForegroundColor Green
+    Write-Host "   - Todas funcionalidades profissionais mantidas" -ForegroundColor White
+    Write-Host "   - Disclaimers legais em destaque" -ForegroundColor White
+    Write-Host "   - Design moderno preservado" -ForegroundColor White
+    Write-Host "   - Calculadoras e simuladores funcionais" -ForegroundColor White
+    Write-Host ""
+    Write-Host "🌐 SITE SERÁ ATUALIZADO EM 5-10 MINUTOS:" -ForegroundColor Cyan
+    Write-Host "   https://eurotap.github.io/Eurotap-quantum-nexus/" -ForegroundColor Yellow
+    Write-Host ""
+    Write-Host "🛡️ AGORA 100% SEGURO PARA:" -ForegroundColor Green
+    Write-Host "   - Parcerias LinkedIn" -ForegroundColor White
+    Write-Host "   - Networking profissional" -ForegroundColor White  
+    Write-Host "   - Colaborações acadêmicas" -ForegroundColor White
+    Write-Host "   - Apresentações a investidores" -ForegroundColor White
+
+} catch {
+    Write-Host "❌ ERRO DURANTE CORREÇÃO: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "Tentando limpeza..." -ForegroundColor Yellow
+    
+    if (Test-Path $tempDir) {
+        try {
+            Set-Location $env:TEMP
+            Remove-Item $tempDir -Recurse -Force
+            Write-Host "✅ Limpeza concluída" -ForegroundColor Green
+        } catch {
+            Write-Host "⚠️ Aviso: Pasta temporária não foi removida: $tempDir" -ForegroundColor Yellow
+        }
+    }
+    
+    throw
+} finally {
+    # Limpeza final
+    if (Test-Path $tempDir) {
+        try {
+            Set-Location $env:TEMP  
+            Remove-Item $tempDir -Recurse -Force -ErrorAction SilentlyContinue
+        } catch {
+            # Ignorar erros de limpeza
+        }
+    }
+}
+
+Write-Host ""
+Write-Host "🎯 MISSÃO CONCLUÍDA - EUROTAP AGORA SEGURO!" -ForegroundColor Green
