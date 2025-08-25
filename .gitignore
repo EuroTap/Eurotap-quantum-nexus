@@ -1,5 +1,11 @@
-﻿*.log
+﻿*.env
+*.key
+*secret*
+*private*
+BETA-*.md
+*-Clean.ps1
+*-beta-*.js
+backup/
+*.log
 *.tmp
-node_modules/
 .DS_Store
-Thumbs.db
