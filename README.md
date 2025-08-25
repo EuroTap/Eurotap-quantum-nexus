@@ -18,8 +18,8 @@ Visit our demonstration: [https://eurotap.github.io/Eurotap-quantum-nexus/](http
 
 ## Team
 
-**Laury Fernando Zacarias** - Lead Researcher & Developer
-**Jeferson Ramos de Oliveira** - System Architect & Co-Researcher
+**L F Z** - Lead Researcher & Developer
+**J R * - System Architect & Co-Researcher
 
 ## Contact
 
