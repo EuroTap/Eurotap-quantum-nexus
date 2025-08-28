@@ -1103,14 +1103,15 @@
             const blockCanvas = document.getElementById('blockChart');
 
             // Destruir gráficos existentes se existirem
-            if (window.tpsChart) {
+            if (window.tpsChart && typeof window.tpsChart.destroy === 'function') {
                 window.tpsChart.destroy();
-                window.tpsChart = null;
             }
-            if (window.blockChart) {
+            window.tpsChart = null;
+            
+            if (window.blockChart && typeof window.blockChart.destroy === 'function') {
                 window.blockChart.destroy();
-                window.blockChart = null;
             }
+            window.blockChart = null;
 
             if (tpsCanvas) {
                 window.tpsChart = new Chart(tpsCanvas, {
@@ -1156,7 +1157,7 @@
             }
 
             if (blockCanvas) {
-                blockChart = new Chart(blockCanvas, {
+                window.blockChart = new Chart(blockCanvas, {
                     type: 'line',
                     data: {
                         labels: [],
@@ -1232,16 +1233,16 @@
             statusText.textContent = `🔮 TESTNET ${data.connected ? 'CONECTADO' : 'SIMULADO'} - ${data.tps.toLocaleString()} TPS • SOLANA ÉPOCA ${data.epoch}`;
 
             // Atualizar gráficos
-            if (tpsChart && data.tpsHistory.length > 0) {
-                tpsChart.data.labels = data.tpsHistory.map((_, i) => i + 1);
-                tpsChart.data.datasets[0].data = data.tpsHistory;
-                tpsChart.update('none');
+            if (window.tpsChart && data.tpsHistory.length > 0) {
+                window.tpsChart.data.labels = data.tpsHistory.map((_, i) => i + 1);
+                window.tpsChart.data.datasets[0].data = data.tpsHistory;
+                window.tpsChart.update('none');
             }
 
-            if (blockChart && data.blockHistory.length > 0) {
-                blockChart.data.labels = data.blockHistory.map((_, i) => i + 1);
-                blockChart.data.datasets[0].data = data.blockHistory;
-                blockChart.update('none');
+            if (window.blockChart && data.blockHistory.length > 0) {
+                window.blockChart.data.labels = data.blockHistory.map((_, i) => i + 1);
+                window.blockChart.data.datasets[0].data = data.blockHistory;
+                window.blockChart.update('none');
             }
         }
 
@@ -1959,10 +1960,15 @@ ${'='.repeat(50)}
                 initQuantumParticles();
                 initModals();
                 
-                // Aguardar Chart.js carregar
+                // Aguardar Chart.js carregar antes de inicializar gráficos
                 setTimeout(() => {
-                    initCharts();
-                }, 500);
+                    if (typeof Chart !== 'undefined') {
+                        initCharts();
+                    } else {
+                        console.warn('Chart.js não carregado ainda, tentando novamente...');
+                        setTimeout(initCharts, 2000);
+                    }
+                }, 1000);
                 
                 // Adicionar handler do terminal
                 const terminalInput = document.getElementById('terminalInput');
@@ -1973,7 +1979,7 @@ ${'='.repeat(50)}
                 // Iniciar atualizações em tempo real
                 setTimeout(() => {
                     startRealTimeUpdates();
-                }, 1000);
+                }, 2000);
 
                 console.log('✅ EuroTAP inicializado com sucesso!');
                 
@@ -1991,7 +1997,7 @@ ${'='.repeat(50)}
 
         // Fallback para window.onload
         window.addEventListener('load', function() {
-            if (!tpsChart || !blockChart) {
+            if (!window.tpsChart || !window.blockChart) {
                 setTimeout(initCharts, 1000);
             }
         });
