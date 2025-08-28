@@ -2017,7 +2017,40 @@ ${'='.repeat(50)}
         🌐 Dados atualizados a cada 3 segundos
         `);
     </script>
-</body> <!-- Disclaimer banner - adicionar aqui -->
+</body> <!-- Modal Teste de Performance Real -->
+<div id="realPerformanceModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('realPerformanceModal')">&times;</span>
+        <h2>Teste de Performance Real - Solana TestNet</h2>
+        
+        <div class="performance-controls">
+            <div class="control-group">
+                <label>Número de Transações:</label>
+                <input type="number" id="txCount" value="10" min="1" max="50">
+            </div>
+            <div class="control-group">
+                <label>Concorrência:</label>
+                <input type="number" id="concurrency" value="3" min="1" max="10">
+            </div>
+            <div class="control-group">
+                <button onclick="initializeRealTest()" id="initBtn" class="btn-primary">
+                    Inicializar Sistema
+                </button>
+                <button onclick="runRealTest()" id="testBtn" class="btn-secondary" disabled>
+                    Executar Teste
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-status">
+            <div class="status-indicator" id="realTestStatus">Sistema não inicializado</div>
+        </div>
+        
+        <div class="test-results" id="realTestResults">
+            <p>Execute um teste para ver os resultados...</p>
+        </div>
+    </div>
+</div><!-- Disclaimer banner - adicionar aqui -->
     <div class="disclaimer-banner" style="background: #ff4444; color: white; padding: 10px; text-align: center; font-weight: bold; z-index: 9999;">
         ⚠️ DEMONSTRAÇÃO EDUCACIONAL - NÃO É UM SERVIÇO FINANCEIRO REAL ⚠️
     </div>
