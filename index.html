@@ -1102,8 +1102,18 @@
             const tpsCanvas = document.getElementById('tpsChart');
             const blockCanvas = document.getElementById('blockChart');
 
+            // Destruir gráficos existentes se existirem
+            if (window.tpsChart) {
+                window.tpsChart.destroy();
+                window.tpsChart = null;
+            }
+            if (window.blockChart) {
+                window.blockChart.destroy();
+                window.blockChart = null;
+            }
+
             if (tpsCanvas) {
-                tpsChart = new Chart(tpsCanvas, {
+                window.tpsChart = new Chart(tpsCanvas, {
                     type: 'line',
                     data: {
                         labels: [],
