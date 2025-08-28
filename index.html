@@ -2235,6 +2235,298 @@
                 console.log('💻 Open Terminal for interactive TestNet commands');
             }
         }, 3000);
-    </script>
+    </script> // Adicione este código ao JavaScript do seu site existente
+// Substitua as funções de inicialização dos gráficos
+
+// Função para carregar dados do arquivo JSON
+async function loadEuroTAPData() {
+    try {
+        const response = await fetch('eurotap-data.json?' + new Date().getTime());
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        }
+        throw new Error('Arquivo de dados não encontrado');
+    } catch (error) {
+        console.log('Usando dados simulados - arquivo JSON não disponível');
+        return generateFallbackData();
+    }
+}
+
+// Dados de fallback se o arquivo JSON não estiver disponível
+function generateFallbackData() {
+    const tpsHistory = Array.from({length: 20}, () => Math.floor(Math.random() * 3000) + 2000);
+    const volumeHistory = Array.from({length: 20}, (_, i) => 100 + i * 10 + Math.random() * 50);
+    
+    return {
+        timestamp: new Date().toISOString(),
+        solana: {
+            slot: Math.floor(Math.random() * 1000000) + 200000000,
+            blockHeight: Math.floor(Math.random() * 1000000) + 199000000,
+            epoch: Math.floor(Math.random() * 100) + 400,
+            validators: Math.floor(Math.random() * 500) + 1200,
+            connected: false
+        },
+        metrics: {
+            tps: tpsHistory[tpsHistory.length - 1],
+            totalTransactions: Math.floor(Math.random() * 10000) + 50000,
+            totalVolumeK: volumeHistory[volumeHistory.length - 1],
+            activeNodes: Math.floor(Math.random() * 50) + 150,
+            performancePercent: Math.random() * 100,
+            networkStatus: 'SIMULATED'
+        },
+        charts: {
+            tpsHistory: tpsHistory,
+            volumeHistory: volumeHistory,
+            labels: Array.from({length: 20}, (_, i) => i + 1)
+        }
+    };
+}
+
+// Atualizar gráficos com dados reais
+async function updateChartsWithRealData() {
+    const data = await loadEuroTAPData();
+    
+    if (data && data.charts) {
+        // Atualizar gráfico TPS
+        if (window.tpsChart && data.charts.tpsHistory) {
+            window.tpsChart.data.labels = data.charts.labels.slice(-20);
+            window.tpsChart.data.datasets[0].data = data.charts.tpsHistory.slice(-20);
+            window.tpsChart.update('none');
+        }
+        
+        // Atualizar gráfico Volume
+        if (window.volumeChart && data.charts.volumeHistory) {
+            // Para gráfico de barras, usar últimos 6 pontos
+            const recentVolume = data.charts.volumeHistory.slice(-6);
+            const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            
+            window.volumeChart.data.labels = monthLabels;
+            window.volumeChart.data.datasets[0].data = recentVolume;
+            window.volumeChart.update('none');
+        }
+        
+        // Atualizar métricas na interface
+        if (data.metrics) {
+            updateUIMetrics(data);
+        }
+        
+        // Atualizar status da conexão
+        if (data.solana) {
+            updateConnectionStatus(data.solana);
+        }
+        
+        console.log('Gráficos atualizados com dados reais:', data.timestamp);
+    }
+}
+
+// Atualizar métricas na UI
+function updateUIMetrics(data) {
+    const elements = {
+        'tpsValue': data.metrics.tps?.toLocaleString() || '0',
+        'currentTPS': data.metrics.tps?.toLocaleString() || '0',
+        'heroTps': data.metrics.tps?.toLocaleString() || '0',
+        'totalTransactions': data.metrics.totalTransactions?.toLocaleString() || '0',
+        'totalTx': data.metrics.totalTransactions?.toLocaleString() || '0',
+        'totalVolume': `€${data.metrics.totalVolumeK || 0}K`,
+        'currentVolume': `€${data.metrics.totalVolumeK || 0}K`,
+        'heroVolume': `€${data.metrics.totalVolumeK || 0}K+`,
+        'activeNodes': data.metrics.activeNodes?.toString() || '0',
+        'detailTPS': data.metrics.tps?.toLocaleString() || '0'
+    };
+    
+    // Atualizar elementos que existem
+    Object.keys(elements).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = elements[id];
+        }
+    });
+}
+
+// Atualizar status da conexão Solana
+function updateConnectionStatus(solanaData) {
+    const elements = {
+        'currentSlot': solanaData.slot?.toLocaleString() || '-',
+        'currentEpoch': solanaData.epoch?.toString() || '-',
+        'blockHeight': `#${solanaData.blockHeight?.toLocaleString() || '-'}`,
+        'validators': solanaData.validators?.toLocaleString() || '-',
+        'validatorCount': solanaData.validators?.toLocaleString() || '-'
+    };
+    
+    Object.keys(elements).forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = elements[id];
+        }
+    });
+    
+    // Status de conexão
+    const statusElement = document.getElementById('solanaStatus');
+    if (statusElement) {
+        if (solanaData.connected) {
+            statusElement.textContent = 'Conectado';
+            statusElement.className = 'status-value status-connected';
+        } else {
+            statusElement.textContent = 'Simulado';
+            statusElement.className = 'status-value';
+        }
+    }
+}
+
+// Inicializar sistema de atualização automática
+function initializeRealTimeUpdates() {
+    // Atualização imediata
+    updateChartsWithRealData();
+    
+    // Atualizar a cada 3 segundos
+    setInterval(() => {
+        updateChartsWithRealData();
+    }, 3000);
+    
+    console.log('Sistema de atualização em tempo real inicializado');
+}
+
+// Substituir a função de inicialização dos gráficos existente
+function initializeChartsWithRealData() {
+    const tpsCtx = document.getElementById('tpsChart');
+    const volumeCtx = document.getElementById('volumeChart');
+    
+    if (tpsCtx) {
+        window.tpsChart = new Chart(tpsCtx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 20}, (_, i) => i + 1),
+                datasets: [{
+                    label: 'TPS Real-Time',
+                    data: Array(20).fill(0),
+                    borderColor: '#00ff88',
+                    backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 500
+                },
+                plugins: {
+                    legend: { 
+                        labels: { color: '#ffffff' },
+                        display: true
+                    }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#ffffff' }, 
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } 
+                    },
+                    y: { 
+                        ticks: { color: '#ffffff' }, 
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    }
+
+    if (volumeCtx) {
+        window.volumeChart = new Chart(volumeCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Volume (€K)',
+                    data: [0, 0, 0, 0, 0, 0],
+                    backgroundColor: 'rgba(147, 51, 234, 0.3)',
+                    borderColor: '#9333ea',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 500
+                },
+                plugins: {
+                    legend: { 
+                        labels: { color: '#ffffff' },
+                        display: true
+                    }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: '#ffffff' }, 
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' } 
+                    },
+                    y: { 
+                        ticks: { color: '#ffffff' }, 
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+}
+
+// Função principal de inicialização - substitua a existente
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando EuroTAP com dados reais da Solana...');
+    
+    // Inicializar gráficos
+    initializeChartsWithRealData();
+    
+    // Aguardar um momento para os gráficos carregarem
+    setTimeout(() => {
+        initializeRealTimeUpdates();
+    }, 1000);
+    
+    console.log('EuroTAP carregado - conectando com dados da Solana TestNet');
+});
+
+// Adicionar indicador visual de status da conexão de dados
+function addDataStatusIndicator() {
+    const indicator = document.createElement('div');
+    indicator.id = 'dataStatus';
+    indicator.style.cssText = `
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 255, 136, 0.9);
+        color: black;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 1001;
+        display: none;
+    `;
+    indicator.textContent = 'Dados atualizados';
+    document.body.appendChild(indicator);
+    
+    // Mostrar indicador quando dados são atualizados
+    const originalUpdate = updateChartsWithRealData;
+    updateChartsWithRealData = async function() {
+        await originalUpdate();
+        indicator.style.display = 'block';
+        setTimeout(() => {
+            indicator.style.display = 'none';
+        }, 1000);
+    };
+}
+
+// Executar quando a página carregar
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addDataStatusIndicator);
+} else {
+    addDataStatusIndicator();
+}
 </body>
 </html>
