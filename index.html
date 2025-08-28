@@ -801,39 +801,86 @@
                     <!-- Payment Methods -->
                     <div style="margin-bottom: 20px;">
                         <div style="color: #cccccc; font-size: 14px; margin-bottom: 10px; text-align: center;">Método de Pagamento:</div>
-                        <div style="display: flex; gap: 8px;">
-                            <button onclick="selectPaymentMethod('card')" id="cardMethod" style="
-                                flex: 1; 
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;">
+                            <button onclick="selectPaymentMethod('nfc')" id="nfcMethod" style="
                                 padding: 12px; 
                                 background: rgba(0, 102, 255, 0.3); 
                                 border: 2px solid #0066ff; 
                                 color: #0066ff; 
                                 border-radius: 8px; 
-                                font-size: 12px; 
+                                font-size: 11px; 
                                 cursor: pointer;
                                 font-weight: bold;
-                            ">💳 Cartão</button>
-                            <button onclick="selectPaymentMethod('pix')" id="pixMethod" style="
-                                flex: 1; 
+                            ">📡 NFC/Contactless</button>
+                            <button onclick="selectPaymentMethod('chip')" id="chipMethod" style="
                                 padding: 12px; 
                                 background: rgba(255, 136, 0, 0.1); 
                                 border: 2px solid transparent; 
                                 color: #ff8800; 
                                 border-radius: 8px; 
-                                font-size: 12px; 
+                                font-size: 11px; 
                                 cursor: pointer;
-                            ">⚡ PIX</button>
-                            <button onclick="selectPaymentMethod('crypto')" id="cryptoMethod" style="
-                                flex: 1; 
+                            ">💳 Chip & PIN</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                            <button onclick="selectPaymentMethod('qr')" id="qrMethod" style="
                                 padding: 12px; 
                                 background: rgba(0, 255, 136, 0.1); 
                                 border: 2px solid transparent; 
                                 color: #00ff88; 
                                 border-radius: 8px; 
-                                font-size: 12px; 
+                                font-size: 11px; 
                                 cursor: pointer;
-                            ">₿ Crypto</button>
+                            ">📱 QR SEPA</button>
+                            <button onclick="selectPaymentMethod('sepa')" id="sepaMethod" style="
+                                padding: 12px; 
+                                background: rgba(138, 43, 226, 0.1); 
+                                border: 2px solid transparent; 
+                                color: #8a2be2; 
+                                border-radius: 8px; 
+                                font-size: 11px; 
+                                cursor: pointer;
+                            ">⚡ SEPA Instant</button>
                         </div>
+                    </div>
+
+                    <!-- PIN Entry (shown when needed) -->
+                    <div id="pinEntry" style="display: none; margin-bottom: 20px; background: rgba(255, 0, 0, 0.1); border: 1px solid #ff0000; border-radius: 10px; padding: 15px;">
+                        <div style="color: #ff6666; font-size: 14px; margin-bottom: 10px; text-align: center;">💳 Insira o PIN do Cartão</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px;">
+                            <button onclick="addPinDigit('1')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">1</button>
+                            <button onclick="addPinDigit('2')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">2</button>
+                            <button onclick="addPinDigit('3')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">3</button>
+                            <button onclick="addPinDigit('4')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">4</button>
+                            <button onclick="addPinDigit('5')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">5</button>
+                            <button onclick="addPinDigit('6')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">6</button>
+                            <button onclick="addPinDigit('7')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">7</button>
+                            <button onclick="addPinDigit('8')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">8</button>
+                            <button onclick="addPinDigit('9')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">9</button>
+                            <button onclick="clearPin()" style="padding: 12px; background: #ff4444; border: none; color: #fff; border-radius: 6px; font-size: 12px; cursor: pointer;">Clear</button>
+                            <button onclick="addPinDigit('0')" style="padding: 12px; background: #333; border: none; color: #fff; border-radius: 6px; font-size: 16px; cursor: pointer;">0</button>
+                            <button onclick="confirmPin()" style="padding: 12px; background: #00ff88; border: none; color: #000; border-radius: 6px; font-size: 12px; cursor: pointer;">OK</button>
+                        </div>
+                        <div style="text-align: center; color: #ff6666; font-size: 12px;">PIN: <span id="pinDisplay">****</span></div>
+                    </div>
+
+                    <!-- QR Code Display (shown for QR payments) -->
+                    <div id="qrDisplay" style="display: none; margin-bottom: 20px; background: rgba(0, 0, 0, 0.8); border: 2px solid #00ff88; border-radius: 10px; padding: 20px; text-align: center;">
+                        <div style="color: #00ff88; font-size: 14px; margin-bottom: 15px;">📱 Escaneie o QR Code SEPA</div>
+                        <div id="qrCode" style="
+                            width: 120px; 
+                            height: 120px; 
+                            background: white; 
+                            margin: 0 auto 15px; 
+                            border-radius: 8px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            font-size: 60px;
+                            color: #000;
+                        ">⚡</div>
+                        <div style="color: #cccccc; font-size: 11px;">EPC QR Code - SEPA Credit Transfer</div>
+                        <div style="color: #00ff88; font-size: 12px; margin-top: 8px;" id="qrTimer">Expira em: 05:00</div>
                     </div>
 
                     <!-- Process Payment Button -->
@@ -1406,8 +1453,12 @@ ${'='.repeat(50)}
 
         // Sistema do App Maquininha
         let currentAmount = '0.00';
-        let selectedPaymentMethod = 'card';
+        let selectedPaymentMethod = 'nfc';
         let appTransactionHistory = [];
+        let enteredPin = '';
+        let pinRequired = false;
+        let qrTimer = null;
+        let qrTimeLeft = 300; // 5 minutos em segundos
 
         function openMobileApp() {
             const modal = document.getElementById('mobileAppModal');
@@ -1509,20 +1560,131 @@ ${'='.repeat(50)}
             selectedPaymentMethod = method;
             
             // Reset all buttons
-            document.getElementById('cardMethod').style.background = 'rgba(0, 102, 255, 0.1)';
-            document.getElementById('cardMethod').style.borderColor = 'transparent';
-            document.getElementById('pixMethod').style.background = 'rgba(255, 136, 0, 0.1)';
-            document.getElementById('pixMethod').style.borderColor = 'transparent';
-            document.getElementById('cryptoMethod').style.background = 'rgba(0, 255, 136, 0.1)';
-            document.getElementById('cryptoMethod').style.borderColor = 'transparent';
+            const methods = ['nfc', 'chip', 'qr', 'sepa'];
+            methods.forEach(m => {
+                const btn = document.getElementById(m + 'Method');
+                if (btn) {
+                    btn.style.background = getMethodColor(m, false);
+                    btn.style.borderColor = 'transparent';
+                }
+            });
             
             // Highlight selected
             const selectedBtn = document.getElementById(method + 'Method');
-            selectedBtn.style.background = method === 'card' ? 'rgba(0, 102, 255, 0.3)' : 
-                                        method === 'pix' ? 'rgba(255, 136, 0, 0.3)' : 
-                                        'rgba(0, 255, 136, 0.3)';
-            selectedBtn.style.borderColor = method === 'card' ? '#0066ff' : 
-                                          method === 'pix' ? '#ff8800' : '#00ff88';
+            if (selectedBtn) {
+                selectedBtn.style.background = getMethodColor(method, true);
+                selectedBtn.style.borderColor = getMethodBorderColor(method);
+            }
+
+            // Hide/show relevant UI elements
+            document.getElementById('pinEntry').style.display = 'none';
+            document.getElementById('qrDisplay').style.display = 'none';
+            
+            if (method === 'qr') {
+                generateQRCode();
+            }
+        }
+
+        function getMethodColor(method, selected) {
+            const colors = {
+                nfc: selected ? 'rgba(0, 102, 255, 0.3)' : 'rgba(0, 102, 255, 0.1)',
+                chip: selected ? 'rgba(255, 136, 0, 0.3)' : 'rgba(255, 136, 0, 0.1)',
+                qr: selected ? 'rgba(0, 255, 136, 0.3)' : 'rgba(0, 255, 136, 0.1)',
+                sepa: selected ? 'rgba(138, 43, 226, 0.3)' : 'rgba(138, 43, 226, 0.1)'
+            };
+            return colors[method] || 'rgba(128, 128, 128, 0.1)';
+        }
+
+        function getMethodBorderColor(method) {
+            const colors = {
+                nfc: '#0066ff',
+                chip: '#ff8800',
+                qr: '#00ff88',
+                sepa: '#8a2be2'
+            };
+            return colors[method] || '#666666';
+        }
+
+        // Sistema de PIN
+        function addPinDigit(digit) {
+            if (enteredPin.length < 4) {
+                enteredPin += digit;
+                updatePinDisplay();
+            }
+        }
+
+        function clearPin() {
+            enteredPin = '';
+            updatePinDisplay();
+        }
+
+        function updatePinDisplay() {
+            const display = document.getElementById('pinDisplay');
+            if (display) {
+                display.textContent = '*'.repeat(enteredPin.length) + '-'.repeat(4 - enteredPin.length);
+            }
+        }
+
+        function confirmPin() {
+            if (enteredPin.length === 4) {
+                document.getElementById('pinEntry').style.display = 'none';
+                pinRequired = false;
+                
+                // Simular verificação de PIN
+                setTimeout(() => {
+                    processPayment();
+                }, 1000);
+                
+                enteredPin = '';
+                updatePinDisplay();
+            } else {
+                showPaymentResult('❌ PIN deve ter 4 dígitos', '#ff4444');
+            }
+        }
+
+        // Sistema QR Code SEPA
+        function generateQRCode() {
+            document.getElementById('qrDisplay').style.display = 'block';
+            qrTimeLeft = 300; // 5 minutos
+            
+            // Gerar QR code visual simples
+            const qrCodeEl = document.getElementById('qrCode');
+            qrCodeEl.innerHTML = generateQRPattern();
+            
+            // Iniciar timer
+            startQRTimer();
+        }
+
+        function generateQRPattern() {
+            // Gerar padrão QR visual simples
+            let pattern = '<div style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 1px; width: 100%; height: 100%;">';
+            for (let i = 0; i < 64; i++) {
+                const filled = Math.random() > 0.5;
+                pattern += `<div style="background: ${filled ? '#000' : '#fff'}; width: 100%; height: 100%;"></div>`;
+            }
+            pattern += '</div>';
+            return pattern;
+        }
+
+        function startQRTimer() {
+            if (qrTimer) clearInterval(qrTimer);
+            
+            qrTimer = setInterval(() => {
+                qrTimeLeft--;
+                const minutes = Math.floor(qrTimeLeft / 60);
+                const seconds = qrTimeLeft % 60;
+                
+                const timerEl = document.getElementById('qrTimer');
+                if (timerEl) {
+                    timerEl.textContent = `Expira em: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+                
+                if (qrTimeLeft <= 0) {
+                    clearInterval(qrTimer);
+                    document.getElementById('qrDisplay').style.display = 'none';
+                    showPaymentResult('⏰ QR Code expirado. Gere um novo.', '#ff8800');
+                }
+            }, 1000);
         }
 
         async function processPayment() {
@@ -1533,50 +1695,68 @@ ${'='.repeat(50)}
                 return;
             }
 
+            // Verificar se PIN é necessário (NFC/Contactless > €50)
+            if ((selectedPaymentMethod === 'nfc' || selectedPaymentMethod === 'chip') && amount > 50 && !pinRequired) {
+                document.getElementById('pinEntry').style.display = 'block';
+                pinRequired = true;
+                showPaymentResult('💳 PIN necessário para valores acima de €50', '#ff8800');
+                return;
+            }
+
             const processBtn = document.getElementById('processButton');
             processBtn.disabled = true;
-            processBtn.textContent = '🔄 Processando...';
+            
+            // Atualizar botão baseado no método
+            const processingMessages = {
+                nfc: '📡 Processando NFC...',
+                chip: '💳 Validando PIN...',
+                qr: '📱 Aguardando QR Scan...',
+                sepa: '⚡ Processando SEPA Instant...'
+            };
+            
+            processBtn.textContent = processingMessages[selectedPaymentMethod] || '🔄 Processando...';
             processBtn.style.background = 'linear-gradient(45deg, #666, #888)';
 
             try {
-                // Simular processamento
-                await new Promise(resolve => setTimeout(resolve, 2000));
+                // Tempo de processamento específico por método
+                const processingTimes = {
+                    nfc: 1500,     // NFC é mais rápido
+                    chip: 3000,    // Chip & PIN demora mais
+                    qr: 2500,      // QR depende do scan
+                    sepa: 8000     // SEPA Instant até 10 segundos
+                };
+                
+                await new Promise(resolve => setTimeout(resolve, processingTimes[selectedPaymentMethod] || 2000));
                 
                 // Obter dados da rede para incluir na transação
                 const networkData = await solana.getNetworkData();
                 
-                // Criar transação
-                const transaction = {
-                    id: 'TXN' + Date.now(),
-                    amount: amount,
-                    method: selectedPaymentMethod,
-                    timestamp: new Date().toISOString(),
-                    slot: networkData.slot,
-                    epoch: networkData.epoch,
-                    status: 'confirmed',
-                    hash: generateTransactionHash()
-                };
+                // Criar transação com dados específicos do método europeu
+                const transaction = createEuropeanTransaction(amount, networkData);
 
                 // Adicionar ao histórico
                 appTransactionHistory.unshift(transaction);
                 if (appTransactionHistory.length > 5) appTransactionHistory.pop();
                 
-                // Mostrar resultado
-                showPaymentResult('✅ Pagamento Aprovado!', '#00ff88');
+                // Mostrar resultado específico do método
+                const successMessages = {
+                    nfc: '✅ Contactless Aprovado!',
+                    chip: '✅ Chip & PIN Aprovado!',
+                    qr: '✅ QR SEPA Confirmado!',
+                    sepa: '✅ SEPA Instant Concluído!'
+                };
+                
+                showPaymentResult(successMessages[selectedPaymentMethod] || '✅ Pagamento Aprovado!', '#00ff88');
                 updateTransactionHistory();
                 
-                // Log da transação
-                console.log(`
-💳 TRANSAÇÃO PROCESSADA NO EUROTAP:
-📋 ID: ${transaction.id}
-💰 Valor: €${amount.toFixed(2)}
-💳 Método: ${getPaymentMethodName(selectedPaymentMethod)}
-🕐 Timestamp: ${new Date(transaction.timestamp).toLocaleString('pt-BR')}
-📦 Slot Solana: ${transaction.slot.toLocaleString()}
-🏛️ Época: ${transaction.epoch}
-🔐 Hash: ${transaction.hash}
-✅ Status: Confirmado na ${networkData.connected ? 'TestNet' : 'Simulação'}
-                `);
+                // Log da transação europeia
+                logEuropeanTransaction(transaction, networkData);
+                
+                // Cleanup específico por método
+                if (selectedPaymentMethod === 'qr' && qrTimer) {
+                    clearInterval(qrTimer);
+                    document.getElementById('qrDisplay').style.display = 'none';
+                }
                 
                 // Reset após sucesso
                 setTimeout(() => {
@@ -1586,7 +1766,7 @@ ${'='.repeat(50)}
                 
             } catch (error) {
                 showPaymentResult('❌ Erro no Processamento', '#ff4444');
-                console.error('Erro na transação:', error);
+                console.error('Erro na transação europeia:', error);
             } finally {
                 // Restaurar botão
                 setTimeout(() => {
@@ -1595,6 +1775,108 @@ ${'='.repeat(50)}
                     processBtn.style.background = 'linear-gradient(45deg, #00ff88, #0066ff)';
                 }, 3000);
             }
+        }
+
+        function createEuropeanTransaction(amount, networkData) {
+            const now = new Date();
+            
+            return {
+                id: generateTransactionId(),
+                amount: amount,
+                method: selectedPaymentMethod,
+                timestamp: now.toISOString(),
+                slot: networkData.slot,
+                epoch: networkData.epoch,
+                status: 'confirmed',
+                hash: generateTransactionHash(),
+                europeanData: {
+                    sepaCountry: getRandomSEPACountry(),
+                    processingTime: getProcessingTime(),
+                    currency: 'EUR',
+                    standard: getPaymentStandard(),
+                    authMethod: getAuthenticationMethod(),
+                    terminalId: 'ETA-' + Date.now().toString().slice(-6)
+                }
+            };
+        }
+
+        function generateTransactionId() {
+            const prefixes = {
+                nfc: 'NFC',
+                chip: 'EMV', 
+                qr: 'QRS',
+                sepa: 'SCT'
+            };
+            return (prefixes[selectedPaymentMethod] || 'TXN') + Date.now();
+        }
+
+        function getRandomSEPACountry() {
+            const sepaCountries = ['DE', 'FR', 'ES', 'IT', 'NL', 'BE', 'AT', 'PT', 'FI', 'IE'];
+            return sepaCountries[Math.floor(Math.random() * sepaCountries.length)];
+        }
+
+        function getProcessingTime() {
+            const times = {
+                nfc: '< 2s',
+                chip: '2-4s', 
+                qr: '3-5s',
+                sepa: '< 10s (Instant)'
+            };
+            return times[selectedPaymentMethod] || '< 3s';
+        }
+
+        function getPaymentStandard() {
+            const standards = {
+                nfc: 'EMV Contactless',
+                chip: 'EMV Chip & PIN',
+                qr: 'EPC QR Code',
+                sepa: 'SCT Inst'
+            };
+            return standards[selectedPaymentMethod] || 'Standard EU';
+        }
+
+        function getAuthenticationMethod() {
+            const auth = {
+                nfc: currentAmount > 50 ? 'PIN Verified' : 'Contactless Only',
+                chip: 'PIN Verified',
+                qr: 'Mobile App Auth',
+                sepa: 'Bank Authentication'
+            };
+            return auth[selectedPaymentMethod] || 'Standard Auth';
+        }
+
+        function logEuropeanTransaction(transaction, networkData) {
+            console.log(`
+💳 TRANSAÇÃO EUROPEIA PROCESSADA NO EUROTAP:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 ID Transação: ${transaction.id}
+💰 Valor: €${transaction.amount.toFixed(2)}
+💳 Método: ${getPaymentMethodName(selectedPaymentMethod)}
+🏛️ Padrão: ${transaction.europeanData.standard}
+🔐 Autenticação: ${transaction.europeanData.authMethod}
+⏱️ Tempo Processamento: ${transaction.europeanData.processingTime}
+🕐 Timestamp: ${new Date(transaction.timestamp).toLocaleString('pt-BR')}
+🌍 País SEPA: ${transaction.europeanData.sepaCountry}
+🏢 Terminal: ${transaction.europeanData.terminalId}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔮 DADOS BLOCKCHAIN SOLANA (VALIDAÇÃO):
+📦 Slot: ${transaction.slot.toLocaleString()}
+🏛️ Época: ${transaction.epoch}
+🔐 Hash Quantum: ${transaction.hash}
+✅ Status: ${transaction.status.toUpperCase()}
+🌐 Rede: ${networkData.connected ? 'Solana TestNet' : 'Simulação'}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            `);
+        }
+
+        function getPaymentMethodName(method) {
+            const names = {
+                nfc: 'NFC/Contactless (Apple Pay/Google Pay)',
+                chip: 'Chip & PIN (EMV)',
+                qr: 'QR Code SEPA (Mobile Banking)',
+                sepa: 'SEPA Instant Credit Transfer'
+            };
+            return names[method] || 'Método Não Identificado';
         }
 
         function generateTransactionHash() {
@@ -1609,8 +1891,8 @@ ${'='.repeat(50)}
         function getPaymentMethodName(method) {
             switch(method) {
                 case 'card': return 'Cartão de Crédito/Débito';
-                case 'pix': return 'PIX Instant Payment';
-                case 'crypto': return 'Criptomoeda (SOL/USDC)';
+                case 'sepa': return 'Transferência SEPA Instantânea';
+                case 'contactless': return 'Pagamento Contactless (NFC)';
                 default: return 'Não identificado';
             }
         }
