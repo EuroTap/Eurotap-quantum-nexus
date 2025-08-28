@@ -1608,7 +1608,7 @@
                         break;
                 }
             } catch (error) {
-                console.error('❌ Demo metrics update error:', error);
+                console.error('Demo metrics update error:', error);
             }
         }
 
@@ -1972,6 +1972,9 @@
 
                 // Initial update
                 updateNetworkMetrics();
+
+                // Initial language setup
+                changeLanguage('en'); // Load default English
 
                 console.log('🎉 EuroTAP application fully initialized!');
 
