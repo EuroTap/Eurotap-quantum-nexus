@@ -36,7 +36,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 12px;
             transition: all 0.3s;
         }
 
@@ -119,7 +119,7 @@
             50% { background: linear-gradient(90deg, #f7931e, #ff6b35); }
         }
 
-        /* Live Transaction Feed */
+        /* Live Transaction Feed - CORRIGIDO */
         .live-feed {
             position: fixed;
             bottom: 20px;
@@ -316,6 +316,97 @@
             font-weight: 500;
         }
 
+        /* Market Intelligence Section */
+        .intelligence-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 102, 255, 0.05));
+            border-radius: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+        }
+
+        .intelligence-title {
+            text-align: center;
+            font-size: 32px;
+            color: #00ff88;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .intelligence-subtitle {
+            text-align: center;
+            color: #cccccc;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+
+        .intel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .intel-card {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intel-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #4ecdc4;
+            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
+            background: linear-gradient(135deg, #1f2a44 0%, #1a1a2e 100%);
+        }
+
+        .intel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(78, 205, 196, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .intel-card:hover::before {
+            left: 100%;
+        }
+
+        .intel-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(78, 205, 196, 0.5));
+        }
+
+        .intel-card h3 {
+            color: #4ecdc4;
+            font-size: 22px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .intel-metric {
+            color: #ff6b6b;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .intel-card p {
+            color: #cccccc;
+            text-align: center;
+            line-height: 1.5;
+        }
+
         /* Seção de Gráficos */
         .charts-section {
             margin: 60px 0;
@@ -342,7 +433,6 @@
             padding: 30px;
             position: relative;
             backdrop-filter: blur(10px);
-            min-height: 350px;
         }
 
         .chart-title {
@@ -353,22 +443,9 @@
             font-size: 20px;
         }
 
-        .chart-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 300px;
-            background: rgba(0, 255, 136, 0.05);
-            border-radius: 15px;
-            flex-direction: column;
-            font-size: 18px;
-            color: #00ff88;
-        }
-
-        .chart-data {
-            margin-top: 20px;
-            font-size: 24px;
-            font-weight: bold;
+        canvas {
+            max-width: 100% !important;
+            height: 300px !important;
         }
 
         /* Seção de Demos */
@@ -571,11 +648,17 @@
             font-size: 20px;
         }
 
-        .footer-section p {
+        .footer-section p, .footer-section a {
             color: #cccccc;
             text-decoration: none;
             margin-bottom: 12px;
             font-size: 16px;
+            word-break: break-all;
+            overflow-wrap: break-word;
+        }
+
+        .footer-section a:hover {
+            color: #00ff88;
         }
 
         .footer-bottom {
@@ -615,7 +698,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .demo-grid {
+            .demo-grid, .intel-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -640,16 +723,6 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        .disclaimer-banner {
-            background: #ff4444;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-weight: bold;
-            z-index: 9999;
-            position: relative;
-        }
     </style>
 </head>
 <body>
@@ -663,7 +736,7 @@
     </div>
 
     <!-- Disclaimer banner -->
-    <div class="disclaimer-banner">
+    <div class="disclaimer-banner" style="background: #ff4444; color: white; padding: 10px; text-align: center; font-weight: bold; z-index: 9999;">
         <span data-translate="disclaimer">⚠️ PROJETO EDUCACIONAL - DADOS REAIS SOLANA TESTNET + ESTIMATIVAS DEMONSTRATIVAS ⚠️</span>
     </div>
 
@@ -682,7 +755,7 @@
         <span id="statusText" data-translate="status_banner">🔮 TESTNET ATIVO - SINCRONIZANDO COM SOLANA...</span>
     </div>
 
-    <!-- Live Transaction Feed -->
+    <!-- Live Transaction Feed - CORRIGIDO -->
     <div class="live-feed">
         <div class="feed-header" data-translate="live_feed">📡 TRANSAÇÕES AO VIVO</div>
         <div id="transactionFeed">
@@ -780,23 +853,50 @@
             </div>
         </section>
 
+        <!-- Market Intelligence Section -->
+        <section class="intelligence-section">
+            <h2 class="intelligence-title" data-translate="intelligence_title">🧠 Market Intelligence Hub</h2>
+            <p class="intelligence-subtitle" data-translate="intelligence_subtitle">Análise educacional do mercado europeu de pagamentos - Estimativas demonstrativas</p>
+            
+            <div class="intel-grid">
+                <div class="intel-card" onclick="showCompetitorAnalysis()">
+                    <div class="intel-icon">🏆</div>
+                    <h3 data-translate="competitive_intelligence">Inteligência Competitiva</h3>
+                    <div class="intel-metric">25-30% market gap (est.)</div>
+                    <p data-translate="competitive_description">Análise educacional de competição e posicionamento estratégico</p>
+                </div>
+                <div class="intel-card" onclick="showMarketData()">
+                    <div class="intel-icon">📈</div>
+                    <h3 data-translate="market_analytics">Análise de Mercado</h3>
+                    <div class="intel-metric">€2.2-2.6T Volume SEPA (est.)</div>
+                    <p data-translate="market_description">Estimativas educacionais do mercado europeu de pagamentos</p>
+                </div>
+                <div class="intel-card" onclick="showRegulatoryLandscape()">
+                    <div class="intel-icon">⚖️</div>
+                    <h3 data-translate="regulatory_monitor">Monitor Regulatório</h3>
+                    <div class="intel-metric">DORA deadline Q1 2025</div>
+                    <p data-translate="regulatory_description">Acompanhar mudanças regulatórias reais e requisitos oficiais</p>
+                </div>
+                <div class="intel-card" onclick="showAdvancedROI()">
+                    <div class="intel-icon">💰</div>
+                    <h3 data-translate="advanced_roi">Calculadora ROI</h3>
+                    <div class="intel-metric">ROI 50-150% (cenário otimista)</div>
+                    <p data-translate="roi_description">Modelagem educacional e análise de cenários hipotéticos</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Seção de Gráficos -->
         <section class="charts-section">
             <h2 class="section-title" data-translate="charts_title">Análise de Rede em Tempo Real</h2>
             <div class="charts-grid">
                 <div class="chart-container">
                     <h3 class="chart-title" data-translate="tps_chart_title">TPS da Rede Solana (Tempo Real)</h3>
-                    <div class="chart-placeholder">
-                        📊 Gráfico TPS em Tempo Real
-                        <div class="chart-data" id="tpsChartData">Loading...</div>
-                    </div>
+                    <canvas id="tpsChart"></canvas>
                 </div>
                 <div class="chart-container">
                     <h3 class="chart-title" data-translate="block_chart_title">Altura dos Blocos</h3>
-                    <div class="chart-placeholder">
-                        📈 Gráfico Altura dos Blocos
-                        <div class="chart-data" id="blockChartData">Loading...</div>
-                    </div>
+                    <canvas id="blockChart"></canvas>
                 </div>
             </div>
         </section>
@@ -826,11 +926,25 @@
                     <button class="demo-button" data-translate="open_app">Abrir App</button>
                 </div>
                 
-                <div class="demo-card" onclick="alert('Monitor em desenvolvimento!')">
+                <div class="demo-card" onclick="openNetworkMonitor()">
                     <div class="demo-icon">📊</div>
                     <h3 class="demo-title" data-translate="network_monitor_title">Monitor de Rede</h3>
                     <p class="demo-description" data-translate="network_monitor_description">Visualização detalhada dos dados da rede em tempo real</p>
                     <button class="demo-button" data-translate="view_monitor">Ver Monitor</button>
+                </div>
+
+                <div class="demo-card" onclick="openRealPerformanceTest()">
+                    <div class="demo-icon">⚡</div>
+                    <h3 class="demo-title" data-translate="performance_test_title">Teste Performance Real</h3>
+                    <p class="demo-description" data-translate="performance_test_description">Submeter transações reais na TestNet</p>
+                    <button class="demo-button" data-translate="run_test">Executar Teste</button>
+                </div>
+
+                <div class="demo-card" onclick="openEuropeMap()">
+                    <div class="demo-icon">🗺️</div>
+                    <h3 class="demo-title" data-translate="europe_map_title">Mapa Europeu</h3>
+                    <p class="demo-description" data-translate="europe_map_description">Visualização interativa da adoção na Europa</p>
+                    <button class="demo-button" data-translate="view_map">Ver Mapa</button>
                 </div>
             </div>
         </section>
@@ -846,7 +960,7 @@
             </div>
             <div class="terminal-input">
                 <span class="terminal-prompt">eurotap@solana:~$</span>
-                <input type="text" class="terminal-command" id="terminalInput" placeholder="Digite um comando...">
+                <input type="text" class="terminal-command" id="terminalInput" data-translate-placeholder="terminal_placeholder">
             </div>
         </div>
     </div>
@@ -860,28 +974,6 @@
                 <h3 style="color: #00ff88; margin-bottom: 20px;" data-translate="quantum_keys_title">🔐 Geração de Chaves Quânticas</h3>
                 <button onclick="generateQuantumKeys()" style="background: linear-gradient(45deg, #0066ff, #00ff88); border: none; color: white; padding: 15px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px;" data-translate="generate_keys">Gerar Chaves ML-DSA-65</button>
                 <div id="keyOutput" style="font-family: monospace; color: #00ff88; font-size: 13px; min-height: 150px; padding: 15px; background: rgba(0,0,0,0.5); border-radius: 8px; border: 1px solid #00ff88;"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Mobile App -->
-    <div id="mobileAppModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 data-translate="mobile_app_modal_title">📱 App Maquininha EuroTAP</h2>
-            <div style="background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 25px; padding: 30px; max-width: 400px; margin: 0 auto;">
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h3 style="color: #00ff88; font-size: 24px; margin-bottom: 10px;" data-translate="app_title">Terminal Quantum-Safe</h3>
-                    <p style="color: #cccccc; font-size: 16px;" data-translate="app_subtitle">Processamento seguro de pagamentos</p>
-                </div>
-                <div style="display: grid; gap: 20px;">
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <label style="color: #00ff88; font-weight: bold; font-size: 14px;" data-translate="amount_label">Valor (EUR):</label>
-                        <input type="number" id="paymentAmount" placeholder="0.00" step="0.01" style="background: rgba(0, 0, 0, 0.8); border: 2px solid #333; border-radius: 8px; padding: 12px; color: #ffffff; font-size: 16px;">
-                    </div>
-                    <button onclick="processPayment()" style="background: linear-gradient(45deg, #00ff88, #0066ff); border: none; border-radius: 15px; padding: 20px; color: #ffffff; font-size: 18px; font-weight: bold; cursor: pointer;" data-translate="process_payment">Processar Pagamento Quantum-Safe</button>
-                    <div id="paymentResult" style="margin-top: 20px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 10px; display: none;"></div>
-                </div>
             </div>
         </div>
     </div>
@@ -914,8 +1006,9 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Translation system - SIMPLIFICADO E ROBUSTO
+        // Translation system - COMPLETO E MELHORADO
         const translations = {
             pt: {
                 disclaimer: "⚠️ PROJETO EDUCACIONAL - DADOS REAIS SOLANA TESTNET + ESTIMATIVAS DEMONSTRATIVAS ⚠️",
@@ -942,6 +1035,16 @@
                 validators_label: "Validadores Ativos",
                 quantum_crypto_label: "Criptografia Quantum-Safe",
                 monitoring_label: "Monitoramento Contínuo",
+                intelligence_title: "🧠 Market Intelligence Hub",
+                intelligence_subtitle: "Análise educacional do mercado europeu de pagamentos - Estimativas demonstrativas",
+                competitive_intelligence: "Inteligência Competitiva",
+                competitive_description: "Análise educacional de competição e posicionamento estratégico",
+                market_analytics: "Análise de Mercado",
+                market_description: "Estimativas educacionais do mercado europeu de pagamentos",
+                regulatory_monitor: "Monitor Regulatório",
+                regulatory_description: "Acompanhar mudanças regulatórias reais e requisitos oficiais",
+                advanced_roi: "Calculadora ROI",
+                roi_description: "Modelagem educacional e análise de cenários hipotéticos",
                 charts_title: "Análise de Rede em Tempo Real",
                 tps_chart_title: "TPS da Rede Solana (Tempo Real)",
                 block_chart_title: "Altura dos Blocos",
@@ -958,15 +1061,17 @@
                 network_monitor_title: "Monitor de Rede",
                 network_monitor_description: "Visualização detalhada dos dados da rede em tempo real",
                 view_monitor: "Ver Monitor",
+                performance_test_title: "Teste Performance Real",
+                performance_test_description: "Submeter transações reais na TestNet",
+                run_test: "Executar Teste",
+                europe_map_title: "Mapa Europeu",
+                europe_map_description: "Visualização interativa da adoção na Europa",
+                view_map: "Ver Mapa",
                 terminal_modal_title: "🔮 Terminal EuroTAP - Solana TestNet",
+                terminal_placeholder: "Digite um comando...",
                 quantum_modal_title: "⚛️ Simulador Criptografia Quântica ML-DSA-65",
                 quantum_keys_title: "🔐 Geração de Chaves Quânticas",
                 generate_keys: "Gerar Chaves ML-DSA-65",
-                mobile_app_modal_title: "📱 App Maquininha EuroTAP",
-                app_title: "Terminal Quantum-Safe",
-                app_subtitle: "Processamento seguro de pagamentos",
-                amount_label: "Valor (EUR):",
-                process_payment: "Processar Pagamento Quantum-Safe",
                 project: "Projeto",
                 project_desc: "EuroTAP é um conceito educacional de terminal de pagamento quantum-safe",
                 project_purpose: "Preparando o futuro dos pagamentos digitais",
@@ -986,102 +1091,213 @@
                 status_banner: "🔮 TESTNET ACTIVE - SYNCING WITH SOLANA...",
                 hero_title: "Quantum-Safe Payment Terminal",
                 hero_subtitle: "Europe's first quantum-resistant payment solution concept"
-                // Adicione mais traduções conforme necessário
             }
         };
 
         let currentLanguage = 'pt';
 
-        // Sistema robusto de conexão Solana - SIMPLIFICADO
+        // Sistema de Conexão Real com Solana - CORRIGIDO PARA CORS
         class SolanaConnector {
             constructor() {
+                // MÚLTIPLOS ENDPOINTS - Fallback automático para CORS
                 this.endpoints = [
-                    'https://rpc.ankr.com/solana_testnet',
-                    'https://api.testnet.solana.com'
+                    'https://rpc.ankr.com/solana_testnet',        // ANKR público com CORS
+                    'https://api.testnet.solana.com',             // Oficial Solana
+                    'https://solana-testnet.g.alchemy.com/v2/demo' // Alchemy público
                 ];
                 this.currentEndpointIndex = 0;
                 this.isConnected = false;
-                this.data = {
-                    tps: 0,
-                    slot: 0,
-                    blockHeight: 0,
-                    epoch: 0,
-                    validators: 0
-                };
+                this.tpsHistory = [];
+                this.blockHistory = [];
+                this.lastSlot = 0;
+                this.lastUpdate = 0;
+                this.transactionHistory = [];
+                this.userTransactions = [];
+            }
+
+            get endpoint() {
+                return this.endpoints[this.currentEndpointIndex];
+            }
+
+            // Tentar próximo endpoint em caso de falha
+            switchToNextEndpoint() {
+                this.currentEndpointIndex = (this.currentEndpointIndex + 1) % this.endpoints.length;
+                console.log(`🔄 Tentando endpoint: ${this.endpoint}`);
             }
 
             async makeRPCCall(method, params = []) {
-                try {
-                    const response = await fetch(this.endpoints[this.currentEndpointIndex], {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            jsonrpc: '2.0',
-                            id: Math.floor(Math.random() * 1000),
-                            method: method,
-                            params: params
-                        })
-                    });
-                    
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    
-                    const data = await response.json();
-                    if (data.error) throw new Error(`RPC Error: ${data.error.message}`);
-                    
-                    return data.result;
-                } catch (error) {
-                    console.warn(`❌ Solana connection failed: ${error.message}`);
-                    return null;
+                let lastError = null;
+                
+                // Tentar todos os endpoints antes de falhar
+                for (let attempt = 0; attempt < this.endpoints.length; attempt++) {
+                    try {
+                        const response = await fetch(this.endpoint, {
+                            method: 'POST',
+                            headers: { 
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            mode: 'cors', // Explicitar CORS
+                            body: JSON.stringify({
+                                jsonrpc: '2.0',
+                                id: Math.floor(Math.random() * 1000000),
+                                method: method,
+                                params: params
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                        }
+                        
+                        const data = await response.json();
+                        if (data.error) {
+                            throw new Error(`RPC Error: ${data.error.message}`);
+                        }
+                        
+                        // Sucesso - log apenas na primeira conexão
+                        if (!this.isConnected) {
+                            console.log(`✅ Conectado à Solana TestNet via: ${this.endpoint}`);
+                        }
+                        return data.result;
+                        
+                    } catch (error) {
+                        lastError = error;
+                        console.warn(`❌ Falha no endpoint ${this.endpoint}: ${error.message}`);
+                        this.switchToNextEndpoint();
+                        
+                        // Se for erro de CORS, tentar próximo imediatamente
+                        if (error.message.includes('CORS') || error.message.includes('fetch')) {
+                            continue;
+                        }
+                    }
                 }
+                
+                console.error(`💥 Todos os endpoints falharam. Último erro:`, lastError?.message);
+                return null;
+            }
+
+            // CORRIGIDO: Gerar transações de usuários finais em EUR
+            generateUserTransactions() {
+                const txTypes = ['Compra Online', 'Pagamento Loja', 'Transferência', 'Pagamento Serviços', 'Supermercado', 'Restaurante', 'Farmácia', 'Combustível', 'Transporte'];
+                const locations = ['Lisboa', 'Porto', 'Madrid', 'Barcelona', 'Paris', 'Lyon', 'Berlim', 'Munique', 'Roma', 'Milão', 'Amsterdam', 'Bruxelas'];
+                const merchants = ['SuperMercado XYZ', 'Loja Tech Store', 'Farmácia Central', 'Café Europa', 'Restaurant Vila', 'Posto Shell', 'Metro Lisboa', 'H&M Store', 'MediaMarkt', 'Continente'];
+                
+                const transactions = [];
+                
+                for (let i = 0; i < 8; i++) {
+                    // Gerar valores realistas para transações europeias
+                    const amounts = [15.50, 23.90, 45.20, 67.80, 89.30, 125.60, 78.45, 34.20, 156.90, 99.99, 12.50, 234.40, 67.20, 189.95, 45.75];
+                    const eurAmount = amounts[Math.floor(Math.random() * amounts.length)];
+                    
+                    transactions.push({
+                        id: 'EUR_' + Date.now().toString(36).toUpperCase() + '_' + i,
+                        type: txTypes[Math.floor(Math.random() * txTypes.length)],
+                        merchant: merchants[Math.floor(Math.random() * merchants.length)],
+                        amount: eurAmount,
+                        location: locations[Math.floor(Math.random() * locations.length)],
+                        timestamp: new Date(Date.now() - (i * 30000)).toLocaleTimeString('pt-PT'),
+                        status: '✅ Confirmada',
+                        currency: 'EUR',
+                        quantumSigned: true
+                    });
+                }
+                return transactions;
             }
 
             async getNetworkData() {
                 try {
-                    const slot = await this.makeRPCCall('getSlot');
-                    if (slot) {
+                    const [slot, epochInfo] = await Promise.all([
+                        this.makeRPCCall('getSlot'),
+                        this.makeRPCCall('getEpochInfo')
+                    ]);
+
+                    if (slot && epochInfo) {
                         this.isConnected = true;
-                        this.data = {
-                            tps: Math.floor(Math.random() * 2000) + 1000,
+                        
+                        // Calcular TPS baseado na progressão dos slots
+                        let tps = 0;
+                        if (this.lastSlot > 0 && this.lastUpdate > 0) {
+                            const slotDiff = slot - this.lastSlot;
+                            const timeDiff = (Date.now() - this.lastUpdate) / 1000;
+                            tps = Math.max(Math.floor((slotDiff * 400) / timeDiff), 100);
+                        } else {
+                            tps = Math.floor(Math.random() * 2000) + 1000;
+                        }
+                        
+                        this.lastSlot = slot;
+                        this.lastUpdate = Date.now();
+
+                        // Adicionar aos históricos
+                        this.tpsHistory.push(tps);
+                        if (this.tpsHistory.length > 20) this.tpsHistory.shift();
+                        
+                        this.blockHistory.push(epochInfo.blockHeight);
+                        if (this.blockHistory.length > 20) this.blockHistory.shift();
+
+                        // Atualizar transações de usuários
+                        if (Math.random() < 0.3) { // 30% chance de gerar novas transações
+                            this.userTransactions = this.generateUserTransactions();
+                        }
+
+                        return {
+                            connected: true,
+                            endpoint: this.endpoint,
                             slot: slot,
-                            blockHeight: slot - 1000,
-                            epoch: Math.floor(slot / 432000),
-                            validators: Math.floor(Math.random() * 200) + 1500
+                            blockHeight: epochInfo.blockHeight,
+                            epoch: epochInfo.epoch,
+                            health: true,
+                            tps: tps,
+                            validators: Math.floor(Math.random() * 200) + 1500,
+                            tpsHistory: [...this.tpsHistory],
+                            blockHistory: [...this.blockHistory],
+                            userTransactions: this.userTransactions
                         };
-                        return this.data;
+                    } else {
+                        throw new Error('Dados incompletos da rede');
                     }
                 } catch (error) {
-                    console.error('Solana connection error:', error);
+                    this.isConnected = false;
+                    console.warn('Falha na conexão, usando dados simulados:', error.message);
+                    return this.getSimulatedData();
                 }
+            }
+
+            getSimulatedData() {
+                const tps = Math.floor(Math.random() * 2000) + 1000;
+                const blockHeight = Math.floor(Date.now() / 1000) + 300000000;
                 
-                // Fallback para dados simulados
-                this.isConnected = false;
-                this.data = {
-                    tps: Math.floor(Math.random() * 2000) + 1000,
-                    slot: Math.floor(Date.now() / 1000),
-                    blockHeight: Math.floor(Date.now() / 1000) - 1000,
+                this.tpsHistory.push(tps);
+                if (this.tpsHistory.length > 20) this.tpsHistory.shift();
+                
+                this.blockHistory.push(blockHeight);
+                if (this.blockHistory.length > 20) this.blockHistory.shift();
+
+                // Gerar transações de usuários simuladas
+                this.userTransactions = this.generateUserTransactions();
+
+                return {
+                    connected: false,
+                    endpoint: 'Modo Simulado',
+                    slot: Math.floor(Date.now() / 1000) + 350000000,
+                    blockHeight: blockHeight,
                     epoch: 650,
-                    validators: Math.floor(Math.random() * 200) + 1500
+                    health: false,
+                    tps: tps,
+                    validators: Math.floor(Math.random() * 200) + 1500,
+                    tpsHistory: [...this.tpsHistory],
+                    blockHistory: [...this.blockHistory],
+                    userTransactions: this.userTransactions
                 };
-                return this.data;
             }
         }
 
-        // Instância global - CORRIGIDO
+        // Instância global do conector
         const solana = new SolanaConnector();
+        let tpsChart, blockChart;
         let updateInterval;
 
-        // Funções principais - SIMPLIFICADAS E ROBUSTAS
-        function safeUpdateElement(id, value) {
-            try {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.textContent = value;
-                }
-            } catch (error) {
-                console.warn(`Failed to update element ${id}:`, error);
-            }
-        }
-
+        // Funções principais
         function switchLanguage(lang) {
             currentLanguage = lang;
             
@@ -1099,143 +1315,252 @@
             });
         }
 
-        function generateQuantumKeys() {
-            const output = document.getElementById('keyOutput');
-            if (!output) return;
+        // CORRIGIDO: Atualizar feed de transações ao vivo com EUR
+        function updateTransactionFeed(userTransactions) {
+            const feedElement = document.getElementById('transactionFeed');
+            if (!feedElement || !userTransactions || userTransactions.length === 0) return;
+
+            feedElement.innerHTML = '';
             
-            output.innerHTML = `
-🔐 GERANDO CHAVES ML-DSA-65...
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚡ Inicializando algoritmo quantum-safe...
-🧮 Gerando matriz A (6×8)...
-🎲 Criando vetor secreto s1, s2...
-🔒 Computando chave pública t = A*s1 + s2...
-
-CHAVE PÚBLICA GERADA:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${Array.from({length: 8}, () => 
-    Array.from({length: 44}, () => 
-        Math.random().toString(36).charAt(0).toUpperCase()
-    ).join('')
-).join('\n')}
-
-✅ CHAVES ML-DSA-65 GERADAS COM SUCESSO!
-🛡️ Resistente a ataques quânticos
-🔐 Algoritmo aprovado NIST PQC
-⚡ Pronto para assinatura quantum-safe
-            `;
-        }
-
-        function processPayment() {
-            const amount = document.getElementById('paymentAmount')?.value;
-            const result = document.getElementById('paymentResult');
-            
-            if (!amount || !result) return;
-            
-            if (amount <= 0) {
-                result.style.display = 'block';
-                result.innerHTML = '<span style="color: #ff6b6b;">❌ Valor inválido</span>';
-                return;
-            }
-            
-            result.style.display = 'block';
-            result.innerHTML = `
-                <div style="color: #00ff88; font-weight: bold;">✅ PAGAMENTO PROCESSADO</div>
-                <div style="margin: 10px 0; color: #ffffff;">
-                    💰 Valor: €${parseFloat(amount).toFixed(2)}<br>
-                    🔐 Quantum-Safe: ML-DSA-65<br>
-                    📡 Rede: Solana TestNet<br>
-                    🕐 Tempo: ${new Date().toLocaleTimeString()}<br>
-                    🆔 TX: EUR_${Date.now().toString(36).toUpperCase()}
-                </div>
-                <div style="color: #0066ff; font-size: 12px;">
-                    🛡️ Transação protegida contra computação quântica
-                </div>
-            `;
-        }
-
-        async function updateUI(data) {
-            if (!data) return;
-            
-            try {
-                // Update connection status
-                const statusEl = document.getElementById('connectionStatus');
-                if (statusEl) {
-                    statusEl.innerHTML = data.isConnected ? 
-                        'Conectado à Solana TestNet' : 'Modo Simulado (Demonstração)';
-                    statusEl.style.background = data.isConnected ? '#004d00' : '#4d3d00';
-                }
-
-                // Update metrics with safe checks
-                safeUpdateElement('currentTPS', data.tps.toLocaleString());
-                safeUpdateElement('currentSlot', data.slot.toLocaleString());
-                safeUpdateElement('currentEpoch', data.epoch);
-                safeUpdateElement('validators', data.validators.toLocaleString());
-                safeUpdateElement('blockHeight', '#' + data.blockHeight.toLocaleString());
-                safeUpdateElement('solanaStatus', data.isConnected ? 'Saudável' : 'Simulado');
-                safeUpdateElement('statTPS', data.tps.toLocaleString());
-                safeUpdateElement('statValidators', data.validators.toLocaleString());
-
-                // Update status banner
-                const statusText = document.getElementById('statusText');
-                if (statusText) {
-                    const mode = data.isConnected ? 'CONECTADO' : 'SIMULADO';
-                    statusText.textContent = `TESTNET ${mode} - ${data.tps.toLocaleString()} TPS • SOLANA ÉPOCA ${data.epoch}`;
-                }
-
-                // Update chart placeholders (fallback quando Chart.js não disponível)
-                safeUpdateElement('tpsChartData', `${data.tps.toLocaleString()} TPS`);
-                safeUpdateElement('blockChartData', `#${data.blockHeight.toLocaleString()}`);
-
-                // Update transaction feed
-                updateTransactionFeed();
-
-            } catch (error) {
-                console.error('UI update error:', error);
-            }
-        }
-
-        function updateTransactionFeed() {
-            const feed = document.getElementById('transactionFeed');
-            if (!feed) return;
-            
-            const txTypes = ['Compra Online', 'Pagamento Loja', 'Transferência', 'Restaurante'];
-            const merchants = ['Tech Store Lisboa', 'Café Central', 'SuperMercado XYZ', 'Farmácia Europa'];
-            const locations = ['Lisboa', 'Porto', 'Madrid', 'Barcelona'];
-            
-            feed.innerHTML = '';
-            
-            for (let i = 0; i < 5; i++) {
-                const amount = (Math.random() * 200 + 10).toFixed(2);
-                const tx = document.createElement('div');
-                tx.className = 'transaction-item';
-                tx.innerHTML = `
-                    <div class="tx-type">${txTypes[Math.floor(Math.random() * txTypes.length)]}</div>
-                    <div class="tx-merchant">${merchants[Math.floor(Math.random() * merchants.length)]}</div>
+            userTransactions.slice(0, 8).forEach((tx, index) => {
+                const txElement = document.createElement('div');
+                txElement.className = 'transaction-item';
+                
+                txElement.innerHTML = `
+                    <div class="tx-type">${tx.type}</div>
+                    <div class="tx-merchant">${tx.merchant}</div>
                     <div style="display: flex; justify-content: space-between; margin: 8px 0;">
-                        <span class="tx-amount">€${amount}</span>
-                        <span class="tx-location">${locations[Math.floor(Math.random() * locations.length)]}</span>
+                        <span class="tx-amount">€${tx.amount}</span>
+                        <span class="tx-location">${tx.location}</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="tx-time">${new Date().toLocaleTimeString()}</span>
-                        <span class="tx-status">✅ Confirmada</span>
+                        <span class="tx-time">${tx.timestamp}</span>
+                        <span class="tx-status">${tx.status}</span>
                     </div>
                     <div style="font-size: 10px; color: #0066ff; margin-top: 4px;">
-                        🔐 Quantum-Signed • ID: EUR_${Date.now().toString(36).toUpperCase().substring(0, 8)}
+                        🔐 Quantum-Signed • ID: ${tx.id.substring(0, 12)}...
                     </div>
                 `;
-                feed.appendChild(tx);
+                
+                feedElement.appendChild(txElement);
+            });
+        }
+
+        // Inicializar gráficos
+        function initCharts() {
+            // Verificar se Chart.js está carregado
+            if (typeof Chart === 'undefined') {
+                console.warn('Chart.js não carregado, tentando novamente em 2 segundos...');
+                setTimeout(initCharts, 2000);
+                return;
+            }
+
+            const tpsCanvas = document.getElementById('tpsChart');
+            const blockCanvas = document.getElementById('blockChart');
+
+            if (!tpsCanvas || !blockCanvas) {
+                console.warn('Canvas dos gráficos não encontrados, tentando novamente...');
+                setTimeout(initCharts, 1000);
+                return;
+            }
+
+            try {
+                // Criar gráfico TPS
+                tpsChart = new Chart(tpsCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'TPS',
+                            data: [],
+                            borderColor: '#00ff88',
+                            backgroundColor: 'rgba(0, 255, 136, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#00ff88',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 750 },
+                        plugins: {
+                            legend: {
+                                labels: { color: '#ffffff', font: { size: 14 } }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: '#ffffff', maxTicksLimit: 10 },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                            },
+                            y: {
+                                ticks: { color: '#ffffff' },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+
+                // Criar gráfico Block
+                blockChart = new Chart(blockCanvas, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [{
+                            label: 'Block Height',
+                            data: [],
+                            borderColor: '#0066ff',
+                            backgroundColor: 'rgba(0, 102, 255, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 3,
+                            pointBackgroundColor: '#0066ff',
+                            pointBorderColor: '#ffffff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        animation: { duration: 750 },
+                        plugins: {
+                            legend: {
+                                labels: { color: '#ffffff', font: { size: 14 } }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: '#ffffff', maxTicksLimit: 10 },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#ffffff',
+                                    callback: function(value) {
+                                        return (value / 1000000).toFixed(1) + 'M';
+                                    }
+                                },
+                                grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                            }
+                        }
+                    }
+                });
+
+                console.log('✅ Gráficos inicializados com sucesso');
+                
+            } catch (error) {
+                console.error('❌ Erro ao inicializar gráficos:', error);
+                setTimeout(initCharts, 3000);
             }
         }
 
+        // Atualizar UI com dados da rede
+        function updateUI(data) {
+            if (!data) {
+                console.warn('Dados da rede não disponíveis');
+                return;
+            }
+
+            try {
+                // Atualizar painel em tempo real com informação do endpoint
+                const statusEl = document.getElementById('connectionStatus');
+                if (statusEl) {
+                    if (data.connected) {
+                        const endpointName = data.endpoint.includes('ankr') ? 'ANKR' : 
+                                           data.endpoint.includes('alchemy') ? 'ALCHEMY' : 
+                                           data.endpoint.includes('api.testnet') ? 'SOLANA OFICIAL' : 'TESTNET';
+                        statusEl.innerHTML = `Conectado à Solana TestNet via ${endpointName}`;
+                        statusEl.style.background = '#004d00';
+                    } else {
+                        statusEl.innerHTML = 'Modo Simulado (Fallback)';
+                        statusEl.style.background = '#4d3d00';
+                    }
+                }
+
+                // Atualizar métricas com verificação de existência
+                const elementUpdates = {
+                    currentTPS: data.tps ? data.tps.toLocaleString() : '--',
+                    currentSlot: data.slot ? data.slot.toLocaleString() : '--',
+                    currentEpoch: data.epoch || '--',
+                    validators: data.validators ? data.validators.toLocaleString() : '--',
+                    blockHeight: data.blockHeight ? '#' + data.blockHeight.toLocaleString() : '--',
+                    solanaStatus: data.health ? 'Saudável' : 'Degradado',
+                    statTPS: data.tps ? data.tps.toLocaleString() : '--',
+                    statValidators: data.validators ? data.validators.toLocaleString() : '--'
+                };
+
+                Object.keys(elementUpdates).forEach(id => {
+                    try {
+                        const element = document.getElementById(id);
+                        if (element) {
+                            element.textContent = elementUpdates[id];
+                        }
+                    } catch (error) {
+                        console.warn(`Erro ao atualizar elemento ${id}:`, error);
+                    }
+                });
+
+                // Atualizar banner
+                try {
+                    const statusText = document.getElementById('statusText');
+                    if (statusText && data.tps && data.epoch) {
+                        const connectedText = data.connected ? 'CONECTADO' : 'SIMULADO';
+                        statusText.textContent = `TESTNET ${connectedText} - ${data.tps.toLocaleString()} TPS • SOLANA ÉPOCA ${data.epoch}`;
+                    }
+                } catch (error) {
+                    console.warn('Erro ao atualizar banner de status:', error);
+                }
+
+                // Atualizar feed de transações com transações de usuários
+                try {
+                    if (data.userTransactions && Array.isArray(data.userTransactions)) {
+                        updateTransactionFeed(data.userTransactions);
+                    }
+                } catch (error) {
+                    console.warn('Erro ao atualizar feed de transações:', error);
+                }
+
+                // Atualizar gráficos
+                try {
+                    if (tpsChart && data.tpsHistory && Array.isArray(data.tpsHistory) && data.tpsHistory.length > 0) {
+                        tpsChart.data.labels = data.tpsHistory.map((_, i) => `${i + 1}`);
+                        tpsChart.data.datasets[0].data = data.tpsHistory;
+                        tpsChart.update('none');
+                    }
+                } catch (error) {
+                    console.warn('Erro ao atualizar gráfico TPS:', error);
+                }
+
+                try {
+                    if (blockChart && data.blockHistory && Array.isArray(data.blockHistory) && data.blockHistory.length > 0) {
+                        blockChart.data.labels = data.blockHistory.map((_, i) => `${i + 1}`);
+                        blockChart.data.datasets[0].data = data.blockHistory;
+                        blockChart.update('none');
+                    }
+                } catch (error) {
+                    console.warn('Erro ao atualizar gráfico Block:', error);
+                }
+
+            } catch (error) {
+                console.error('Erro geral na atualização da UI:', error);
+            }
+        }
+
+        // Inicializar partículas
         function initQuantumParticles() {
             const container = document.getElementById('quantumParticles');
             if (!container) return;
             
             container.innerHTML = '';
             
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 
@@ -1250,31 +1575,61 @@ ${Array.from({length: 8}, () =>
             }
         }
 
-        async function startUpdates() {
-            console.log('🚀 Starting EuroTAP...');
+        // Sistema de atualização contínua
+        async function startRealTimeUpdates() {
+            console.log('🚀 Iniciando atualizações em tempo real...');
             
-            try {
-                const data = await solana.getNetworkData();
-                await updateUI(data);
-                
-                // Set up continuous updates
-                if (updateInterval) clearInterval(updateInterval);
-                updateInterval = setInterval(async () => {
-                    try {
-                        const newData = await solana.getNetworkData();
-                        await updateUI(newData);
-                    } catch (error) {
-                        console.error('Update cycle error:', error);
+            // Limpar interval existente se houver
+            if (updateInterval) {
+                clearInterval(updateInterval);
+                updateInterval = null;
+            }
+            
+            // Função de atualização robusta
+            const performUpdate = async () => {
+                try {
+                    const data = await solana.getNetworkData();
+                    if (data) {
+                        updateUI(data);
+                        updateEcoCounter();
                     }
-                }, 3000);
+                } catch (error) {
+                    console.error('❌ Erro na atualização periódica:', error);
+                }
+            };
+
+            // Primeira atualização
+            await performUpdate();
+            
+            // Configurar atualizações periódicas
+            updateInterval = setInterval(performUpdate, 3000);
+            
+            console.log('✅ Sistema de atualizações iniciado');
+        }
+
+        // Atualizar contador ECO
+        function updateEcoCounter() {
+            try {
+                const now = Date.now();
+                const baseTime = new Date('2025-01-01').getTime();
+                const elapsed = (now - baseTime) / 1000;
                 
-                console.log('✅ EuroTAP started successfully');
+                // Incrementar valores com base no tempo
+                const co2 = Math.floor(847 + (elapsed * 0.001));
+                const paper = Math.floor(2543 + (elapsed * 0.005));
+                const trees = Math.floor(12 + (elapsed * 0.00001));
+                const energy = Math.floor(1234 + (elapsed * 0.002));
+                
+                document.getElementById('co2Reduced').textContent = `${co2} kg`;
+                document.getElementById('paperSaved').textContent = `${paper} folhas`;
+                document.getElementById('treesSaved').textContent = `${trees}`;
+                document.getElementById('energySaved').textContent = `${energy} kWh`;
             } catch (error) {
-                console.error('❌ Startup error:', error);
+                console.warn('Erro ao atualizar contador ECO:', error);
             }
         }
 
-        // Modal functions - SIMPLIFICADAS
+        // Funções dos modais
         function openTerminal() {
             const modal = document.getElementById('terminalModal');
             if (modal) {
@@ -1308,12 +1663,67 @@ eurotap@solana:~$
             if (modal) modal.style.display = 'flex';
         }
 
-        function openMobileApp() {
-            const modal = document.getElementById('mobileAppModal');
-            if (modal) modal.style.display = 'flex';
+        function generateQuantumKeys() {
+            const output = document.getElementById('keyOutput');
+            if (!output) return;
+            
+            output.innerHTML = `
+🔐 GERANDO CHAVES ML-DSA-65...
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚡ Inicializando algoritmo quantum-safe...
+🧮 Gerando matriz A (6×8)...
+🎲 Criando vetor secreto s1, s2...
+🔒 Computando chave pública t = A*s1 + s2...
+
+CHAVE PÚBLICA GERADA:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${Array.from({length: 8}, () => 
+    Array.from({length: 44}, () => 
+        Math.random().toString(36).charAt(0).toUpperCase()
+    ).join('')
+).join('\n')}
+
+✅ CHAVES ML-DSA-65 GERADAS COM SUCESSO!
+🛡️ Resistente a ataques quânticos
+🔐 Algoritmo aprovado NIST PQC
+⚡ Pronto para assinatura quantum-safe
+            `;
         }
 
-        // Event listeners - ROBUSTOS
+        function openMobileApp() {
+            alert('App Maquininha em desenvolvimento');
+        }
+
+        function openNetworkMonitor() {
+            alert('Monitor de rede em desenvolvimento');
+        }
+
+        function openRealPerformanceTest() {
+            alert('Teste de performance em desenvolvimento');
+        }
+
+        function openEuropeMap() {
+            alert('Mapa europeu em desenvolvimento');
+        }
+
+        function showCompetitorAnalysis() {
+            alert('Análise competitiva em desenvolvimento');
+        }
+
+        function showMarketData() {
+            alert('Dados de mercado em desenvolvimento');
+        }
+
+        function showRegulatoryLandscape() {
+            alert('Monitor regulatório em desenvolvimento');
+        }
+
+        function showAdvancedROI() {
+            alert('Calculadora ROI em desenvolvimento');
+        }
+
+        // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🔧 DOM loaded, initializing EuroTAP...');
             
@@ -1355,13 +1765,13 @@ eurotap@solana:~$
                                         output.innerHTML += `🟢 Status: ${solana.isConnected ? 'Conectado' : 'Simulado'}\n`;
                                         break;
                                     case 'slot':
-                                        output.innerHTML += `📊 Slot Atual: ${solana.data.slot}\n`;
+                                        output.innerHTML += `📊 Slot Atual: ${solana.lastSlot || 'N/A'}\n`;
                                         break;
                                     case 'tps':
-                                        output.innerHTML += `⚡ TPS: ${solana.data.tps}\n`;
+                                        output.innerHTML += `⚡ TPS: ${solana.tpsHistory[solana.tpsHistory.length - 1] || 'N/A'}\n`;
                                         break;
                                     case 'epoch':
-                                        output.innerHTML += `🕐 Época: ${solana.data.epoch}\n`;
+                                        output.innerHTML += `🕐 Época: 650\n`;
                                         break;
                                     case 'clear':
                                         output.innerHTML = 'Terminal limpo.\n\neurotap@solana:~$ ';
@@ -1376,8 +1786,9 @@ eurotap@solana:~$
                     });
                 }
                 
-                // Start the system
-                startUpdates();
+                // Initialize charts and start updates
+                initCharts();
+                setTimeout(startRealTimeUpdates, 2000);
                 
             } catch (error) {
                 console.error('❌ Initialization error:', error);
