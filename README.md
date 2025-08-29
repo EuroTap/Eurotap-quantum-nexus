@@ -1,36 +1,25 @@
-﻿# EuroTAP Research - Educational Platform
+# EuroTAP - Quantum-Safe Payment Terminal
 
-![EuroTAP](https://img.shields.io/badge/EuroTAP-Research-blue?style=for-the-badge)
-![Quantum-Safe](https://img.shields.io/badge/Quantum--Safe-ML--DSA--65-green?style=for-the-badge)
+Europe's first quantum-resistant payment solution concept using ML-DSA-65 cryptography.
 
-## About
+## Technology Stack
+- ML-DSA-65 Post-Quantum Cryptography (NIST approved 2024)
+- Solana blockchain integration
+- Real-time compliance automation
+- Environmental impact tracking
 
-EuroTAP Research is an educational project demonstrating quantum-safe cryptography concepts.
-
-### Features
-- ML-DSA-65 (NIST Post-Quantum Standard)
-- Educational demonstrations
-- European payment system focus
-
-## Demo
-
-Visit our demonstration: [https://eurotap.github.io/Eurotap-quantum-nexus/](https://eurotap.github.io/Eurotap-quantum-nexus/)
+## Live Demo
+🔗 [View Demo](https://eurotap.github.io/Eurotap-quantum-nexus/)
 
 ## Team
+- **Laury Fernando** - CTO & Co-Founder
+- **Jeferson Ramos** - CEO & Co-Founder
 
-**L F Z** - Lead Researcher & Developer
-J R  - System Architect & Co-Researcher
+## Development Status
+Prototype phase - Commercial development in progress
 
 ## Contact
-
-- Email: tapeuro78@gmail.com
-- GitHub: [github.com/EuroTap](https://github.com/EuroTap)
-
-## Disclaimer
-
-âœ… Educational purposes only
-âœ… Non-commercial research project
-âœ… Open for academic collaboration
+📧 tapeuro78@gmail.com
 
 ---
-Â© 2025 EuroTAP Research Project
+*© 2025 EuroTAP - Quantum-Safe
