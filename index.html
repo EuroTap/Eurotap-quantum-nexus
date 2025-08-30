@@ -2414,9 +2414,11 @@
                         if (this.lastSlot > 0 && this.lastUpdate > 0) {
                             const slotDiff = slot - this.lastSlot;
                             const timeDiff = (Date.now() - this.lastUpdate) / 1000;
-                            tps = Math.max(Math.floor((slotDiff * 400) / timeDiff), 100);
+                            tps = Math.max(Math.floor((slotDiff * 400) / timeDiff), 1000);
+                            // Simula capacidade robusta EuroTAP: 1.000-5.000 TPS
+                            tps = Math.min(Math.max(tps, 1000), 5000);
                         } else {
-                            tps = Math.floor(Math.random() * 2000) + 1000;
+                            tps = Math.floor(Math.random() * 4000) + 1000; // 1.000-5.000 TPS
                         }
                         
                         this.lastSlot = slot;
@@ -2459,7 +2461,7 @@
             }
 
             getSimulatedData() {
-                const tps = Math.floor(Math.random() * 2000) + 1000;
+                const tps = Math.floor(Math.random() * 4000) + 1000; // 1.000-5.000 TPS
                 const blockHeight = Math.floor(Date.now() / 1000) + 300000000;
                 const validators = Math.floor(Math.random() * 200) + 1500;
                 
