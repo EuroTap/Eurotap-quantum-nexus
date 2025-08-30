@@ -2284,7 +2284,7 @@
             }
         }
 
-        // Sistema de Conexão Real com Solana - MELHORADO
+        // Sistema de Conexão Real com Solana - INFRAESTRUTURA ROBUSTA
         class SolanaConnector {
             constructor() {
                 this.endpoints = [
@@ -2300,6 +2300,20 @@
                 this.lastUpdate = 0;
                 this.networkData = {};
                 this.ecoMetrics = { co2: 847, paper: 2543, trees: 12, energy: 1234 };
+                
+                // Infraestrutura Robusta - Métricas de Performance
+                this.infrastructureMetrics = {
+                    loadBalancer: { status: 'ACTIVE', requests_per_sec: 0, latency: 0 },
+                    database: { cpu: 0, ram: 0, connections: 0, queries_per_sec: 0 },
+                    cache: { hit_rate: 95, memory_usage: 0, operations_per_sec: 0 },
+                    servers: [
+                        { id: 'EU-WEST-1', cpu: 0, ram: 0, network_io: 0, status: 'ONLINE' },
+                        { id: 'EU-CENTRAL-1', cpu: 0, ram: 0, network_io: 0, status: 'ONLINE' },
+                        { id: 'EU-SOUTH-1', cpu: 0, ram: 0, network_io: 0, status: 'ONLINE' }
+                    ],
+                    cdn: { cache_hit_rate: 98, bandwidth_gbps: 0, edge_servers: 12 },
+                    security: { requests_blocked: 0, ddos_attacks: 0, fraud_score: 0.1 }
+                };
             }
 
             get endpoint() {
@@ -2386,7 +2400,41 @@
                 return transactions;
             }
 
-            // ECO Counter sincronizado com rede real
+            // Simular métricas de infraestrutura robusta
+            updateInfrastructureMetrics(tps) {
+                const load = Math.min(tps / 5000, 1); // Normalizar baseado em 5000 TPS máximo
+                
+                // Load Balancer
+                this.infrastructureMetrics.loadBalancer.requests_per_sec = Math.floor(tps * 1.2);
+                this.infrastructureMetrics.loadBalancer.latency = Math.floor(5 + (load * 15)); // 5-20ms
+                
+                // Database
+                this.infrastructureMetrics.database.cpu = Math.floor(20 + (load * 50)); // 20-70%
+                this.infrastructureMetrics.database.ram = Math.floor(30 + (load * 40)); // 30-70%
+                this.infrastructureMetrics.database.connections = Math.floor(50 + (load * 150)); // 50-200
+                this.infrastructureMetrics.database.queries_per_sec = Math.floor(tps * 2.5);
+                
+                // Cache Redis
+                this.infrastructureMetrics.cache.hit_rate = Math.max(85, 98 - (load * 13));
+                this.infrastructureMetrics.cache.memory_usage = Math.floor(40 + (load * 35)); // 40-75%
+                this.infrastructureMetrics.cache.operations_per_sec = Math.floor(tps * 8);
+                
+                // Servidores
+                this.infrastructureMetrics.servers.forEach((server, i) => {
+                    const variation = (Math.random() - 0.5) * 0.2; // ±10% variação
+                    server.cpu = Math.floor(25 + (load * 40) + (variation * 20)); // 25-65%
+                    server.ram = Math.floor(35 + (load * 30) + (variation * 15)); // 35-65%
+                    server.network_io = Math.floor(tps * (0.3 + i * 0.1)); // Distribuído
+                });
+                
+                // CDN
+                this.infrastructureMetrics.cdn.bandwidth_gbps = Number((tps * 0.002).toFixed(2)); // ~2MB por TPS
+                this.infrastructureMetrics.cdn.cache_hit_rate = Math.max(95, 99 - (load * 4));
+                
+                // Security
+                this.infrastructureMetrics.security.requests_blocked = Math.floor(Math.random() * 10);
+                this.infrastructureMetrics.security.fraud_score = Number((Math.random() * 0.3).toFixed(2));
+            }
             updateEcoMetrics(tps, validators) {
                 if (tps && validators) {
                     // Fator baseado em TPS real - quanto maior TPS, maior economia
@@ -2427,6 +2475,9 @@
 
                         // Atualizar ECO baseado em dados reais
                         this.updateEcoMetrics(tps, validators);
+                        
+                        // Atualizar métricas de infraestrutura robusta
+                        this.updateInfrastructureMetrics(tps);
 
                         this.tpsHistory.push(tps);
                         if (this.tpsHistory.length > 20) this.tpsHistory.shift();
@@ -2446,7 +2497,8 @@
                             tpsHistory: [...this.tpsHistory],
                             blockHistory: [...this.blockHistory],
                             userTransactions: this.generateUserTransactions(),
-                            ecoMetrics: { ...this.ecoMetrics }
+                            ecoMetrics: { ...this.ecoMetrics },
+                            infrastructure: { ...this.infrastructureMetrics }
                         };
 
                         return this.networkData;
@@ -2468,6 +2520,9 @@
                 // Atualizar ECO mesmo em modo simulado
                 this.updateEcoMetrics(tps, validators);
                 
+                // Atualizar métricas de infraestrutura robusta
+                this.updateInfrastructureMetrics(tps);
+                
                 this.tpsHistory.push(tps);
                 if (this.tpsHistory.length > 20) this.tpsHistory.shift();
                 
@@ -2486,7 +2541,8 @@
                     tpsHistory: [...this.tpsHistory],
                     blockHistory: [...this.blockHistory],
                     userTransactions: this.generateUserTransactions(),
-                    ecoMetrics: { ...this.ecoMetrics }
+                    ecoMetrics: { ...this.ecoMetrics },
+                    infrastructure: { ...this.infrastructureMetrics }
                 };
 
                 return this.networkData;
@@ -2954,11 +3010,12 @@ ${Array.from({length: 8}, () =>
                 modal.style.display = 'flex';
                 const details = document.getElementById('networkDetails');
                 if (details && solana.networkData) {
+                    const infra = solana.networkData.infrastructure || {};
                     details.innerHTML = `
-🌐 MONITORAMENTO AVANÇADO DA REDE SOLANA TESTNET
+🌐 EUROTAP INFRAESTRUTURA ROBUSTA - REDE DE TESTE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📊 MÉTRICAS EM TEMPO REAL:
+📊 MÉTRICAS SOLANA TESTNET:
 ┌─────────────────────────────────────────────────┐
 │ TPS Atual: ${solana.networkData.tps || '--'} transações/segundo        │
 │ Slot: ${solana.networkData.slot || '--'}                    │
@@ -2968,18 +3025,40 @@ ${Array.from({length: 8}, () =>
 │ Status: ${solana.networkData.connected ? '🟢 Conectado' : '🟡 Simulado'}                │
 └─────────────────────────────────────────────────┘
 
+⚡ LOAD BALANCER:
+Requests/sec: ${infra.loadBalancer?.requests_per_sec || '--'}
+Latência média: ${infra.loadBalancer?.latency || '--'}ms
+Status: ${infra.loadBalancer?.status || 'N/A'}
+
+🗄️  DATABASE PostgreSQL:
+CPU: ${infra.database?.cpu || '--'}% | RAM: ${infra.database?.ram || '--'}%
+Conexões ativas: ${infra.database?.connections || '--'}
+Queries/sec: ${infra.database?.queries_per_sec || '--'}
+
+⚡ CACHE REDIS:
+Hit Rate: ${infra.cache?.hit_rate || '--'}%
+Memory Usage: ${infra.cache?.memory_usage || '--'}%
+Operations/sec: ${infra.cache?.operations_per_sec || '--'}
+
+🖥️  SERVIDORES (3 nodes):
+${infra.servers ? infra.servers.map(server => 
+`${server.id}: CPU ${server.cpu}% | RAM ${server.ram}% | I/O ${server.network_io} | ${server.status}`
+).join('\n') : 'N/A'}
+
+🌍 CDN/EDGE:
+Cache Hit: ${infra.cdn?.cache_hit_rate || '--'}%
+Bandwidth: ${infra.cdn?.bandwidth_gbps || '--'} Gbps
+Edge Servers: ${infra.cdn?.edge_servers || '--'} nodes
+
+🛡️  SEGURANÇA:
+Requests Blocked: ${infra.security?.requests_blocked || '--'}/min
+Fraud Score: ${infra.security?.fraud_score || '--'}
+DDoS Protection: ATIVO
+
 🔗 CONECTIVIDADE:
 Endpoint: ${solana.networkData.endpoint || 'N/A'}
-Latência: <50ms
+Latência: <${infra.loadBalancer?.latency || 20}ms
 Uptime: 99.9%
-
-💡 QUANTUM-SAFE STATUS:
-Criptografia: ML-DSA-65 ✅
-NIST Approved: ✅
-Post-Quantum: ✅
-
-📈 HISTÓRICO TPS (Últimos 20 pontos):
-${solana.networkData.tpsHistory ? solana.networkData.tpsHistory.map((tps, i) => `${i+1}: ${tps} TPS`).join('\n') : 'N/A'}
                     `;
                 }
             }
